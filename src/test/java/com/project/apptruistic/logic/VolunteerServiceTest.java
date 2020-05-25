@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.sql.Date;
+import java.time.LocalDate;
+
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -21,8 +24,8 @@ class VolunteerServiceTest {
 
     @Test
     void save() {
-        volunteerService.save(new Volunteer("ciao", "ciao", "ciao", "ciao"));
+        volunteerService.save(new Volunteer("ciao", "ciao", Date.valueOf(LocalDate.now()), "ciao", "ciao"));
 
-        verify(repository).save(new Volunteer("ciao", "ciao", "ciao", "ciao"));
+        verify(repository).save(new Volunteer("ciao", "ciao", Date.valueOf(LocalDate.now()), "ciao", "ciao"));
     }
 }

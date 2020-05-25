@@ -1,5 +1,6 @@
 package com.project.apptruistic.persistence.domain;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Volunteer {
@@ -7,15 +8,25 @@ public class Volunteer {
     private String id;
     private String firstName;
     private String lastName;
+    private Date dateOfBirth;
     private String password;
     private String email;
 
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, String password, String email) {
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Volunteer(String firstName, String lastName, Date dateOfBirth, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.email = email;
     }
@@ -62,18 +73,22 @@ public class Volunteer {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Volunteer volunteer = (Volunteer) o;
         return Objects.equals(id, volunteer.id) &&
                 Objects.equals(firstName, volunteer.firstName) &&
                 Objects.equals(lastName, volunteer.lastName) &&
+                Objects.equals(dateOfBirth, volunteer.dateOfBirth) &&
                 Objects.equals(password, volunteer.password) &&
                 Objects.equals(email, volunteer.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, password, email);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, password, email);
     }
 }
+
+
