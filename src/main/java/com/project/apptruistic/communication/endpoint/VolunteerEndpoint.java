@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/volunteer")
+@RequestMapping("/volunteers")
 public class VolunteerEndpoint {
 
     private final VolunteerService volunteerService;
@@ -16,9 +18,9 @@ public class VolunteerEndpoint {
     public VolunteerEndpoint(VolunteerService volunteerService) {
         this.volunteerService = volunteerService;
     }
-    @PostMapping
-    Volunteer post(@RequestBody Volunteer volunteer){
-         return volunteerService.save(volunteer);
 
+    @PostMapping
+    Volunteer post(@Valid @RequestBody Volunteer volunteer) {
+        return volunteerService.save(volunteer);
     }
 }

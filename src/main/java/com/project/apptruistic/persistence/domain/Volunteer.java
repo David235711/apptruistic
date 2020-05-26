@@ -1,18 +1,45 @@
 package com.project.apptruistic.persistence.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 public class Volunteer {
 
     private String id;
+    @NotEmpty
     private String firstName;
+    @NotEmpty
     private String lastName;
+
     private Date dateOfBirth;
+    @Min(8)
     private String password;
+    @NotEmpty
     private String email;
+    private Set<String> authorities = new HashSet<>();
 
     public Volunteer() {
+    }
+
+    public Volunteer(String firstName, String lastName, Date dateOfBirth, String password, String email, Set<String> authorities) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.email = email;
+        this.authorities = authorities;
+    }
+
+    public Volunteer(@NotEmpty String firstName, @NotEmpty String lastName, Date dateOfBirth, @Min(8) String password, @NotEmpty String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.email = email;
     }
 
     public Date getDateOfBirth() {
@@ -23,12 +50,12 @@ public class Volunteer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Volunteer(String firstName, String lastName, Date dateOfBirth, String password, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.password = password;
-        this.email = email;
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
     }
 
     public String getId() {
@@ -73,7 +100,6 @@ public class Volunteer {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Volunteer volunteer = (Volunteer) o;
@@ -82,12 +108,13 @@ public class Volunteer {
                 Objects.equals(lastName, volunteer.lastName) &&
                 Objects.equals(dateOfBirth, volunteer.dateOfBirth) &&
                 Objects.equals(password, volunteer.password) &&
-                Objects.equals(email, volunteer.email);
+                Objects.equals(email, volunteer.email) &&
+                Objects.equals(authorities, volunteer.authorities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, password, email);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, password, email, authorities);
     }
 }
 
