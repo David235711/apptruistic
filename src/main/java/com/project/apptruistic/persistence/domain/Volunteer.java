@@ -1,11 +1,11 @@
 package com.project.apptruistic.persistence.domain;
 
-import java.util.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 
 public class Volunteer {
 
@@ -15,7 +15,7 @@ public class Volunteer {
     @NotEmpty
     private String lastName;
 
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @Min(8)
     private String password;
     @NotEmpty
@@ -25,7 +25,7 @@ public class Volunteer {
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, Date dateOfBirth, String password, String email, Set<String> authorities) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String password, String email, Set<String> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -34,7 +34,7 @@ public class Volunteer {
         this.authorities = authorities;
     }
 
-    public Volunteer(@NotEmpty String firstName, @NotEmpty String lastName, Date dateOfBirth, @Min(8) String password, @NotEmpty String email) {
+    public Volunteer(@NotEmpty String firstName, @NotEmpty String lastName, LocalDate dateOfBirth, @Min(8) String password, @NotEmpty String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -42,11 +42,11 @@ public class Volunteer {
         this.email = email;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
