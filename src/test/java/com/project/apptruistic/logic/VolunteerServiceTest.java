@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
@@ -32,7 +31,7 @@ class VolunteerServiceTest {
 
     @Test
     void saveAlreadyExists() {
-        Volunteer volunteer = new Volunteer("ciao", "ciao", Date.valueOf(LocalDate.now()), "ciao", "ciao", volunteerRole);
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "ciao", "ciao", volunteerRole);
         when(repository.findOneByEmail(volunteer.getEmail()))
                 .thenReturn(Optional.of(volunteer));
 
@@ -45,7 +44,7 @@ class VolunteerServiceTest {
 
     @Test
     void saveVolunteerDoesNotExist() {
-        Volunteer volunteer = new Volunteer("ciao", "ciao", Date.valueOf(LocalDate.now()), "ciao", "ciao");
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "ciao", "ciao");
         when(repository.findOneByEmail(volunteer.getEmail()))
                 .thenReturn(Optional.empty());
         when(passwordEncoder.encode(volunteer.getPassword()))
@@ -55,7 +54,7 @@ class VolunteerServiceTest {
 
         verify(repository).findOneByEmail(volunteer.getEmail());
         verify(passwordEncoder).encode(volunteer.getPassword());
-        Volunteer expected = new Volunteer("ciao", "ciao", Date.valueOf(LocalDate.now()), "ciao", "ciao", volunteerRole);
+        Volunteer expected = new Volunteer("ciao", "ciao", LocalDate.now(), "ciao", "ciao", volunteerRole);
         verify(repository).save(expected);
     }
 }

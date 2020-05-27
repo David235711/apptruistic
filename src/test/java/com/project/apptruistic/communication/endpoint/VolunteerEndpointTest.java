@@ -42,7 +42,7 @@ class VolunteerEndpointTest {
 
     })
     void postIsInvalid(String firstName, String lastName, String password, String email) {
-        Volunteer volunteer = new Volunteer(firstName, lastName, Date.valueOf(LocalDate.now()), password, email, Set.of("ROLE_VOLUNTEER"));
+        Volunteer volunteer = new Volunteer(firstName, lastName, LocalDate.now(), password, email, Set.of("ROLE_VOLUNTEER"));
 
         testRestTemplate.postForObject(url, volunteer, Volunteer.class);
 
@@ -51,7 +51,7 @@ class VolunteerEndpointTest {
 
     @Test
     void postIsValid(){
-        Volunteer volunteer = new Volunteer("firstName", "lastName", Date.valueOf(LocalDate.now()), "password", "email", Set.of("ROLE_VOLUNTEER"));
+        Volunteer volunteer = new Volunteer("firstName", "lastName", LocalDate.now(), "password", "email", Set.of("ROLE_VOLUNTEER"));
 
         testRestTemplate.postForObject(url, volunteer, Volunteer.class);
 
