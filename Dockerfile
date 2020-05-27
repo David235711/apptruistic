@@ -6,12 +6,8 @@ COPY ./src ./src
 
 RUN mvn clean package && cp target/app.jar app.jar
 
-#FROM openjdk:11
 FROM openjdk:11.0.7-jre-buster
 WORKDIR /app
 COPY --from=maven /app/app.jar ./app.jar
-# ADD target/docker-spring-boot.jar docker-spring-boot.jar
-# ARG JAR_FILE=target/*.jar
-# COPY ${JAR_FILE} app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
