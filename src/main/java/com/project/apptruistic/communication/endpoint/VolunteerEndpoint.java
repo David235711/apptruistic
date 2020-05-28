@@ -2,12 +2,16 @@ package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.logic.VolunteerService;
 import com.project.apptruistic.persistence.domain.Volunteer;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
+
+import javax.validation.UnexpectedTypeException;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/volunteers")
@@ -20,7 +24,17 @@ public class VolunteerEndpoint {
     }
 
     @PostMapping
-    Volunteer post(@Valid @RequestBody Volunteer volunteer) {
-        return volunteerService.save(volunteer);
+    ResponseEntity<String>  post(@Valid @RequestBody Volunteer volunteer) {
+        volunteerService.save(volunteer);
+        return ResponseEntity.ok("User is valid");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            UnexpectedTypeException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put(String.valueOf(ex.getCause()), ex.getMessage());
+        return errors;
     }
 }

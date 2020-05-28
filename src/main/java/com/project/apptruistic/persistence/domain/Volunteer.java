@@ -1,7 +1,10 @@
 package com.project.apptruistic.persistence.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,16 +13,21 @@ import java.util.Set;
 public class Volunteer {
 
     private String id;
+
     @NotEmpty
     private String firstName;
+
     @NotEmpty
     private String lastName;
 
     private LocalDate dateOfBirth;
+
     @Min(8)
     private String password;
+
     @NotEmpty
     private String email;
+
     private Set<String> authorities = new HashSet<>();
 
     public Volunteer() {
@@ -34,7 +42,7 @@ public class Volunteer {
         this.authorities = authorities;
     }
 
-    public Volunteer(@NotEmpty String firstName, @NotEmpty String lastName, LocalDate dateOfBirth, @Min(8) String password, @NotEmpty String email) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
