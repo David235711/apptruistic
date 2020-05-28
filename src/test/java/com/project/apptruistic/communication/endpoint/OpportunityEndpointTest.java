@@ -3,6 +3,7 @@ package com.project.apptruistic.communication.endpoint;
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,7 +34,7 @@ class OpportunityEndpointTest {
 
         testRestTemplate.postForObject(url, opportunity, Opportunity.class);
 
-        verify(service).save(opportunity);
+        verify(service).save(Mockito.any(Opportunity.class));
 
     }
 

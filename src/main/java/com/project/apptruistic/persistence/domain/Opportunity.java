@@ -3,6 +3,8 @@ package com.project.apptruistic.persistence.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -10,20 +12,26 @@ import java.util.Objects;
 public class Opportunity {
 
     private String id;
-    @NotEmpty
+
+    @NotEmpty(message = "Please provide a name")
     private String name;
-    @NotEmpty
+
+    @NotEmpty(message = "Please provide a description")
     private String description;
-//    @NotEmpty
+
+    @NotNull(message = "Please provide a occurrence date (yyyy.MM.dd)")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private LocalDate occurDate;
-//    @NotEmpty
+
+    @NotNull(message = "Please provide a start time (HH:mm:ss)")
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime startTime;
-//    @NotEmpty
+
+    @NotNull(message = "Please provide a end time (HH:mm:ss)")
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime endTime;
-    @NotEmpty
+
+    @NotEmpty(message = "Please provide a category")
     private String category;
 
     private String creator;
@@ -32,7 +40,7 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(@NotEmpty String name, @NotEmpty String description, @NotEmpty LocalDate occurDate, @NotEmpty LocalTime startTime, @NotEmpty LocalTime endTime, @NotEmpty String category, String creator, String creatorName) {
+    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
         this.name = name;
         this.description = description;
         this.occurDate = occurDate;
