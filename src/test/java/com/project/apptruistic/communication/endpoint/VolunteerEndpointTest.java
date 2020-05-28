@@ -27,18 +27,16 @@ class VolunteerEndpointTest {
     @MockBean
     VolunteerService service;
 
-    @SpyBean
-    VolunteerEndpoint endpoint;
-
     String url = "/volunteers";
 
-    /* This test fails currently
+
     @ParameterizedTest
     @CsvSource({
-            "'', lastName, password, email",
-            "firstName, '', password, email",
-            "firstName, lastName, wrong, email",
-            "firstName, lastName, password, ''"
+            "'', lastName, password, email@com.com",
+            "firstName, '', password, email@com.com",
+            "firstName, lastName, wrong, email@com.com",
+            "firstName, lastName, password, ''",
+            "firstName, lastName, password, notEmail",
 
     })
     void postIsInvalid(String firstName, String lastName, String password, String email) {
@@ -47,11 +45,11 @@ class VolunteerEndpointTest {
         testRestTemplate.postForObject(url, volunteer, Volunteer.class);
 
         verify(service, never()).save(volunteer);
-    }*/
+    }
 
     @Test
     void postIsValid() {
-        Volunteer volunteer = new Volunteer("firstName", "lastName", LocalDate.now(), "password", "email", Set.of("ROLE_VOLUNTEER"));
+        Volunteer volunteer = new Volunteer("firstName", "lastName", LocalDate.now(), "password", "email@com.com", Set.of("ROLE_VOLUNTEER"));
 
         testRestTemplate.postForObject(url, volunteer, Volunteer.class);
 
