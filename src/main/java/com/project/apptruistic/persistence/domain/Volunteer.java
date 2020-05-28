@@ -1,10 +1,9 @@
 package com.project.apptruistic.persistence.domain;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -14,18 +13,19 @@ public class Volunteer {
 
     private String id;
 
-    @NotEmpty
+    @NotEmpty(message = "Please provide a first name")
     private String firstName;
 
-    @NotEmpty
+    @NotEmpty(message = "Please provide a last name")
     private String lastName;
 
     private LocalDate dateOfBirth;
 
-    @Min(8)
+    @Length(min = 8, message = "Please provide a password with at least 8 characters")
     private String password;
 
-    @NotEmpty
+    @NotEmpty(message = "Please provide an email address")
+    @Email(message = "Please provide a valid email address")
     private String email;
 
     private Set<String> authorities = new HashSet<>();

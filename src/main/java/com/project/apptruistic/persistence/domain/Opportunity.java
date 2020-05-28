@@ -14,13 +14,13 @@ public class Opportunity {
     private String name;
     @NotEmpty
     private String description;
-    @NotEmpty
+//    @NotEmpty
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private LocalDate occurDate;
-    @NotEmpty
+//    @NotEmpty
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime startTime;
-    @NotEmpty
+//    @NotEmpty
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime endTime;
     @NotEmpty
