@@ -17,9 +17,12 @@ public class OpportunityService {
     }
 
     public Opportunity save(Opportunity opportunity) {
-        if (exists(opportunity)) {
-            return opportunity;
+        int hashcode = opportunity.hashCode();
+        Optional<Opportunity> oOpportunity = opportunityRepository.findOneByHashcode(hashcode);
+        if (oOpportunity.isPresent()) {
+            return oOpportunity.get();
         }
+        opportunity.setHashcode(hashcode);
         return opportunityRepository.save(opportunity);
     }
 

@@ -26,7 +26,7 @@ class OpportunityServiceTest {
 
     @Test
     void saveOpportunityAlreadyExists() {
-        Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+        Opportunity opportunity = new Opportunity(1, "help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
                 "creator", "creatorName");
 
         when(repository.findOneByName(opportunity.getName()))
@@ -41,7 +41,7 @@ class OpportunityServiceTest {
 
     @Test
     void saveOpportunityDoesNotExist() {
-        Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+        Opportunity opportunity = new Opportunity(1, "help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
                 "individual", "creatorName");
         when(repository.findOneByName(opportunity.getName()))
                 .thenReturn(Optional.empty());

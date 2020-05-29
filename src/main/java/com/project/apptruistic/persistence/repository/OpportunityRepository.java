@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface OpportunityRepository extends MongoRepository<Opportunity, String> {
+
     Optional<Opportunity> findOneByName(String name);
+
+    Optional<Opportunity> findOneByHashcode(int hashcode);
 
 }

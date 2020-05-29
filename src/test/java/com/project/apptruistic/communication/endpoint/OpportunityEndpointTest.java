@@ -28,7 +28,7 @@ class OpportunityEndpointTest {
 
     @Test
     void post() {
-        Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+        Opportunity opportunity = new Opportunity(1, "help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
                 "individual", "creatorName");
 
         testRestTemplate.postForObject(url, opportunity, Opportunity.class);

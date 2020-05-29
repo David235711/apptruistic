@@ -1,6 +1,7 @@
 package com.project.apptruistic.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,9 @@ import java.util.Objects;
 public class Opportunity {
 
     private String id;
+
+    @Indexed(unique = true)
+    private int hashcode;
 
     @NotEmpty(message = "Please provide a name")
     private String name;
@@ -39,7 +43,8 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
+    public Opportunity(int hashcode, String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
+        this.hashcode = hashcode;
         this.name = name;
         this.description = description;
         this.occurDate = occurDate;
@@ -122,24 +127,29 @@ public class Opportunity {
         this.creatorName = creatorName;
     }
 
+    public int getHashcode() {
+        return hashcode;
+    }
+
+    public void setHashcode(int hashcode) {
+        this.hashcode = hashcode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Opportunity that = (Opportunity) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(hashcode, that.hashcode) &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description) &&
                 Objects.equals(occurDate, that.occurDate) &&
                 Objects.equals(startTime, that.startTime) &&
                 Objects.equals(endTime, that.endTime) &&
-                Objects.equals(category, that.category) &&
-                Objects.equals(creator, that.creator) &&
                 Objects.equals(creatorName, that.creatorName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, occurDate, startTime, endTime, category, creator, creatorName);
+        return Objects.hash(hashcode, name, occurDate, startTime, endTime, creatorName);
     }
 }
