@@ -31,7 +31,7 @@ class VolunteerServiceTest {
 
     @Test
     void saveAlreadyExists() {
-        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "ciao", "ciao", volunteerRole);
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), gender, "ciao", "ciao", volunteerRole);
         when(repository.findOneByEmail(volunteer.getEmail()))
                 .thenReturn(Optional.of(volunteer));
 
@@ -44,7 +44,7 @@ class VolunteerServiceTest {
 
     @Test
     void saveVolunteerDoesNotExist() {
-        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "ciao", "ciao");
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), gender, "ciao", "ciao");
         when(repository.findOneByEmail(volunteer.getEmail()))
                 .thenReturn(Optional.empty());
         when(passwordEncoder.encode(volunteer.getPassword()))
@@ -54,7 +54,7 @@ class VolunteerServiceTest {
 
         verify(repository).findOneByEmail(volunteer.getEmail());
         verify(passwordEncoder).encode(volunteer.getPassword());
-        Volunteer expected = new Volunteer("ciao", "ciao", LocalDate.now(), "ciao", "ciao", volunteerRole);
+        Volunteer expected = new Volunteer("ciao", "ciao", LocalDate.now(), gender, "ciao", "ciao", volunteerRole);
         verify(repository).save(expected);
     }
 }
