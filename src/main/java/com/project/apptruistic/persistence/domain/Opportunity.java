@@ -55,6 +55,17 @@ public class Opportunity {
         this.creatorName = creatorName;
     }
 
+    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
+        this.name = name;
+        this.description = description;
+        this.occurDate = occurDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.category = category;
+        this.creator = creator;
+        this.creatorName = creatorName;
+    }
+
     public String getId() {
         return id;
     }
