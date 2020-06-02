@@ -1,5 +1,6 @@
 package com.project.apptruistic.persistence.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -19,6 +20,7 @@ public class Volunteer {
     @NotEmpty(message = "Please provide a last name")
     private String lastName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private LocalDate dateOfBirth;
 
     @NotEmpty(message = "please provide a gender")
@@ -33,7 +35,7 @@ public class Volunteer {
 
     private Set<String> authorities = new HashSet<>();
 
-    private Set<String> categories;
+    private Set<String> categories = new HashSet<>();
 
     public Volunteer() {
     }
