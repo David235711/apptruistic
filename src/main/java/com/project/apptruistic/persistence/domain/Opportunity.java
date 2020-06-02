@@ -39,6 +39,8 @@ public class Opportunity {
 
     private String creator;
     private String creatorName;
+    private boolean done;
+    private String location;
 
     public Opportunity() {
     }
@@ -55,7 +57,8 @@ public class Opportunity {
         this.creatorName = creatorName;
     }
 
-    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
+    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
+                       String creator, String creatorName, boolean done, String location) {
         this.name = name;
         this.description = description;
         this.occurDate = occurDate;
@@ -64,6 +67,8 @@ public class Opportunity {
         this.category = category;
         this.creator = creator;
         this.creatorName = creatorName;
+        this.done=done;
+        this.location=location;
     }
 
     public String getId() {
@@ -136,6 +141,22 @@ public class Opportunity {
 
     public void setCreatorName(String creatorName) {
         this.creatorName = creatorName;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getHashcode() {

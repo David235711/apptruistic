@@ -41,4 +41,17 @@ public class OpportunityService {
     public List<Opportunity> getAll() {
         return opportunityRepository.findAll();
     }
+
+    public Optional<Opportunity> markAsDone(String id) {
+        Optional<Opportunity> oOpportunity = opportunityRepository.findById(id);
+        if (oOpportunity.isEmpty()) {
+            return Optional.empty();
+        }
+        Opportunity opportunity = oOpportunity.get();
+        opportunity.setDone(true);
+        opportunityRepository.save(opportunity);
+        return Optional.of(opportunity);
+    }
+
+
 }

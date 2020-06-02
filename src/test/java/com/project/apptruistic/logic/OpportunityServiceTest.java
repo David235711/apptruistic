@@ -31,7 +31,7 @@ class OpportunityServiceTest {
     @Test
     void saveOpportunityAlreadyExists() {
         Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "creator", "creatorName");
+                "creator", "creatorName", false, "Vienna");
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.of(opportunity));
@@ -46,7 +46,7 @@ class OpportunityServiceTest {
     @Test
     void saveOpportunityDoesNotExist() {
         Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "individual", "creatorName");
+                "individual", "creatorName", false, "Vienna");
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.empty());
@@ -56,7 +56,38 @@ class OpportunityServiceTest {
         verify(repository).findOneByHashcode(any(Integer.class));
         assertNotNull(opportunity.getHashcode());
         verify(repository).save(opportunity);
-
     }
+
+    @Test
+    void markAsDoneDoesNotFindEntry() {
+        String id = "id";
+        Optional<Opportunity> oExpected = Optional.empty();
+        when(repository.findById(id))
+                .thenReturn(oExpected);
+
+        Optional<Opportunity> oResult = opportunityService.markAsDone(id);
+
+        assertEquals(oExpected, oResult);
+        verify(repository).findById(id);
+    }
+
+    @Test
+    void markAsDoneFindsEntry() {
+        String id = "id";
+        Optional<ToDo> oExpected = Optional.of(new ToDo("test"));
+        when(toDoRepository.findById(id))
+                .thenReturn(oExpected);
+
+        Optional<ToDo> oResult = toDoManager.markAsDone(id);
+
+        oExpected.get().setDone(true);
+        assertEquals(oExpected, oResult);
+        verify(toDoRepository).findById(id);
+        verify(toDoRepository).save(oExpected.get());
+    }
+
+
+
+
 }
 
