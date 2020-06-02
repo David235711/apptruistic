@@ -7,3 +7,4 @@ spring:
 apptruistic:
   volunteerRole: "ROLE_VOLUNTEER"
   message: "Welcome"
+  oneWeek: 1
