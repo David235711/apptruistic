@@ -33,10 +33,12 @@ public class Volunteer {
 
     private Set<String> authorities = new HashSet<>();
 
+    private Set<String> categories;
+
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<String> authorities) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<String> authorities, Set<String> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -44,15 +46,17 @@ public class Volunteer {
         this.password = password;
         this.email = email;
         this.authorities = authorities;
+        this.categories = categories;
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<String> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
         this.email = email;
+        this.categories = categories;
     }
 
     public LocalDate getDateOfBirth() {
@@ -119,6 +123,14 @@ public class Volunteer {
         this.gender = gender;
     }
 
+    public Set<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<String> categories) {
+        this.categories = categories;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -131,12 +143,13 @@ public class Volunteer {
                 Objects.equals(gender, volunteer.gender) &&
                 Objects.equals(password, volunteer.password) &&
                 Objects.equals(email, volunteer.email) &&
-                Objects.equals(authorities, volunteer.authorities);
+                Objects.equals(authorities, volunteer.authorities) &&
+                Objects.equals(categories, volunteer.categories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, authorities);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, authorities, categories);
     }
 }
 

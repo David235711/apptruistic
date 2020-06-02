@@ -15,15 +15,13 @@ public class VolunteerService {
     private final VolunteerRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final Set<String> volunteerRole;
-    private final Set<String> genders;
+
 
     public VolunteerService(VolunteerRepository repository, PasswordEncoder passwordEncoder,
-                            @Value("${apptruistic.volunteerRole}") Set<String> volunteerRole,
-                            @Value("${apptruistic.genders}") Set<String> genders) {
+                            @Value("${apptruistic.volunteerRole}") Set<String> volunteerRole) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.volunteerRole = volunteerRole;
-        this.genders = genders;
     }
 
     public Volunteer save(Volunteer volunteer) {
