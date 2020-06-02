@@ -2,7 +2,9 @@ package com.project.apptruistic.logic;
 
 import com.project.apptruistic.persistence.domain.Opportunity;
 import com.project.apptruistic.persistence.repository.OpportunityRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,6 +13,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
@@ -26,29 +30,31 @@ class OpportunityServiceTest {
 
     @Test
     void saveOpportunityAlreadyExists() {
-        Opportunity opportunity = new Opportunity(1, "help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+        Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
                 "creator", "creatorName");
-
-        when(repository.findOneByName(opportunity.getName()))
+        assertEquals(0, opportunity.getHashcode());
+        when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.of(opportunity));
 
         opportunityService.save(opportunity);
-
-        verify(repository).findOneByName(opportunity.getName());
+        assertEquals(0, opportunity.getHashcode());
+        verify(repository).findOneByHashcode(any(Integer.class));
         verifyNoMoreInteractions(repository);
     }
 
 
     @Test
     void saveOpportunityDoesNotExist() {
-        Opportunity opportunity = new Opportunity(1, "help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+        Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
                 "individual", "creatorName");
-        when(repository.findOneByName(opportunity.getName()))
+        assertEquals(0, opportunity.getHashcode());
+        when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.empty());
 
         opportunityService.save(opportunity);
 
-        verify(repository).findOneByName(opportunity.getName());
+        verify(repository).findOneByHashcode(any(Integer.class));
+        assertNotNull(opportunity.getHashcode());
         verify(repository).save(opportunity);
 
     }

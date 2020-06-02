@@ -1,8 +1,9 @@
+server:
+  port: 8080
 spring:
   data:
     mongodb:
       uri: mongodb://apptruistic:apptruist1c@ds247479.mlab.com:47479/apptruistic?retryWrites=false
-#      uri: mongodb://localhost/apptruistic
 apptruistic:
   volunteerRole: "ROLE_VOLUNTEER"
   genders: female, male, unspecified

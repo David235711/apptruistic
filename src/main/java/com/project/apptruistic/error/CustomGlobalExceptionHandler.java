@@ -25,6 +25,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors().stream()
+                .peek(System.out::println)  // ToDo: add the field name to the error
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
         body.put("errors", errors);
