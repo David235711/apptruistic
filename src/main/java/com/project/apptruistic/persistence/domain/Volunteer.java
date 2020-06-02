@@ -21,6 +21,7 @@ public class Volunteer {
 
     private LocalDate dateOfBirth;
 
+    @NotEmpty(message = "please provide a gender")
     private String gender;
 
     @Length(min = 8, message = "Please provide a password with at least 8 characters")
