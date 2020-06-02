@@ -31,7 +31,7 @@ class OpportunityServiceTest {
     @Test
     void saveOpportunityAlreadyExists() {
         Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "creator", "creatorName", "Vienna");
+                "creator", "creatorName", "Vienna", 1);
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.of(opportunity));
@@ -46,7 +46,7 @@ class OpportunityServiceTest {
     @Test
     void saveOpportunityDoesNotExist() {
         Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "individual", "creatorName", "Vienna");
+                "individual", "creatorName", "Vienna", 1);
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.empty());
@@ -71,7 +71,7 @@ class OpportunityServiceTest {
     void markAsDoneFindsEntry() {
         String id = "id";
         Optional<Opportunity> oExpected = Optional.of( new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "individual", "creatorName", "Vienna"));
+                "individual", "creatorName", "Vienna", 1));
         when(repository.findById(id))
                 .thenReturn(oExpected);
         Optional<Opportunity> oResult = opportunityService.markAsDone(id);

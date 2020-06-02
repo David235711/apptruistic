@@ -41,6 +41,7 @@ public class Opportunity {
     private String creatorName;
     private boolean done;
     private String location;
+    private int numberOfParticipants;
 
     public Opportunity() {
     }
@@ -58,7 +59,7 @@ public class Opportunity {
     }
 
     public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
-                       String creator, String creatorName, String location) {
+                       String creator, String creatorName, String location, int numberOfParticipants) {
         this.name = name;
         this.description = description;
         this.occurDate = occurDate;
@@ -68,6 +69,7 @@ public class Opportunity {
         this.creator = creator;
         this.creatorName = creatorName;
         this.location = location;
+        this.numberOfParticipants = numberOfParticipants;
     }
 
     public String getId() {
@@ -164,6 +166,14 @@ public class Opportunity {
 
     public void setHashcode(int hashcode) {
         this.hashcode = hashcode;
+    }
+
+    public int getNumberOfParticipants() {
+        return numberOfParticipants;
+    }
+
+    public void setNumberOfParticipants(int numberOfParticipants) {
+        this.numberOfParticipants = numberOfParticipants;
     }
 
     @Override

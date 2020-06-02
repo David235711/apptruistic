@@ -2,6 +2,7 @@ package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
+import com.project.apptruistic.persistence.repository.OpportunityRepository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,7 +12,6 @@ import java.util.List;
 @RequestMapping("/opportunities")
 public class OpportunityEndpoint {
     private final OpportunityService opportunityService;
-
 
     public OpportunityEndpoint(OpportunityService opportunityService) {
         this.opportunityService = opportunityService;
@@ -33,4 +33,11 @@ public class OpportunityEndpoint {
     List<Opportunity> getAll() {
         return opportunityService.getAll();
     }
+
+    @GetMapping("/availables")
+    List<Opportunity> get() {
+        return opportunityService.getAllAvailables();
+    }
+
+
 }

@@ -35,6 +35,10 @@ public class OpportunityService {
         return opportunityRepository.findAll();
     }
 
+
+    public List<Opportunity> getAllAvailables() {
+        return opportunityRepository.findAllByDoneFalse();
+    }
     public Optional<Opportunity> markAsDone(String id) {
         Optional<Opportunity> oOpportunity = opportunityRepository.findById(id);
         if (oOpportunity.isEmpty()) {
