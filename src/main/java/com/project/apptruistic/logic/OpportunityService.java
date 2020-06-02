@@ -25,14 +25,6 @@ public class OpportunityService {
         opportunity.setHashcode(hashcode);
         return opportunityRepository.save(opportunity);
     }
-// we shouldn't need this anymore now
-//    boolean exists(Opportunity opportunity) {
-//        Optional<Opportunity> oOpportunity = opportunityRepository.findOneByName(opportunity.getName());
-//        return oOpportunity.isPresent() && oOpportunity.get().getCreatorName().equals(opportunity.getCreatorName()) &&
-//                oOpportunity.get().getOccurDate().equals(opportunity.getOccurDate()) &&
-//                oOpportunity.get().getStartTime().equals(opportunity.getStartTime()) &&
-//                oOpportunity.get().getEndTime().equals(opportunity.getEndTime());
-//    }
 
     public Optional<Opportunity> get(String name) {
         return opportunityRepository.findOneByName(name);

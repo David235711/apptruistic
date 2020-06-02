@@ -5,3 +5,4 @@ spring:
 #      uri: mongodb://localhost/apptruistic
 apptruistic:
   volunteerRole: "ROLE_VOLUNTEER"
+  genders: female, male, unspecified
