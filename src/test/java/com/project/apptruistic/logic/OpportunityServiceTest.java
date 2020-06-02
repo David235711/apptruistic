@@ -31,7 +31,7 @@ class OpportunityServiceTest {
     @Test
     void saveOpportunityAlreadyExists() {
         Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "creator", "creatorName", false, "Vienna");
+                "creator", "creatorName", "Vienna");
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.of(opportunity));
@@ -46,13 +46,11 @@ class OpportunityServiceTest {
     @Test
     void saveOpportunityDoesNotExist() {
         Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "individual", "creatorName", false, "Vienna");
+                "individual", "creatorName", "Vienna");
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.empty());
-
         opportunityService.save(opportunity);
-
         verify(repository).findOneByHashcode(any(Integer.class));
         assertNotNull(opportunity.getHashcode());
         verify(repository).save(opportunity);
@@ -64,9 +62,7 @@ class OpportunityServiceTest {
         Optional<Opportunity> oExpected = Optional.empty();
         when(repository.findById(id))
                 .thenReturn(oExpected);
-
         Optional<Opportunity> oResult = opportunityService.markAsDone(id);
-
         assertEquals(oExpected, oResult);
         verify(repository).findById(id);
     }
@@ -74,20 +70,15 @@ class OpportunityServiceTest {
     @Test
     void markAsDoneFindsEntry() {
         String id = "id";
-        Optional<ToDo> oExpected = Optional.of(new ToDo("test"));
-        when(toDoRepository.findById(id))
+        Optional<Opportunity> oExpected = Optional.of( new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+                "individual", "creatorName", "Vienna"));
+        when(repository.findById(id))
                 .thenReturn(oExpected);
-
-        Optional<ToDo> oResult = toDoManager.markAsDone(id);
-
+        Optional<Opportunity> oResult = opportunityService.markAsDone(id);
         oExpected.get().setDone(true);
         assertEquals(oExpected, oResult);
-        verify(toDoRepository).findById(id);
-        verify(toDoRepository).save(oExpected.get());
+        verify(repository).findById(id);
+        verify(repository).save(oExpected.get());
     }
-
-
-
-
 }
 

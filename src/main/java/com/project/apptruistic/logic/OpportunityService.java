@@ -23,6 +23,7 @@ public class OpportunityService {
             return oOpportunity.get();
         }
         opportunity.setHashcode(hashcode);
+
         return opportunityRepository.save(opportunity);
     }
 
