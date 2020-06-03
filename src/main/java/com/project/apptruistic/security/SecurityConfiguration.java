@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     UserDetailsService userDetailsService(VolunteerRepository volunteerRepository) {
         return email -> volunteerRepository.findOneByEmail(email)
-                .map(UserPrincipal::new)
+                .map(UserDetailsImpl::new)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
     }
 

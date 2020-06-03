@@ -8,3 +8,5 @@ apptruistic:
   volunteerRole: "ROLE_VOLUNTEER"
   message: "Welcome"
   oneWeek: 1
+  jwtSecret: "SecretKey"
+  jwtExpirationMs: 86400000

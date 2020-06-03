@@ -3,13 +3,17 @@ package com.project.apptruistic.persistence.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.*;
 
+@Document(collection = "volunteers")
 public class Volunteer {
-
+    @Id
     private String id;
 
     @NotEmpty(message = "Please provide a first name")
@@ -31,7 +35,8 @@ public class Volunteer {
     @Email(message = "Please provide a valid email address")
     private String email;
 
-    private Set<String> authorities = new HashSet<>();
+    @DBRef
+    private Set<Role> roles = new HashSet<>();
 
     private Set<String> categories = new HashSet<>();
 
@@ -42,14 +47,14 @@ public class Volunteer {
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<String> authorities, Set<String> categories) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, Set<String> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
         this.email = email;
-        this.authorities = authorities;
+        this.roles = roles;
         this.categories = categories;
     }
 
@@ -71,12 +76,12 @@ public class Volunteer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Set<String> getAuthorities() {
-        return authorities;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setAuthorities(Set<String> authorities) {
-        this.authorities = authorities;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getId() {
@@ -171,7 +176,7 @@ public class Volunteer {
                 Objects.equals(gender, volunteer.gender) &&
                 Objects.equals(password, volunteer.password) &&
                 Objects.equals(email, volunteer.email) &&
-                Objects.equals(authorities, volunteer.authorities) &&
+                Objects.equals(roles, volunteer.roles) &&
                 Objects.equals(categories, volunteer.categories) &&
                 Objects.equals(appliedOpportunities, volunteer.appliedOpportunities) &&
                 Objects.equals(declinedOpportunities, volunteer.declinedOpportunities) &&
