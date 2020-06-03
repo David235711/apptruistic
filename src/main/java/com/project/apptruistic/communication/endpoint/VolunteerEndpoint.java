@@ -1,13 +1,12 @@
 package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.logic.VolunteerService;
+import com.project.apptruistic.persistence.domain.Opportunity;
 import com.project.apptruistic.persistence.domain.Volunteer;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/volunteers")
@@ -22,6 +21,10 @@ public class VolunteerEndpoint {
     @PostMapping
     Volunteer post(@Valid @RequestBody Volunteer volunteer) {
         return volunteerService.save(volunteer);
+    }
+    @GetMapping()
+    List<Volunteer> getAll() {
+        return volunteerService.getAll();
     }
 
 }

@@ -6,9 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Volunteer {
 
@@ -36,6 +34,10 @@ public class Volunteer {
     private Set<String> authorities = new HashSet<>();
 
     private Set<String> categories = new HashSet<>();
+
+    private List<Opportunity> appliedOpportunities = new ArrayList<>();
+    private List<Opportunity> declinedOpportunities = new ArrayList<>();
+    private List<Opportunity> acceptedOpportunities = new ArrayList<>();
 
     public Volunteer() {
     }
@@ -133,6 +135,30 @@ public class Volunteer {
         this.categories = categories;
     }
 
+    public List<Opportunity> getAppliedOpportunities() {
+        return appliedOpportunities;
+    }
+
+    public void setAppliedOpportunities(List<Opportunity> appliedOpportunities) {
+        this.appliedOpportunities = appliedOpportunities;
+    }
+
+    public List<Opportunity> getAcceptedOpportunities() {
+        return acceptedOpportunities;
+    }
+
+    public void setAcceptedOpportunities(List<Opportunity> acceptedOpportunities) {
+        this.acceptedOpportunities = acceptedOpportunities;
+    }
+
+    public List<Opportunity> getDeclinedOpportunities() {
+        return declinedOpportunities;
+    }
+
+    public void setDeclinedOpportunities(List<Opportunity> declinedOpportunities) {
+        this.declinedOpportunities = declinedOpportunities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -146,12 +172,15 @@ public class Volunteer {
                 Objects.equals(password, volunteer.password) &&
                 Objects.equals(email, volunteer.email) &&
                 Objects.equals(authorities, volunteer.authorities) &&
-                Objects.equals(categories, volunteer.categories);
+                Objects.equals(categories, volunteer.categories) &&
+                Objects.equals(appliedOpportunities, volunteer.appliedOpportunities) &&
+                Objects.equals(declinedOpportunities, volunteer.declinedOpportunities) &&
+                Objects.equals(acceptedOpportunities, volunteer.acceptedOpportunities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, authorities, categories);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, authorities, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities);
     }
 }
 
