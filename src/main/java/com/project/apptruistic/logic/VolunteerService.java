@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -27,6 +28,9 @@ public class VolunteerService {
     public Volunteer save(Volunteer volunteer) {
         return repository.findOneByEmail(volunteer.getEmail())
                 .orElseGet(() -> createVolunteer(volunteer));
+    }
+    public List<Volunteer> getAll(){
+        return repository.findAll();
     }
 
     private Volunteer createVolunteer(Volunteer volunteer) {

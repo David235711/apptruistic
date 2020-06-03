@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 public class OpportunityService {
 
     private final OpportunityRepository opportunityRepository;
-    private  final VolunteerRepository volunteerRepository;
+    private final VolunteerRepository volunteerRepository;
     private final int oneWeek;
 
     public OpportunityService(OpportunityRepository opportunityRepository,
@@ -55,15 +55,17 @@ public class OpportunityService {
     public List<Opportunity> findHeroOpportunities() {
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(oneWeek)))
+                .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
                 .collect(toList());
     }
-// ToDo: to update after we figure the security thing out
+
+    // ToDo: to update after we figure the security thing out
     public List<Opportunity> findSuggestedOpportunities(String id) {
         Optional<Volunteer> oVolunteer = volunteerRepository.findById(id);
-        if(oVolunteer.isEmpty()){
+        if (oVolunteer.isEmpty()) {
             return new ArrayList<>();
         }
-        Volunteer volunteer =oVolunteer.get();
+        Volunteer volunteer = oVolunteer.get();
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> volunteer.getCategories().contains(opportunity.getCategory()))
                 .collect(toList());

@@ -1,19 +1,22 @@
 package com.project.apptruistic.logic;
 
 import com.project.apptruistic.persistence.domain.Opportunity;
+import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.OpportunityRepository;
-import org.junit.jupiter.api.Assertions;
+import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
@@ -26,6 +29,9 @@ class OpportunityServiceTest {
 
     @MockBean
     OpportunityRepository repository;
+
+    @MockBean
+    VolunteerRepository volunteerRepository;
 
 
     @Test
@@ -70,7 +76,7 @@ class OpportunityServiceTest {
     @Test
     void markAsDoneFindsEntry() {
         String id = "id";
-        Optional<Opportunity> oExpected = Optional.of( new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+        Optional<Opportunity> oExpected = Optional.of(new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
                 "individual", "creatorName", "Vienna", 1));
         when(repository.findById(id))
                 .thenReturn(oExpected);
@@ -79,6 +85,47 @@ class OpportunityServiceTest {
         assertEquals(oExpected, oResult);
         verify(repository).findById(id);
         verify(repository).save(oExpected.get());
+    }
+
+    @Test
+    void findHeroOpportunities() {
+        List<Opportunity> done = List.of(new Opportunity("test", "test", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category", "individual", "creatorName", "Vienna", 1));
+        when(repository.findAllByDoneFalse())
+                .thenReturn(done);
+
+        opportunityService.findHeroOpportunities();
+
+        verify(repository).findAllByDoneFalse();
+    }
+    @Test
+    void findSuggestedOpportunitiesFindsVolunteer(){
+        String id = "id";
+        Optional<Volunteer> volunteer = Optional.of(new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", Set.of("categories")));
+        List<Opportunity> done = List.of(new Opportunity("test", "test", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category", "individual", "creatorName", "Vienna", 1));
+        when(volunteerRepository.findById(id))
+                .thenReturn(volunteer);
+
+        when(repository.findAllByDoneFalse())
+                .thenReturn(done);
+
+        opportunityService.findSuggestedOpportunities(id);
+
+        verify(volunteerRepository).findById(id);
+        verify(repository).findAllByDoneFalse();
+
+    }
+    @Test
+    void findSuggestedOpportunitiesDoesNotFindVolunteer(){
+        String id = "id";
+        List<Opportunity> done = List.of(new Opportunity("test", "test", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category", "individual", "creatorName", "Vienna", 1));
+        when(volunteerRepository.findById(id))
+                .thenReturn(Optional.empty());
+
+        opportunityService.findSuggestedOpportunities(id);
+
+        verify(volunteerRepository).findById(id);
+        verifyNoInteractions(repository);
+
     }
 }
 
