@@ -1,6 +1,7 @@
 package com.project.apptruistic.logic;
 
 import com.project.apptruistic.persistence.domain.Opportunity;
+import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.OpportunityRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +28,13 @@ class OpportunityServiceTest {
 
     @MockBean
     OpportunityRepository repository;
-
+    String id = "id";
+    Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+            "creator", "creatorName", "Vienna", 5);
 
     @Test
     void saveOpportunityAlreadyExists() {
-        Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "creator", "creatorName", "Vienna", 1);
+
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.of(opportunity));
@@ -45,8 +48,7 @@ class OpportunityServiceTest {
 
     @Test
     void saveOpportunityDoesNotExist() {
-        Opportunity opportunity = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "individual", "creatorName", "Vienna", 1);
+
         assertEquals(0, opportunity.getHashcode());
         when(repository.findOneByHashcode(opportunity.hashCode()))
                 .thenReturn(Optional.empty());
@@ -58,7 +60,7 @@ class OpportunityServiceTest {
 
     @Test
     void markAsDoneDoesNotFindEntry() {
-        String id = "id";
+
         Optional<Opportunity> oExpected = Optional.empty();
         when(repository.findById(id))
                 .thenReturn(oExpected);
@@ -69,8 +71,8 @@ class OpportunityServiceTest {
 
     @Test
     void markAsDoneFindsEntry() {
-        String id = "id";
-        Optional<Opportunity> oExpected = Optional.of( new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+
+        Optional<Opportunity> oExpected = Optional.of(new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
                 "individual", "creatorName", "Vienna", 1));
         when(repository.findById(id))
                 .thenReturn(oExpected);
@@ -79,6 +81,15 @@ class OpportunityServiceTest {
         assertEquals(oExpected, oResult);
         verify(repository).findById(id);
         verify(repository).save(oExpected.get());
+    }
+
+    @Test
+    void calculateNumberOfNeededVolunteers() {
+        Opportunity opportunity1 = new Opportunity("help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
+                "creator", "creatorName", "Vienna", 5, List.of());
+        int numOfNeededVolunteers = opportunityService.calculateNumberOfNeededVolunteers(opportunity1);
+        int expected = opportunity1.getNumberOfParticipants() - opportunity1.getAcceptedVolunteers().size();
+        assertEquals(expected, numOfNeededVolunteers);
     }
 }
 

@@ -45,11 +45,13 @@ public class OpportunityService {
     public List<Opportunity> getAllAvailables() {
         return opportunityRepository.findAllByDoneFalse();
     }
-    public List<Opportunity> findHeroOpportunities(){
+
+    public List<Opportunity> findHeroOpportunities() {
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(oneWeek)))
                 .collect(Collectors.toList());
     }
+
     public Optional<Opportunity> markAsDone(String id) {
         Optional<Opportunity> oOpportunity = opportunityRepository.findById(id);
         if (oOpportunity.isEmpty()) {
@@ -61,5 +63,7 @@ public class OpportunityService {
         return Optional.of(opportunity);
     }
 
-
+    public int calculateNumberOfNeededVolunteers(Opportunity opportunity){
+        return opportunity.getNumberOfParticipants()-opportunity.getAcceptedVolunteers().size();
+    }
 }

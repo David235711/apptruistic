@@ -43,7 +43,7 @@ public class Opportunity {
     private boolean done;
     private String location;
     private int numberOfParticipants;
-    private List<Volunteer> AcceptedVolunteers;
+    private List<Volunteer> acceptedVolunteers;
 
     public Opportunity() {
     }
@@ -63,6 +63,8 @@ public class Opportunity {
         this.done = done;
         this.location = location;
         this.numberOfParticipants = numberOfParticipants;
+        this.acceptedVolunteers = acceptedVolunteers;
+
     }
 
     public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
@@ -77,6 +79,20 @@ public class Opportunity {
         this.creatorName = creatorName;
         this.location = location;
         this.numberOfParticipants = numberOfParticipants;
+    }
+    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
+                       String creator, String creatorName, String location, int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
+        this.name = name;
+        this.description = description;
+        this.occurDate = occurDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.category = category;
+        this.creator = creator;
+        this.creatorName = creatorName;
+        this.location = location;
+        this.numberOfParticipants = numberOfParticipants;
+        this.acceptedVolunteers=acceptedVolunteers;
     }
 
     public String getId() {
@@ -185,11 +201,11 @@ public class Opportunity {
     }
 
     public List<Volunteer> getAcceptedVolunteers() {
-        return AcceptedVolunteers;
+        return acceptedVolunteers;
     }
 
     public void setAcceptedVolunteers(List<Volunteer> acceptedVolunteers) {
-        AcceptedVolunteers = acceptedVolunteers;
+        acceptedVolunteers = acceptedVolunteers;
     }
 
     @Override
