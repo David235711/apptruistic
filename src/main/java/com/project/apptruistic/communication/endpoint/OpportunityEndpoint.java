@@ -2,12 +2,13 @@ package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
-import com.project.apptruistic.persistence.repository.OpportunityRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/opportunities")
 public class OpportunityEndpoint {
@@ -17,7 +18,6 @@ public class OpportunityEndpoint {
         this.opportunityService = opportunityService;
     }
 
-    // @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANISATION"})
     @PostMapping
     Opportunity post(@Valid @RequestBody Opportunity opportunity) {
         return opportunityService.save(opportunity);
@@ -35,6 +35,7 @@ public class OpportunityEndpoint {
     }
 
     @GetMapping("/availables")
+    @PreAuthorize("hasRole('VOLUNTEER')")
     List<Opportunity> get() {
         return opportunityService.getAllAvailables();
     }

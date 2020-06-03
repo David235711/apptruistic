@@ -1,3 +1,4 @@
+/*
 package com.project.apptruistic.security;
 
 
@@ -55,3 +56,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 }
 
+*/

@@ -47,6 +47,8 @@ public class Volunteer {
     public Volunteer() {
     }
 
+
+
     public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, Set<String> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -185,7 +187,7 @@ public class Volunteer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, authorities, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities);
     }
 }
 

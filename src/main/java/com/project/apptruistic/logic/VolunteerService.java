@@ -33,7 +33,7 @@ public class VolunteerService {
         String password = volunteer.getPassword();
         String encoded = passwordEncoder.encode(password);
         volunteer.setPassword(encoded);
-        volunteer.setAuthorities(volunteerRole);
+//        volunteer.setAuthorities(volunteerRole);
         return repository.save(volunteer);
     }
 }
