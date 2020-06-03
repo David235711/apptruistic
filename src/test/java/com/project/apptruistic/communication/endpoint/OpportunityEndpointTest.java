@@ -11,6 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -29,7 +30,7 @@ class OpportunityEndpointTest {
     @Test
     void post() {
         Opportunity opportunity = new Opportunity(1, "help", "description", LocalDate.now(), LocalTime.now(), LocalTime.now(), "category",
-                "individual", "creatorName");
+                "individual", "creatorName", false,"Vienna",1, List.of());
 
         testRestTemplate.postForObject(url, opportunity, Opportunity.class);
 

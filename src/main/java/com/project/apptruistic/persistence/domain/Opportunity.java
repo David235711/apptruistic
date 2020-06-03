@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 
 public class Opportunity {
@@ -42,11 +43,14 @@ public class Opportunity {
     private boolean done;
     private String location;
     private int numberOfParticipants;
+    private List<Volunteer> AcceptedVolunteers;
 
     public Opportunity() {
     }
 
-    public Opportunity(int hashcode, String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
+    public Opportunity(int hashcode, String name, String description, LocalDate occurDate, LocalTime startTime,
+                       LocalTime endTime, String category, String creator, String creatorName, boolean done,
+                       String location, int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
         this.hashcode = hashcode;
         this.name = name;
         this.description = description;
@@ -56,6 +60,9 @@ public class Opportunity {
         this.category = category;
         this.creator = creator;
         this.creatorName = creatorName;
+        this.done = done;
+        this.location = location;
+        this.numberOfParticipants = numberOfParticipants;
     }
 
     public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
@@ -144,6 +151,7 @@ public class Opportunity {
         this.creatorName = creatorName;
     }
 
+
     public boolean isDone() {
         return done;
     }
@@ -174,6 +182,14 @@ public class Opportunity {
 
     public void setNumberOfParticipants(int numberOfParticipants) {
         this.numberOfParticipants = numberOfParticipants;
+    }
+
+    public List<Volunteer> getAcceptedVolunteers() {
+        return AcceptedVolunteers;
+    }
+
+    public void setAcceptedVolunteers(List<Volunteer> acceptedVolunteers) {
+        AcceptedVolunteers = acceptedVolunteers;
     }
 
     @Override

@@ -14,5 +14,7 @@ public interface OpportunityRepository extends MongoRepository<Opportunity, Stri
     Optional<Opportunity> findOneByHashcode(int hashcode);
 
     List<Opportunity> findAllByDoneFalse();
+//  List<Opportunity> findAllByFullFalse();
+
 
 }
