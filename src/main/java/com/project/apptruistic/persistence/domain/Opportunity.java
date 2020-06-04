@@ -42,7 +42,7 @@ public class Opportunity {
     private String creator;
     private String creatorName;
     private boolean done;
-    private String location;
+    private int location;
     private int numberOfParticipants;
     private List<Volunteer> AcceptedVolunteers = new ArrayList<>();
 
@@ -51,7 +51,7 @@ public class Opportunity {
 
     public Opportunity(int hashcode, String name, String description, LocalDate occurDate, LocalTime startTime,
                        LocalTime endTime, String category, String creator, String creatorName, boolean done,
-                       String location, int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
+                       int location, int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
         this.hashcode = hashcode;
         this.name = name;
         this.description = description;
@@ -67,7 +67,7 @@ public class Opportunity {
     }
 
     public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
-                       String creator, String creatorName, String location, int numberOfParticipants) {
+                       String creator, String creatorName, int location, int numberOfParticipants) {
         this.name = name;
         this.description = description;
         this.occurDate = occurDate;
@@ -161,11 +161,11 @@ public class Opportunity {
         this.done = done;
     }
 
-    public String getLocation() {
+    public int getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 

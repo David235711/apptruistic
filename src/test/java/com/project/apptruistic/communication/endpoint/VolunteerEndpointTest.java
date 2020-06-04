@@ -29,29 +29,29 @@ class VolunteerEndpointTest {
     String url = "/volunteers";
 
 
-    @ParameterizedTest
-    @CsvSource({
-            "'', lastName, password, email@com.com",
-            "firstName, '', password, email@com.com",
-            "firstName, lastName, wrong, email@com.com",
-            "firstName, lastName, password, ''",
-            "firstName, lastName, password, notEmail",
-
-    })
-    void postIsInvalid(String firstName, String lastName, String password, String email) {
+//    @ParameterizedTest
+//    @CsvSource({
+//            "'', lastName, password, email@com.com",
+//            "firstName, '', password, email@com.com",
+//            "firstName, lastName, wrong, email@com.com",
+//            "firstName, lastName, password, ''",
+//            "firstName, lastName, password, notEmail",
+//
+//    })
+//    void postIsInvalid(String firstName, String lastName, String password, String email) {
 //        Volunteer volunteer = new Volunteer(firstName, lastName, LocalDate.now(), "gender", password, email, Set.of("ROLE_VOLUNTEER"), Set.of("category"));
 //
 //        testRestTemplate.postForObject(url, volunteer, Volunteer.class);
 //
 //        verify(service, never()).save(volunteer);
-    }
+//    }
 
-    @Test
-    void postIsValid() {
+//    @Test
+//    void postIsValid() {
 //        Volunteer volunteer = new Volunteer("firstName", "lastName", LocalDate.now(), "gender", "password", "email@com.com", Set.of("ROLE_VOLUNTEER"), Set.of("category"));
 //
 //        testRestTemplate.postForObject(url, volunteer, Volunteer.class);
 //
 //        verify(service).save(volunteer);
-    }
+//    }
 }
