@@ -24,16 +24,16 @@ public class Opportunity {
     @NotEmpty(message = "Please provide a description")
     private String description;
 
-    @NotNull(message = "Please provide a occurrence date (yyyy.MM.dd)")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+    @NotNull(message = "Please provide a occurrence date (yyyy-MM-dd)")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate occurDate;
 
-    @NotNull(message = "Please provide a start time (HH:mm:ss)")
-    @JsonFormat(pattern = "HH:mm:ss")
+    @NotNull(message = "Please provide a start time (HH:mm)")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
-    @NotNull(message = "Please provide a end time (HH:mm:ss)")
-    @JsonFormat(pattern = "HH:mm:ss")
+    @NotNull(message = "Please provide a end time (HH:mm)")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
 
     @NotEmpty(message = "Please provide a category")
