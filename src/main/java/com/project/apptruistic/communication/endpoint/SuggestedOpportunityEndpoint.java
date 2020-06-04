@@ -2,13 +2,11 @@ package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/suggested")
 public class SuggestedOpportunityEndpoint {
@@ -20,6 +18,7 @@ public class SuggestedOpportunityEndpoint {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
     List<Opportunity> getSuggested(@PathVariable String id) {
         return opportunityService.findSuggestedOpportunities(id);
     }

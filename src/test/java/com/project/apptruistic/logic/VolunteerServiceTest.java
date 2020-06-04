@@ -29,8 +29,8 @@ class VolunteerServiceTest {
     @Value("${apptruistic.volunteerRole}")
     Set<String> volunteerRole;
 
-    @Test
-    void saveAlreadyExists() {
+//    @Test
+//    void saveAlreadyExists() {
 //        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", volunteerRole, Set.of("categories"));
 //        when(repository.findOneByEmail(volunteer.getEmail()))
 //                .thenReturn(Optional.of(volunteer));
@@ -40,10 +40,10 @@ class VolunteerServiceTest {
 //        verify(repository).findOneByEmail(volunteer.getEmail());
 //        verifyNoMoreInteractions(repository);
 //        verifyNoInteractions(passwordEncoder);
-    }
+//    }
 
-    @Test
-    void saveVolunteerDoesNotExist() {
+//    @Test
+//    void saveVolunteerDoesNotExist() {
 //        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", Set.of("categories"));
 //        when(repository.findOneByEmail(volunteer.getEmail()))
 //                .thenReturn(Optional.empty());
@@ -56,5 +56,5 @@ class VolunteerServiceTest {
 //        verify(passwordEncoder).encode(volunteer.getPassword());
 //        Volunteer expected = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", volunteerRole, Set.of("categories"));
 //        verify(repository).save(expected);
-    }
+//    }
 }
