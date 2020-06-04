@@ -35,6 +35,7 @@ public class VolunteerService {
     }
 
     private Volunteer createVolunteer(Volunteer volunteer) {
+        System.out.println("oopsi, createVolunteer in VolunteerService got called!");
         String password = volunteer.getPassword();
         String encoded = passwordEncoder.encode(password);
         volunteer.setPassword(encoded);

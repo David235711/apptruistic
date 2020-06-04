@@ -55,6 +55,7 @@ public class OpportunityService {
     public List<Opportunity> findHeroOpportunities() {
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(oneWeek)))
+                .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
                 .collect(toList());
     }
 // ToDo: to update after we figure the security thing out
