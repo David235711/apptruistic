@@ -7,6 +7,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Opportunity {
@@ -22,16 +24,16 @@ public class Opportunity {
     @NotEmpty(message = "Please provide a description")
     private String description;
 
-    @NotNull(message = "Please provide a occurrence date (yyyy.MM.dd)")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+    @NotNull(message = "Please provide a occurrence date (yyyy-MM-dd)")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate occurDate;
 
-    @NotNull(message = "Please provide a start time (HH:mm:ss)")
-    @JsonFormat(pattern = "HH:mm:ss")
+    @NotNull(message = "Please provide a start time (HH:mm)")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
-    @NotNull(message = "Please provide a end time (HH:mm:ss)")
-    @JsonFormat(pattern = "HH:mm:ss")
+    @NotNull(message = "Please provide a end time (HH:mm)")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
 
     @NotEmpty(message = "Please provide a category")
@@ -39,11 +41,17 @@ public class Opportunity {
 
     private String creator;
     private String creatorName;
+    private boolean done;
+    private int location;
+    private int numberOfParticipants;
+    private List<Volunteer> AcceptedVolunteers = new ArrayList<>();
 
     public Opportunity() {
     }
 
-    public Opportunity(int hashcode, String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
+    public Opportunity(int hashcode, String name, String description, LocalDate occurDate, LocalTime startTime,
+                       LocalTime endTime, String category, String creator, String creatorName, boolean done,
+                       int location, int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
         this.hashcode = hashcode;
         this.name = name;
         this.description = description;
@@ -53,9 +61,13 @@ public class Opportunity {
         this.category = category;
         this.creator = creator;
         this.creatorName = creatorName;
+        this.done = done;
+        this.location = location;
+        this.numberOfParticipants = numberOfParticipants;
     }
 
-    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category, String creator, String creatorName) {
+    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
+                       String creator, String creatorName, int location, int numberOfParticipants) {
         this.name = name;
         this.description = description;
         this.occurDate = occurDate;
@@ -64,6 +76,8 @@ public class Opportunity {
         this.category = category;
         this.creator = creator;
         this.creatorName = creatorName;
+        this.location = location;
+        this.numberOfParticipants = numberOfParticipants;
     }
 
     public String getId() {
@@ -138,12 +152,45 @@ public class Opportunity {
         this.creatorName = creatorName;
     }
 
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public int getLocation() {
+        return location;
+    }
+
+    public void setLocation(int location) {
+        this.location = location;
+    }
+
     public int getHashcode() {
         return hashcode;
     }
 
     public void setHashcode(int hashcode) {
         this.hashcode = hashcode;
+    }
+
+    public int getNumberOfParticipants() {
+        return numberOfParticipants;
+    }
+
+    public void setNumberOfParticipants(int numberOfParticipants) {
+        this.numberOfParticipants = numberOfParticipants;
+    }
+
+    public List<Volunteer> getAcceptedVolunteers() {
+        return AcceptedVolunteers;
+    }
+
+    public void setAcceptedVolunteers(List<Volunteer> acceptedVolunteers) {
+        AcceptedVolunteers = acceptedVolunteers;
     }
 
     @Override

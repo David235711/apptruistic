@@ -2,15 +2,12 @@ package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.logic.VolunteerService;
 import com.project.apptruistic.persistence.domain.Volunteer;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/volunteers")
+@RequestMapping("/volunteerinformation")
 public class VolunteerEndpoint {
 
     private final VolunteerService volunteerService;
@@ -19,9 +16,11 @@ public class VolunteerEndpoint {
         this.volunteerService = volunteerService;
     }
 
-    @PostMapping
-    Volunteer post(@Valid @RequestBody Volunteer volunteer) {
-        return volunteerService.save(volunteer);
+    @GetMapping("/{email}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    Volunteer getVolunteerByEmail(@PathVariable String email) {
+        System.out.println("volunteerinformation request received");
+        return volunteerService.getVolunteerByEmail(email).orElse(null);
     }
 
 }

@@ -4,6 +4,7 @@ import com.project.apptruistic.persistence.domain.Opportunity;
 import com.project.apptruistic.persistence.domain.Volunteer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface OpportunityRepository extends MongoRepository<Opportunity, String> {
@@ -11,5 +12,9 @@ public interface OpportunityRepository extends MongoRepository<Opportunity, Stri
     Optional<Opportunity> findOneByName(String name);
 
     Optional<Opportunity> findOneByHashcode(int hashcode);
+
+    List<Opportunity> findAllByDoneFalse();
+//  List<Opportunity> findAllByFullFalse();
+
 
 }

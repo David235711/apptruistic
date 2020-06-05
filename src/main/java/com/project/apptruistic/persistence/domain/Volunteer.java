@@ -1,16 +1,19 @@
 package com.project.apptruistic.persistence.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
+@Document(collection = "volunteers")
 public class Volunteer {
-
+    @Id
     private String id;
 
     @NotEmpty(message = "Please provide a first name")
@@ -19,8 +22,10 @@ public class Volunteer {
     @NotEmpty(message = "Please provide a last name")
     private String lastName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
+    @NotEmpty(message = "please provide a gender")
     private String gender;
 
     @Length(min = 8, message = "Please provide a password with at least 8 characters")
@@ -30,28 +35,39 @@ public class Volunteer {
     @Email(message = "Please provide a valid email address")
     private String email;
 
-    private Set<String> authorities = new HashSet<>();
+    @DBRef
+    private Set<Role> roles = new HashSet<>();
+
+    private Set<String> categories = new HashSet<>();
+
+    private List<Opportunity> appliedOpportunities = new ArrayList<>();
+    private List<Opportunity> declinedOpportunities = new ArrayList<>();
+    private List<Opportunity> acceptedOpportunities = new ArrayList<>();
 
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<String> authorities) {
+
+
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, Set<String> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
         this.email = email;
-        this.authorities = authorities;
+        this.roles = roles;
+        this.categories = categories;
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<String> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
         this.email = email;
+        this.categories = categories;
     }
 
     public LocalDate getDateOfBirth() {
@@ -62,12 +78,12 @@ public class Volunteer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Set<String> getAuthorities() {
-        return authorities;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setAuthorities(Set<String> authorities) {
-        this.authorities = authorities;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getId() {
@@ -118,6 +134,38 @@ public class Volunteer {
         this.gender = gender;
     }
 
+    public Set<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<String> categories) {
+        this.categories = categories;
+    }
+
+    public List<Opportunity> getAppliedOpportunities() {
+        return appliedOpportunities;
+    }
+
+    public void setAppliedOpportunities(List<Opportunity> appliedOpportunities) {
+        this.appliedOpportunities = appliedOpportunities;
+    }
+
+    public List<Opportunity> getAcceptedOpportunities() {
+        return acceptedOpportunities;
+    }
+
+    public void setAcceptedOpportunities(List<Opportunity> acceptedOpportunities) {
+        this.acceptedOpportunities = acceptedOpportunities;
+    }
+
+    public List<Opportunity> getDeclinedOpportunities() {
+        return declinedOpportunities;
+    }
+
+    public void setDeclinedOpportunities(List<Opportunity> declinedOpportunities) {
+        this.declinedOpportunities = declinedOpportunities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -130,12 +178,16 @@ public class Volunteer {
                 Objects.equals(gender, volunteer.gender) &&
                 Objects.equals(password, volunteer.password) &&
                 Objects.equals(email, volunteer.email) &&
-                Objects.equals(authorities, volunteer.authorities);
+                Objects.equals(roles, volunteer.roles) &&
+                Objects.equals(categories, volunteer.categories) &&
+                Objects.equals(appliedOpportunities, volunteer.appliedOpportunities) &&
+                Objects.equals(declinedOpportunities, volunteer.declinedOpportunities) &&
+                Objects.equals(acceptedOpportunities, volunteer.acceptedOpportunities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, authorities);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities);
     }
 }
 

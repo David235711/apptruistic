@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -16,11 +17,16 @@ public class VolunteerService {
     private final PasswordEncoder passwordEncoder;
     private final Set<String> volunteerRole;
 
+
     public VolunteerService(VolunteerRepository repository, PasswordEncoder passwordEncoder,
-                            @Value("${apptruistic.volunteerRole}")Set<String> volunteerRole) {
+                            @Value("${apptruistic.volunteerRole}") Set<String> volunteerRole) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.volunteerRole = volunteerRole;
+    }
+
+    public Optional<Volunteer> getVolunteerByEmail(String email) {
+        return repository.findOneByEmail(email);
     }
 
     public Volunteer save(Volunteer volunteer) {
@@ -29,10 +35,11 @@ public class VolunteerService {
     }
 
     private Volunteer createVolunteer(Volunteer volunteer) {
+        System.out.println("oopsi, createVolunteer in VolunteerService got called!");
         String password = volunteer.getPassword();
         String encoded = passwordEncoder.encode(password);
         volunteer.setPassword(encoded);
-        volunteer.setAuthorities(volunteerRole);
+//        volunteer.setAuthorities(volunteerRole);
         return repository.save(volunteer);
     }
 }
