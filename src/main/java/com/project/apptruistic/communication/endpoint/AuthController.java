@@ -117,6 +117,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+        user.getCategories().add("social"); //ToDo: remove default category after frontend implementatiion
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Volunteer registered successfully!"));
