@@ -1,7 +1,6 @@
 package com.project.apptruistic.security.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
