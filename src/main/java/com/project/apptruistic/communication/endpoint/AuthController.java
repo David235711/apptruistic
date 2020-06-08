@@ -1,16 +1,15 @@
 package com.project.apptruistic.communication.endpoint;
 
-import com.project.apptruistic.persistence.domain.ERole;
-import com.project.apptruistic.persistence.domain.Individual;
-import com.project.apptruistic.persistence.domain.Role;
-import com.project.apptruistic.persistence.domain.Volunteer;
+import com.project.apptruistic.persistence.domain.*;
 import com.project.apptruistic.persistence.repository.IndividualRepository;
+import com.project.apptruistic.persistence.repository.OrganizationRepository;
 import com.project.apptruistic.persistence.repository.RoleRepository;
 import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import com.project.apptruistic.security.JwtUtils;
 import com.project.apptruistic.security.UserDetailsImpl;
 import com.project.apptruistic.security.payload.request.IndividualSignupRequest;
 import com.project.apptruistic.security.payload.request.LoginRequest;
+import com.project.apptruistic.security.payload.request.OrganizationSignupRequest;
 import com.project.apptruistic.security.payload.request.VolunteerSignupRequest;
 import com.project.apptruistic.security.payload.response.JwtResponse;
 import com.project.apptruistic.security.payload.response.MessageResponse;
@@ -44,6 +43,9 @@ public class AuthController {
     IndividualRepository individualRepository;
 
     @Autowired
+    OrganizationRepository organizationRepository;
+
+    @Autowired
     RoleRepository roleRepository;
 
     @Autowired
@@ -72,7 +74,7 @@ public class AuthController {
                 roles));
     }
 
-    @PostMapping("/volunteers")
+    @PostMapping("/register/volunteer")
     public ResponseEntity<?> registerUser(@Valid @RequestBody VolunteerSignupRequest signUpRequest) {
         System.out.println("volunteer request received");
         if (volunteerRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -129,7 +131,7 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("Volunteer registered successfully!"));
     }
 
-    @PostMapping("/individuals")
+    @PostMapping("/register/individual")
     public ResponseEntity<?> registerIndividual(@Valid @RequestBody IndividualSignupRequest signUpRequest) {
         System.out.println("individual request received");
         if (individualRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -187,5 +189,64 @@ public class AuthController {
         individualRepository.save(individual);
 
         return ResponseEntity.ok(new MessageResponse("Individual registered successfully!"));
+    }
+
+    @PostMapping("/register/organization")
+    public ResponseEntity<?> registerOrganization(@Valid @RequestBody OrganizationSignupRequest signUpRequest) {
+        System.out.println("organization request received");
+        if (organizationRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already taken!"));
+        }
+
+        // Create new organization's account
+        Organization organization = new Organization(
+                signUpRequest.getOrganizationName(),
+                signUpRequest.getContactFirstName(),
+                signUpRequest.getContactLastName(),
+                signUpRequest.getEmail(),
+                signUpRequest.getPhoneNumber(),
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getStreet(),
+                signUpRequest.getHouseNumber(),
+                signUpRequest.getCity(),
+                signUpRequest.getZipCode()
+        );
+
+        Set<String> strRoles = signUpRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_ORGANIZATION)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "individual":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_INDIVIDUAL)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+                    case "organization":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_ORGANIZATION)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_VOLUNTEER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+
+        organization.setRoles(roles);
+        organizationRepository.save(organization);
+
+        return ResponseEntity.ok(new MessageResponse("Organization registered successfully!"));
     }
 }

@@ -5,11 +5,13 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
+@Document(collection = "organizations")
 public class Organization {
 
     @Id
@@ -53,7 +55,20 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(@NotBlank(message = "Please provide a name") String organizationName, @NotBlank(message = "Please provide a first name") String contactFirstName, @NotEmpty(message = "Please provide a last name") String contactLastName, @NotBlank(message = "Please provide an email address") @Email(message = "Please provide a valid email address") String email, String phoneNumber, @Length(min = 8, message = "Please provide a password with at least 8 characters") String password, @NotBlank(message = "please include a street") String street, @NotBlank(message = "please include a house number") String houseNumber, @NotBlank(message = "please include a city") String city, @NotNull(message = "please include a zip code") int zipCode, Set<Role> roles, List<Opportunity> createdOpportunity) {
+    public Organization(
+            String organizationName,
+            String contactFirstName,
+            String contactLastName,
+            String email,
+            String phoneNumber,
+            String password,
+            String street,
+            String houseNumber,
+            String city,
+            int zipCode,
+            Set<Role> roles,
+            List<Opportunity> createdOpportunity
+    ) {
         this.organizationName = organizationName;
         this.contactFirstName = contactFirstName;
         this.contactLastName = contactLastName;
@@ -66,6 +81,30 @@ public class Organization {
         this.zipCode = zipCode;
         this.roles = roles;
         this.createdOpportunity = createdOpportunity;
+    }
+
+    public Organization(
+            String organizationName,
+            String contactFirstName,
+            String contactLastName,
+            String email,
+            String phoneNumber,
+            String password,
+            String street,
+            String houseNumber,
+            String city,
+            int zipCode
+    ) {
+        this.organizationName = organizationName;
+        this.contactFirstName = contactFirstName;
+        this.contactLastName = contactLastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.city = city;
+        this.zipCode = zipCode;
     }
 
     public String getId() {

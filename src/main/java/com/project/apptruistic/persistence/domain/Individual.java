@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.*;
 
-@Document(collation = "individuals")
+@Document(collection = "individuals")
 public class Individual {
 
     @Id
