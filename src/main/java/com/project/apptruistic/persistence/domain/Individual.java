@@ -59,7 +59,20 @@ public class Individual {
     public Individual() {
     }
 
-    public Individual(@NotBlank(message = "Please provide a first name") String firstName, @NotEmpty(message = "Please provide a first name") String lastName, @NotBlank(message = "Please provide an email address") @Email(message = "Please provide a valid email address") String email, String phoneNumber, LocalDate birthday, String gender, @Length(min = 8, message = "Please provide a password with at least 8 characters") String password, @NotBlank(message = "please include a street") String street, @NotBlank(message = "please include a house number") String houseNumber, @NotBlank(message = "please include a city") String city, @NotBlank(message = "please include a zip code") int zipCode, Set<Role> roles, List<Opportunity> createdOpportunity) {
+    public Individual(
+            String firstName,
+            String lastName,
+            String email,
+            String phoneNumber,
+            LocalDate birthday,
+            String gender,
+            String password,
+            String street,
+            String houseNumber,
+            String city,
+            int zipCode,
+            Set<Role> roles,
+            List<Opportunity> createdOpportunity) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -73,6 +86,32 @@ public class Individual {
         this.zipCode = zipCode;
         this.roles = roles;
         this.createdOpportunity = createdOpportunity;
+    }
+
+    public Individual(
+            String firstName,
+            String lastName,
+            String email,
+            String phoneNumber,
+            LocalDate birthday,
+            String gender,
+            String password,
+            String street,
+            String houseNumber,
+            String city,
+            int zipCode
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.password = password;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.city = city;
+        this.zipCode = zipCode;
     }
 
     public String getId() {

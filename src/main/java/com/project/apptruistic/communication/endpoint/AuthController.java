@@ -1,12 +1,15 @@
 package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.persistence.domain.ERole;
+import com.project.apptruistic.persistence.domain.Individual;
 import com.project.apptruistic.persistence.domain.Role;
 import com.project.apptruistic.persistence.domain.Volunteer;
+import com.project.apptruistic.persistence.repository.IndividualRepository;
 import com.project.apptruistic.persistence.repository.RoleRepository;
 import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import com.project.apptruistic.security.JwtUtils;
 import com.project.apptruistic.security.UserDetailsImpl;
+import com.project.apptruistic.security.payload.request.IndividualSignupRequest;
 import com.project.apptruistic.security.payload.request.LoginRequest;
 import com.project.apptruistic.security.payload.request.VolunteerSignupRequest;
 import com.project.apptruistic.security.payload.response.JwtResponse;
@@ -35,7 +38,10 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    VolunteerRepository userRepository;
+    VolunteerRepository volunteerRepository;
+
+    @Autowired
+    IndividualRepository individualRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -69,7 +75,7 @@ public class AuthController {
     @PostMapping("/volunteers")
     public ResponseEntity<?> registerUser(@Valid @RequestBody VolunteerSignupRequest signUpRequest) {
         System.out.println("volunteer request received");
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (volunteerRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
@@ -118,8 +124,68 @@ public class AuthController {
 
         user.setRoles(roles);
         user.getCategories().add("social"); //ToDo: remove default category after frontend implementatiion
-        userRepository.save(user);
+        volunteerRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Volunteer registered successfully!"));
+    }
+
+    @PostMapping("/individuals")
+    public ResponseEntity<?> registerIndividual(@Valid @RequestBody IndividualSignupRequest signUpRequest) {
+        System.out.println("individual request received");
+        if (individualRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already taken!"));
+        }
+
+        // Create new individual's account
+        Individual individual = new Individual(
+                signUpRequest.getFirstName(),
+                signUpRequest.getLastName(),
+                signUpRequest.getEmail(),
+                signUpRequest.getPhoneNumber(),
+                signUpRequest.getDateOfBirth(),
+                signUpRequest.getGender(),
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getStreet(),
+                signUpRequest.getHouseNumber(),
+                signUpRequest.getCity(),
+                signUpRequest.getZipCode()
+        );
+
+        Set<String> strRoles = signUpRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_INDIVIDUAL)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "individual":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_INDIVIDUAL)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+                    case "organization":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_ORGANIZATION)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_VOLUNTEER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+
+        individual.setRoles(roles);
+        individualRepository.save(individual);
+
+        return ResponseEntity.ok(new MessageResponse("Individual registered successfully!"));
     }
 }
