@@ -24,8 +24,8 @@ public class Opportunity {
     @NotEmpty(message = "Please provide a description")
     private String description;
 
-    @NotNull(message = "Please provide a occurrence date (yyyy-MM-dd)")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @NotNull(message = "Please provide a occurrence date (dd.MM.yyyy)")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private LocalDate occurDate;
 
     @NotNull(message = "Please provide a start time (HH:mm)")

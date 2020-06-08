@@ -23,7 +23,7 @@ public class Volunteer {
     @NotEmpty(message = "Please provide a last name")
     private String lastName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private LocalDate dateOfBirth;
 
     @NotEmpty(message = "please provide a gender")
