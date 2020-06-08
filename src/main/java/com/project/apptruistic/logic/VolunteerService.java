@@ -15,14 +15,13 @@ public class VolunteerService {
 
     private final VolunteerRepository repository;
     private final PasswordEncoder passwordEncoder;
-    private final Set<String> volunteerRole;
+
 
 
     public VolunteerService(VolunteerRepository repository, PasswordEncoder passwordEncoder,
                             @Value("${apptruistic.volunteerRole}") Set<String> volunteerRole) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
-        this.volunteerRole = volunteerRole;
     }
 
     public Optional<Volunteer> getVolunteerByEmail(String email) {
@@ -39,7 +38,6 @@ public class VolunteerService {
         String password = volunteer.getPassword();
         String encoded = passwordEncoder.encode(password);
         volunteer.setPassword(encoded);
-//        volunteer.setAuthorities(volunteerRole);
         return repository.save(volunteer);
     }
 }

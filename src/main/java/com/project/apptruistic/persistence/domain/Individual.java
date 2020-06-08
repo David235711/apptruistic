@@ -22,8 +22,7 @@ public class Individual {
     @NotBlank(message = "Please provide a first name")
     private String firstName;
 
-    @NotEmpty(message = "Please provide a first name")
-
+    @NotEmpty(message = "Please provide a last name")
     private String lastName;
 
     @NotBlank(message = "Please provide an email address")
