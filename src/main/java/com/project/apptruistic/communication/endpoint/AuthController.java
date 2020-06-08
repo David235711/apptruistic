@@ -8,7 +8,7 @@ import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import com.project.apptruistic.security.JwtUtils;
 import com.project.apptruistic.security.UserDetailsImpl;
 import com.project.apptruistic.security.payload.request.LoginRequest;
-import com.project.apptruistic.security.payload.request.SignupRequest;
+import com.project.apptruistic.security.payload.request.VolunteerSignupRequest;
 import com.project.apptruistic.security.payload.response.JwtResponse;
 import com.project.apptruistic.security.payload.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class AuthController {
     }
 
     @PostMapping("/volunteers")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody VolunteerSignupRequest signUpRequest) {
         System.out.println("volunteer request received");
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity

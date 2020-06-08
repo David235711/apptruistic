@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SignupRequest {
+public class VolunteerSignupRequest {
     @NotBlank
     @Size(max = 50)
     @Email
