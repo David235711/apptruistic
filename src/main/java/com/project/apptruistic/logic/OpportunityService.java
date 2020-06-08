@@ -58,7 +58,7 @@ public class OpportunityService {
                 .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
                 .collect(toList());
     }
-// ToDo: to update after we figure the security thing out
+
     public List<Opportunity> findSuggestedOpportunities(String id) {
         Optional<Volunteer> oVolunteer = volunteerRepository.findById(id);
         if(oVolunteer.isEmpty()){
