@@ -1,16 +1,10 @@
 package com.project.apptruistic.runner;
 
-import com.project.apptruistic.logic.OpportunityService;
-import com.project.apptruistic.logic.VolunteerService;
-import com.project.apptruistic.persistence.domain.Opportunity;
-import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.OpportunityRepository;
 import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Optional;
 
 @Configuration
 public class ApptruisticRunner {

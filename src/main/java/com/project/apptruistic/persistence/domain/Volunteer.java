@@ -13,6 +13,7 @@ import java.util.*;
 
 @Document(collection = "volunteers")
 public class Volunteer {
+
     @Id
     private String id;
 
@@ -46,8 +47,6 @@ public class Volunteer {
 
     public Volunteer() {
     }
-
-
 
     public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, Set<String> categories) {
         this.firstName = firstName;
