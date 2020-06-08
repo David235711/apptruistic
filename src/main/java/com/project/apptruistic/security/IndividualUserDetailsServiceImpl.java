@@ -1,6 +1,7 @@
 package com.project.apptruistic.security;
 
 import com.project.apptruistic.persistence.domain.Individual;
+
 import com.project.apptruistic.persistence.repository.IndividualRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class IndividualUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    Individual individualRepository;
+    IndividualRepository individualRepository;
 
     @Override
     @Transactional
