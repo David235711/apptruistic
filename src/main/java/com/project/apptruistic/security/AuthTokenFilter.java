@@ -1,5 +1,8 @@
 package com.project.apptruistic.security;
 
+import com.project.apptruistic.persistence.repository.IndividualRepository;
+import com.project.apptruistic.persistence.repository.OrganizationRepository;
+import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,22 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
 
     @Autowired
-    private VolunteerUserDetailsServiceImpl userDetailsService;
+    private VolunteerRepository volunteerRepository;
+
+    @Autowired
+    private IndividualRepository individualRepository;
+
+    @Autowired
+    private OrganizationRepository organizationRepository;
+
+    @Autowired
+    private VolunteerUserDetailsServiceImpl volunteerUserDetailsService;
+
+    @Autowired
+    private IndividualUserDetailsServiceImpl individualUserDetailsService;
+
+    @Autowired
+    private OrganizationUserDetailsServiceImpl organizationUserDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
@@ -33,7 +51,20 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                String userGroup = userBelongsTo(username);
+                UserDetails userDetails = null;
+                switch (userGroup) {
+                    case "individual":
+                        userDetails = individualUserDetailsService.loadUserByUsername(username);
+                        break;
+                    case "organization":
+                        userDetails = organizationUserDetailsService.loadUserByUsername(username);
+                        break;
+                    default:
+                        userDetails = volunteerUserDetailsService.loadUserByUsername(username);
+                        break;
+                }
+
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
                         userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -45,6 +76,19 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String userBelongsTo(String email) {
+        if (volunteerRepository.existsByEmail(email)) {
+            return "volunteer";
+        }
+        if (individualRepository.existsByEmail(email)) {
+            return "individual";
+        }
+        if (organizationRepository.existsByEmail(email)) {
+            return "organization";
+        }
+        return "notfound";
     }
 
     private String parseJwt(HttpServletRequest request) {
