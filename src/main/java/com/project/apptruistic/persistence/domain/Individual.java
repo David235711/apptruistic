@@ -32,7 +32,7 @@ public class Individual {
     private String phoneNumber;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    private LocalDate birthday;
+    private LocalDate dateOfBirth;
 
     private String gender;
 
@@ -64,7 +64,7 @@ public class Individual {
             String lastName,
             String email,
             String phoneNumber,
-            LocalDate birthday,
+            LocalDate dateOfBirth,
             String gender,
             String password,
             String street,
@@ -77,7 +77,7 @@ public class Individual {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthday = birthday;
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
         this.street = street;
@@ -93,7 +93,7 @@ public class Individual {
             String lastName,
             String email,
             String phoneNumber,
-            LocalDate birthday,
+            LocalDate dateOfBirth,
             String gender,
             String password,
             String street,
@@ -105,7 +105,7 @@ public class Individual {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthday = birthday;
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
         this.street = street;
@@ -154,13 +154,7 @@ public class Individual {
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
-    }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
 
     public String getGender() {
         return gender;
@@ -226,6 +220,14 @@ public class Individual {
         this.createdOpportunity = createdOpportunity;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -237,7 +239,7 @@ public class Individual {
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(phoneNumber, that.phoneNumber) &&
-                Objects.equals(birthday, that.birthday) &&
+                Objects.equals(dateOfBirth, that.dateOfBirth) &&
                 Objects.equals(gender, that.gender) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(street, that.street) &&
@@ -249,6 +251,6 @@ public class Individual {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, phoneNumber, birthday, gender, password, street, houseNumber, city, zipCode, roles, createdOpportunity);
+        return Objects.hash(id, firstName, lastName, email, phoneNumber, dateOfBirth, gender, password, street, houseNumber, city, zipCode, roles, createdOpportunity);
     }
 }

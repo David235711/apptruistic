@@ -33,13 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private OrganizationRepository organizationRepository;
 
     @Autowired
-    private VolunteerUserDetailsServiceImpl volunteerUserDetailsService;
-
-    @Autowired
-    private IndividualUserDetailsServiceImpl individualUserDetailsService;
-
-    @Autowired
-    private OrganizationUserDetailsServiceImpl organizationUserDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
@@ -52,19 +46,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
                 String userGroup = userBelongsTo(username);
-                UserDetails userDetails = null;
-                switch (userGroup) {
-                    case "individual":
-                        userDetails = individualUserDetailsService.loadUserByUsername(username);
-                        break;
-                    case "organization":
-                        userDetails = organizationUserDetailsService.loadUserByUsername(username);
-                        break;
-                    default:
-                        userDetails = volunteerUserDetailsService.loadUserByUsername(username);
-                        break;
-                }
-
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
                         userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
