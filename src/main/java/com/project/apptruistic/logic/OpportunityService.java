@@ -47,7 +47,6 @@ public class OpportunityService {
         return opportunityRepository.findAll();
     }
 
-
     public List<Opportunity> getAllAvailables() {
         return opportunityRepository.findAllByDoneFalse();
     }
