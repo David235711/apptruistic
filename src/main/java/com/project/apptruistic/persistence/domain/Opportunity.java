@@ -1,10 +1,12 @@
 package com.project.apptruistic.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -21,8 +23,20 @@ public class Opportunity {
     @NotEmpty(message = "Please provide a name")
     private String name;
 
-    @NotEmpty(message = "Please provide a description")
-    private String description;
+    @NotEmpty(message = "Please provide a category")
+    private String category;
+
+    private String creatorType;
+
+    private String creatorName;
+
+    @NotEmpty(message = "Please provide a short description (max 200 characters)")
+    @Size(max = 280)
+    private String shortDescription;
+
+    //@NotEmpty(message = "Please provide a short description (max 2000 characters)")
+    @Size(max = 2000)
+    private String detailedDescription;
 
     @NotNull(message = "Please provide a occurrence date (dd.MM.yyyy)")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
@@ -36,48 +50,95 @@ public class Opportunity {
     @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
 
-    @NotEmpty(message = "Please provide a category")
-    private String category;
-
-    private String creator;
-    private String creatorName;
-    private boolean done;
-    private int location;
+    @NotNull(message = "please provide a number of participants")
     private int numberOfParticipants;
+
+    @NotBlank(message = "please include a street")
+    private String street;
+
+    @NotBlank(message = "please include a house number")
+    private String houseNumber;
+
+    @NotBlank(message = "please include a city")
+    private String city;
+
+    @NotNull(message = "please include a zip code")
+    private int zipCode;
+
+    private boolean done;
+
     private List<Volunteer> AcceptedVolunteers = new ArrayList<>();
 
     public Opportunity() {
     }
 
-    public Opportunity(int hashcode, String name, String description, LocalDate occurDate, LocalTime startTime,
-                       LocalTime endTime, String category, String creator, String creatorName, boolean done,
-                       int location, int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
+    public Opportunity(int hashcode, String name, String shortDescription, LocalDate occurDate, LocalTime startTime,
+                       LocalTime endTime, String category, String creatorType, String creatorName, boolean done,
+                       int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
         this.hashcode = hashcode;
         this.name = name;
-        this.description = description;
+        this.shortDescription = shortDescription;
         this.occurDate = occurDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.category = category;
-        this.creator = creator;
+        this.creatorType = creatorType;
         this.creatorName = creatorName;
         this.done = done;
-        this.location = location;
         this.numberOfParticipants = numberOfParticipants;
     }
 
-    public Opportunity(String name, String description, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
-                       String creator, String creatorName, int location, int numberOfParticipants) {
+    public Opportunity(String name, String shortDescription, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
+                       String creatorType, String creatorName, int numberOfParticipants) {
         this.name = name;
-        this.description = description;
+        this.shortDescription = shortDescription;
         this.occurDate = occurDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.category = category;
-        this.creator = creator;
+        this.creatorType = creatorType;
         this.creatorName = creatorName;
-        this.location = location;
         this.numberOfParticipants = numberOfParticipants;
+    }
+
+    public String getDetailedDescription() {
+        return detailedDescription;
+    }
+
+    public void setDetailedDescription(String detailedDescription) {
+        this.detailedDescription = detailedDescription;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getId() {
@@ -96,12 +157,12 @@ public class Opportunity {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getShortDescription() {
+        return shortDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public LocalDate getOccurDate() {
@@ -136,12 +197,12 @@ public class Opportunity {
         this.category = category;
     }
 
-    public String getCreator() {
-        return creator;
+    public String getCreatorType() {
+        return creatorType;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setCreatorType(String creatorType) {
+        this.creatorType = creatorType;
     }
 
     public String getCreatorName() {
@@ -152,21 +213,12 @@ public class Opportunity {
         this.creatorName = creatorName;
     }
 
-
     public boolean isDone() {
         return done;
     }
 
     public void setDone(boolean done) {
         this.done = done;
-    }
-
-    public int getLocation() {
-        return location;
-    }
-
-    public void setLocation(int location) {
-        this.location = location;
     }
 
     public int getHashcode() {

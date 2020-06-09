@@ -19,6 +19,7 @@ public class OpportunityEndpoint {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('INDIVIDUAL') or hasRole('ORGANIZATION')")
     Opportunity post(@Valid @RequestBody Opportunity opportunity) {
         return opportunityService.save(opportunity);
     }
