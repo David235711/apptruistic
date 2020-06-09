@@ -9,14 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Set;
 
-
 @Service
 public class VolunteerService {
-
     private final VolunteerRepository repository;
     private final PasswordEncoder passwordEncoder;
-
-
 
     public VolunteerService(VolunteerRepository repository, PasswordEncoder passwordEncoder,
                             @Value("${apptruistic.volunteerRole}") Set<String> volunteerRole) {

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/volunteerinformation")
-public class VolunteerEndpoint {
+public class VolunteerInformationEndpoint {
 
     private final VolunteerService volunteerService;
 
-    public VolunteerEndpoint(VolunteerService volunteerService) {
+    public VolunteerInformationEndpoint(VolunteerService volunteerService) {
         this.volunteerService = volunteerService;
     }
 

@@ -6,6 +6,8 @@ spring:
       uri: mongodb://apptruistic:apptruist1c@ds247479.mlab.com:47479/apptruistic?retryWrites=false
 apptruistic:
   volunteerRole: "ROLE_VOLUNTEER"
+  individualRole: "ROLE_INDIVIDUAL"
+  organizationRole: "ROLE_ORGANIZATION"
   message: "Welcome"
   oneWeek: 1
   jwtSecret: "SecretKey"

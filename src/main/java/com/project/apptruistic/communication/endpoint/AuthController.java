@@ -77,7 +77,10 @@ public class AuthController {
     @PostMapping("/register/volunteer")
     public ResponseEntity<?> registerUser(@Valid @RequestBody VolunteerSignupRequest signUpRequest) {
         System.out.println("volunteer request received");
-        if (volunteerRepository.existsByEmail(signUpRequest.getEmail())) {
+        String email = signUpRequest.getEmail();
+        if (volunteerRepository.existsByEmail(email)
+                || individualRepository.existsByEmail(email)
+                || organizationRepository.existsByEmail(email)) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
@@ -134,7 +137,10 @@ public class AuthController {
     @PostMapping("/register/individual")
     public ResponseEntity<?> registerIndividual(@Valid @RequestBody IndividualSignupRequest signUpRequest) {
         System.out.println("individual request received");
-        if (individualRepository.existsByEmail(signUpRequest.getEmail())) {
+        String email = signUpRequest.getEmail();
+        if (volunteerRepository.existsByEmail(email)
+                || individualRepository.existsByEmail(email)
+                || organizationRepository.existsByEmail(email)) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
@@ -194,7 +200,10 @@ public class AuthController {
     @PostMapping("/register/organization")
     public ResponseEntity<?> registerOrganization(@Valid @RequestBody OrganizationSignupRequest signUpRequest) {
         System.out.println("organization request received");
-        if (organizationRepository.existsByEmail(signUpRequest.getEmail())) {
+        String email = signUpRequest.getEmail();
+        if (volunteerRepository.existsByEmail(email)
+                || individualRepository.existsByEmail(email)
+                || organizationRepository.existsByEmail(email)) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
