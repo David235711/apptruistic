@@ -1,5 +1,7 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.mongodb.util.JSON;
+import com.project.apptruistic.logic.OpportunityCategory;
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,5 +43,18 @@ public class OpportunityEndpoint {
         return opportunityService.getAllAvailables();
     }
 
+    @GetMapping("/categories")
+    @PreAuthorize("hasRole('INDIVIDUAL') or hasRole('ORGANIZATION') or hasRole('VOLUNTEER')")
+    List<OpportunityCategory> getAllCategories() {
+        return List.of(
+                OpportunityCategory.ANIMALS,
+                OpportunityCategory.CARETAKING,
+                OpportunityCategory.ENVIRONMENT,
+                OpportunityCategory.REFUGEES,
+                OpportunityCategory.TEACHING,
+                OpportunityCategory.ITSUPPORT,
+                OpportunityCategory.TRANSPORT,
+                OpportunityCategory.HOUSEHOLD);
+    }
 
 }

@@ -6,8 +6,10 @@ import com.project.apptruistic.persistence.cascade.CascadeSaveMongoEventListener
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
+@EnableMongoRepositories(basePackages = "com.project.apptruistic.persistence.repository")
 public class MongoConfig extends AbstractMongoConfiguration{
     private final String connectionString = "mongodb://apptruistic:apptruist1c@ds247479.mlab.com:47479/apptruistic?retryWrites=false";
 

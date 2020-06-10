@@ -7,7 +7,9 @@ import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +37,7 @@ public class OpportunityService {
             return oOpportunity.get();
         }
         opportunity.setHashcode(hashcode);
-
+        calculateDuration(opportunity);
         return opportunityRepository.save(opportunity);
     }
 
@@ -80,5 +82,11 @@ public class OpportunityService {
         return Optional.of(opportunity);
     }
 
+    public void calculateDuration(Opportunity opportunity) {
+        LocalTime startTime = opportunity.getStartTime();
+        LocalTime endTime = opportunity.getEndTime();
+        Duration duration = Duration.between(startTime, endTime);
+        opportunity.setDurationInMinutes(duration.toMinutes());
+    }
 
 }

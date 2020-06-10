@@ -33,6 +33,8 @@ public class Opportunity {
 
     private String creatorName;
 
+    private long durationInMinutes;
+
     @NotEmpty(message = "Please provide a short description (max 200 characters)")
     @Size(max = 280)
     private String shortDescription;
@@ -77,9 +79,19 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(int hashcode, String name, String shortDescription, LocalDate occurDate, LocalTime startTime,
-                       LocalTime endTime, String category, CreatorType creatorType, String creatorName, boolean done,
-                       int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
+    public Opportunity(int hashcode,
+                       String name,
+                       String shortDescription,
+                       LocalDate occurDate,
+                       LocalTime startTime,
+                       LocalTime endTime,
+                       String category,
+                       CreatorType creatorType,
+                       String creatorName,
+                       boolean done,
+                       int numberOfParticipants,
+                       List<Volunteer> acceptedVolunteers,
+                       long durationInMinutes) {
         this.hashcode = hashcode;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -91,11 +103,21 @@ public class Opportunity {
         this.creatorName = creatorName;
         this.done = done;
         this.numberOfParticipants = numberOfParticipants;
+        this.durationInMinutes = durationInMinutes;
     }
 
-    public Opportunity(String name, String shortDescription, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
-                       CreatorType creatorType, String creatorName, int numberOfParticipants) {
+    public Opportunity(String name,
+                       String shortDescription,
+                       LocalDate occurDate,
+                       LocalTime startTime,
+                       LocalTime endTime,
+                       String category,
+                       CreatorType creatorType,
+                       String creatorName,
+                       int numberOfParticipants,
+                       long durationInMinutes) {
         this.name = name;
+        this.durationInMinutes = durationInMinutes;
         this.shortDescription = shortDescription;
         this.occurDate = occurDate;
         this.startTime = startTime;
@@ -104,6 +126,14 @@ public class Opportunity {
         this.creatorType = creatorType;
         this.creatorName = creatorName;
         this.numberOfParticipants = numberOfParticipants;
+    }
+
+    public long getDurationInMinutes() {
+        return durationInMinutes;
+    }
+
+    public void setDurationInMinutes(long durationInMinutes) {
+        this.durationInMinutes = durationInMinutes;
     }
 
     public String getDetailedDescription() {
