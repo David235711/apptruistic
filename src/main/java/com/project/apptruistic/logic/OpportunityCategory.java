@@ -1,8 +1,8 @@
 package com.project.apptruistic.logic;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+//@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum OpportunityCategory {
     HOUSEHOLD("household"),
     ENVIRONMENT("environment"),
@@ -17,5 +17,9 @@ public enum OpportunityCategory {
 
     OpportunityCategory(String representation) {
         this.representation = representation;
+    }
+
+    public String getRepresentation() {
+        return representation;
     }
 }

@@ -2,10 +2,11 @@ package com.project.apptruistic.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.apptruistic.logic.CreatorType;
-import com.project.apptruistic.persistence.cascade.CascadeSave;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -16,8 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+//@Document(collection = "opportunity")
 public class Opportunity {
-
+//    @Id
     private String id;
 
     @Indexed(unique = true)
@@ -35,11 +37,11 @@ public class Opportunity {
 
     private long durationInMinutes;
 
-    @NotEmpty(message = "Please provide a short description (max 200 characters)")
+    @NotEmpty(message = "Please provide a short description (maximum of 200 characters)")
     @Size(max = 280)
     private String shortDescription;
 
-    //@NotEmpty(message = "Please provide a short description (max 2000 characters)")
+    @NotEmpty(message = "Please provide a detailed description (maximum of 2000 characters)")
     @Size(max = 2000)
     private String detailedDescription;
 
@@ -72,8 +74,6 @@ public class Opportunity {
 
     private boolean done;
 
-    @DBRef
-    @CascadeSave
     private List<Volunteer> AcceptedVolunteers = new ArrayList<>();
 
     public Opportunity() {

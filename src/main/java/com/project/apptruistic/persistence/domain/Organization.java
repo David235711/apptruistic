@@ -1,6 +1,5 @@
 package com.project.apptruistic.persistence.domain;
 
-import com.project.apptruistic.persistence.cascade.CascadeSave;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -51,8 +50,6 @@ public class Organization {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    @DBRef
-    @CascadeSave
     private List<Opportunity> createdOpportunity = new ArrayList<>();
 
     public Organization() {

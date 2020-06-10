@@ -20,14 +20,14 @@ import static java.util.stream.Collectors.toList;
 public class OpportunityService {
 
     private final OpportunityRepository opportunityRepository;
-    private  final VolunteerRepository volunteerRepository;
-    private final int oneWeek;
+    private final VolunteerRepository volunteerRepository;
+    private final int urgentLimitInWeeks;
 
     public OpportunityService(OpportunityRepository opportunityRepository,
-                              VolunteerRepository volunteerRepository, @Value("${apptruistic.oneWeek}") int oneWeek) {
+                              VolunteerRepository volunteerRepository, @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
         this.opportunityRepository = opportunityRepository;
         this.volunteerRepository = volunteerRepository;
-        this.oneWeek = oneWeek;
+        this.urgentLimitInWeeks = urgentLimitInWeeks;
     }
 
     public Opportunity save(Opportunity opportunity) {
@@ -55,7 +55,7 @@ public class OpportunityService {
 
     public List<Opportunity> findHeroOpportunities() {
         return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(oneWeek)))
+                .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(urgentLimitInWeeks)))
                 .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
                 .collect(toList());
     }

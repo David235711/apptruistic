@@ -1,6 +1,5 @@
 package com.project.apptruistic.communication.endpoint;
 
-import com.mongodb.util.JSON;
 import com.project.apptruistic.logic.OpportunityCategory;
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
@@ -44,17 +43,9 @@ public class OpportunityEndpoint {
     }
 
     @GetMapping("/categories")
-    @PreAuthorize("hasRole('INDIVIDUAL') or hasRole('ORGANIZATION') or hasRole('VOLUNTEER')")
-    List<OpportunityCategory> getAllCategories() {
-        return List.of(
-                OpportunityCategory.ANIMALS,
-                OpportunityCategory.CARETAKING,
-                OpportunityCategory.ENVIRONMENT,
-                OpportunityCategory.REFUGEES,
-                OpportunityCategory.TEACHING,
-                OpportunityCategory.ITSUPPORT,
-                OpportunityCategory.TRANSPORT,
-                OpportunityCategory.HOUSEHOLD);
+//    @PreAuthorize("hasRole('INDIVIDUAL') or hasRole('ORGANIZATION') or hasRole('VOLUNTEER')")
+    OpportunityCategory[] getAllCategories() {
+        return OpportunityCategory.values();
     }
 
 }
