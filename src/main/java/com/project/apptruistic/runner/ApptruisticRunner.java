@@ -16,12 +16,11 @@ public class ApptruisticRunner {
     ApplicationRunner prepareStuff(OpportunityRepository opportunityRepository, VolunteerRepository volunteerRepository) {
         return args -> {
 //            Optional<Opportunity> optionalOpportunity1 = opportunityRepository.findOneByHashcode(501632404);
-//            Optional<Opportunity> optionalOpportunity2 = opportunityRepository.findOneByHashcode(-1063479800);
-//            Optional<Opportunity> optionalOpportunity3 = opportunityRepository.findOneByHashcode(1032714727);
+//            Optional<Opportunity> optionalOpportunity2 = opportunityRepository.findOneByHashcode(-946539702);
+//            Optional<Opportunity> optionalOpportunity3 = opportunityRepository.findOneByHashcode(-490171662);
 //            Optional<Volunteer> oVolunteer = volunteerRepository.findOneByEmail("bad@becky");
 //            if (oVolunteer.isPresent() && optionalOpportunity1.isPresent() && optionalOpportunity2.isPresent()
 //                    && optionalOpportunity3.isPresent()) {
-//                oVolunteer.get().getCategories().add("social");
 //                oVolunteer.get().getAcceptedOpportunities().add(optionalOpportunity1.get());
 //                oVolunteer.get().getAppliedOpportunities().add(optionalOpportunity2.get());
 //                oVolunteer.get().getDeclinedOpportunities().add(optionalOpportunity3.get());
