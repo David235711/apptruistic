@@ -9,6 +9,6 @@ apptruistic:
   individualRole: "ROLE_INDIVIDUAL"
   organizationRole: "ROLE_ORGANIZATION"
   message: "Welcome"
-  oneWeek: 1
+  urgentLimitInWeeks: 1
   jwtSecret: "SecretKey"
   jwtExpirationMs: 86400000

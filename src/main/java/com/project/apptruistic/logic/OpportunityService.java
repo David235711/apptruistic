@@ -7,7 +7,9 @@ import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +20,14 @@ import static java.util.stream.Collectors.toList;
 public class OpportunityService {
 
     private final OpportunityRepository opportunityRepository;
-    private  final VolunteerRepository volunteerRepository;
-    private final int oneWeek;
+    private final VolunteerRepository volunteerRepository;
+    private final int urgentLimitInWeeks;
 
     public OpportunityService(OpportunityRepository opportunityRepository,
-                              VolunteerRepository volunteerRepository, @Value("${apptruistic.oneWeek}") int oneWeek) {
+                              VolunteerRepository volunteerRepository, @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
         this.opportunityRepository = opportunityRepository;
         this.volunteerRepository = volunteerRepository;
-        this.oneWeek = oneWeek;
+        this.urgentLimitInWeeks = urgentLimitInWeeks;
     }
 
     public Opportunity save(Opportunity opportunity) {
@@ -35,7 +37,7 @@ public class OpportunityService {
             return oOpportunity.get();
         }
         opportunity.setHashcode(hashcode);
-
+        calculateDuration(opportunity);
         return opportunityRepository.save(opportunity);
     }
 
@@ -53,7 +55,7 @@ public class OpportunityService {
 
     public List<Opportunity> findHeroOpportunities() {
         return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(oneWeek)))
+                .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(urgentLimitInWeeks)))
                 .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
                 .collect(toList());
     }
@@ -80,5 +82,11 @@ public class OpportunityService {
         return Optional.of(opportunity);
     }
 
+    public void calculateDuration(Opportunity opportunity) {
+        LocalTime startTime = opportunity.getStartTime();
+        LocalTime endTime = opportunity.getEndTime();
+        Duration duration = Duration.between(startTime, endTime);
+        opportunity.setDurationInMinutes(duration.toMinutes());
+    }
 
 }

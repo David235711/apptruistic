@@ -54,12 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-//                .antMatchers("/**").permitAll()
                 .antMatchers("/", "/index*", "/static/**", "/*.js", "/*.json", "/*.ico").permitAll()
-//                .antMatchers("/volunteers/**", "/register/**", "/dashboard/**", "/login/**", "/opportunities/**", "/volunteerinformation/**").permitAll()
-                .antMatchers("/volunteers/**", "/register/**", "/dashboard/**", "/login/**", "/opportunities/**").permitAll()
-//                .antMatchers("/dashboard").permitAll()          // ToDo: remove this line in production
-//                .antMatchers("/volunteerinformation/**").permitAll() // ToDo: remove this line in production
+                .antMatchers("/volunteers/**", "/register/**", "/dashboard/**", "/login/**", "/opportunities", "/opportunities/*").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

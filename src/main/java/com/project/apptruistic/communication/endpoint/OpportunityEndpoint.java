@@ -1,5 +1,6 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.project.apptruistic.logic.OpportunityCategory;
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,5 +42,10 @@ public class OpportunityEndpoint {
         return opportunityService.getAllAvailables();
     }
 
+    @GetMapping("/categories")
+//    @PreAuthorize("hasRole('INDIVIDUAL') or hasRole('ORGANIZATION') or hasRole('VOLUNTEER')")
+    OpportunityCategory[] getAllCategories() {
+        return OpportunityCategory.values();
+    }
 
 }
