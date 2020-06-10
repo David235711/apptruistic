@@ -54,6 +54,7 @@ public class Individual {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
+    @DBRef
     private List<Opportunity> createdOpportunity = new ArrayList<>();
 
     public Individual() {

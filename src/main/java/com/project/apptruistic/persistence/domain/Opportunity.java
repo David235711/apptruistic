@@ -74,6 +74,7 @@ public class Opportunity {
 
     private boolean done;
 
+    @DBRef
     private List<Volunteer> AcceptedVolunteers = new ArrayList<>();
 
     public Opportunity() {
@@ -285,7 +286,6 @@ public class Opportunity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Opportunity that = (Opportunity) o;
-        // ToDo: removed hashcode from equals()
         return Objects.equals(name, that.name) &&
                 Objects.equals(occurDate, that.occurDate) &&
                 Objects.equals(startTime, that.startTime) &&

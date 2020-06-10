@@ -42,10 +42,13 @@ public class Volunteer {
     //ToDo: Set of OpportunityCategory
     private Set<String> categories = new HashSet<>();
 
+    @DBRef
     private List<Opportunity> appliedOpportunities = new ArrayList<>();
 
+    @DBRef
     private List<Opportunity> declinedOpportunities = new ArrayList<>();
 
+    @DBRef
     private List<Opportunity> acceptedOpportunities = new ArrayList<>();
 
     public Volunteer() {
