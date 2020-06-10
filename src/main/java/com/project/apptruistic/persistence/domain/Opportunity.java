@@ -1,8 +1,11 @@
 package com.project.apptruistic.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.apptruistic.logic.CreatorType;
+import com.project.apptruistic.persistence.cascade.CascadeSave;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -26,7 +29,7 @@ public class Opportunity {
     @NotEmpty(message = "Please provide a category")
     private String category;
 
-    private String creatorType;
+    private CreatorType creatorType;
 
     private String creatorName;
 
@@ -67,13 +70,15 @@ public class Opportunity {
 
     private boolean done;
 
+    @DBRef
+    @CascadeSave
     private List<Volunteer> AcceptedVolunteers = new ArrayList<>();
 
     public Opportunity() {
     }
 
     public Opportunity(int hashcode, String name, String shortDescription, LocalDate occurDate, LocalTime startTime,
-                       LocalTime endTime, String category, String creatorType, String creatorName, boolean done,
+                       LocalTime endTime, String category, CreatorType creatorType, String creatorName, boolean done,
                        int numberOfParticipants, List<Volunteer> acceptedVolunteers) {
         this.hashcode = hashcode;
         this.name = name;
@@ -89,7 +94,7 @@ public class Opportunity {
     }
 
     public Opportunity(String name, String shortDescription, LocalDate occurDate, LocalTime startTime, LocalTime endTime, String category,
-                       String creatorType, String creatorName, int numberOfParticipants) {
+                       CreatorType creatorType, String creatorName, int numberOfParticipants) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.occurDate = occurDate;
@@ -197,11 +202,11 @@ public class Opportunity {
         this.category = category;
     }
 
-    public String getCreatorType() {
+    public CreatorType getCreatorType() {
         return creatorType;
     }
 
-    public void setCreatorType(String creatorType) {
+    public void setCreatorType(CreatorType creatorType) {
         this.creatorType = creatorType;
     }
 
@@ -250,8 +255,8 @@ public class Opportunity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Opportunity that = (Opportunity) o;
-        return Objects.equals(hashcode, that.hashcode) &&
-                Objects.equals(name, that.name) &&
+        // ToDo: removed hashcode from equals()
+        return Objects.equals(name, that.name) &&
                 Objects.equals(occurDate, that.occurDate) &&
                 Objects.equals(startTime, that.startTime) &&
                 Objects.equals(endTime, that.endTime) &&
@@ -260,6 +265,6 @@ public class Opportunity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(hashcode, name, occurDate, startTime, endTime, creatorName);
+        return Objects.hash(name, occurDate, startTime, endTime, creatorName);
     }
 }

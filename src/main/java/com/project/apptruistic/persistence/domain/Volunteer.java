@@ -1,6 +1,7 @@
 package com.project.apptruistic.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.apptruistic.persistence.cascade.CascadeSave;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
@@ -41,8 +42,16 @@ public class Volunteer {
 
     private Set<String> categories = new HashSet<>();
 
+    @DBRef
+    @CascadeSave
     private List<Opportunity> appliedOpportunities = new ArrayList<>();
+
+    @DBRef
+    @CascadeSave
     private List<Opportunity> declinedOpportunities = new ArrayList<>();
+
+    @DBRef
+    @CascadeSave
     private List<Opportunity> acceptedOpportunities = new ArrayList<>();
 
     public Volunteer() {
