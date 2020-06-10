@@ -11,7 +11,7 @@ import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.*;
 
-@Document(collection = "volunteers")
+@Document(collection = "volunteers  ")
 public class Volunteer {
 
     @Id
