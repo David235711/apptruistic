@@ -45,6 +45,10 @@ public class OpportunityService {
         return opportunityRepository.findOneByName(name);
     }
 
+    public Optional<Opportunity> getById(String id) {
+        return opportunityRepository.findById(id);
+    }
+
     public List<Opportunity> getAll() {
         return opportunityRepository.findAll();
     }
@@ -62,10 +66,10 @@ public class OpportunityService {
 
     public List<Opportunity> findSuggestedOpportunities(String id) {
         Optional<Volunteer> oVolunteer = volunteerRepository.findById(id);
-        if(oVolunteer.isEmpty()){
+        if (oVolunteer.isEmpty()) {
             return new ArrayList<>();
         }
-        Volunteer volunteer =oVolunteer.get();
+        Volunteer volunteer = oVolunteer.get();
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> volunteer.getCategories().contains(opportunity.getCategory()))
                 .collect(toList());

@@ -31,6 +31,11 @@ public class OpportunityEndpoint {
                 .orElse(null);
     }
 
+    @GetMapping("/id/{id}")
+    Opportunity getById(@PathVariable String id) {
+        return opportunityService.getById(id).orElse(null);
+    }
+
     @GetMapping()
     List<Opportunity> getAll() {
         return opportunityService.getAll();
