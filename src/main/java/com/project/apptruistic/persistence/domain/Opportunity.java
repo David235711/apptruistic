@@ -2,11 +2,10 @@ package com.project.apptruistic.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.apptruistic.logic.CreatorType;
+import com.project.apptruistic.logic.OpportunityCategory;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,7 +18,7 @@ import java.util.Objects;
 
 //@Document(collection = "opportunity")
 public class Opportunity {
-//    @Id
+    //    @Id
     private String id;
 
     @Indexed(unique = true)
@@ -28,14 +27,18 @@ public class Opportunity {
     @NotEmpty(message = "Please provide a name")
     private String name;
 
-    @NotEmpty(message = "Please provide a category")
-    private String category;
+    @NotNull(message = "Please provide a category")
+    private OpportunityCategory category;
 
+    @NotNull(message = "Specify creator type")
     private CreatorType creatorType;
 
+    @NotEmpty(message = "Specify creator id")
+    private String creatorId;
+
+    @NotEmpty(message = "Specify creator name")
     private String creatorName;
 
-    private long durationInMinutes;
 
     @NotEmpty(message = "Please provide a short description (maximum of 200 characters)")
     @Size(max = 280)
@@ -57,6 +60,8 @@ public class Opportunity {
     @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
 
+    private long durationInMinutes;
+
     @NotNull(message = "please provide a number of participants")
     private int numberOfParticipants;
 
@@ -75,58 +80,93 @@ public class Opportunity {
     private boolean done;
 
     @DBRef
-    private List<Volunteer> AcceptedVolunteers = new ArrayList<>();
+    private List<Volunteer> acceptedVolunteers = new ArrayList<>();
 
     public Opportunity() {
     }
 
-    public Opportunity(int hashcode,
-                       String name,
-                       String shortDescription,
-                       LocalDate occurDate,
-                       LocalTime startTime,
-                       LocalTime endTime,
-                       String category,
-                       CreatorType creatorType,
-                       String creatorName,
-                       boolean done,
-                       int numberOfParticipants,
-                       List<Volunteer> acceptedVolunteers,
-                       long durationInMinutes) {
+    public Opportunity(
+            int hashcode,
+            String name,
+            OpportunityCategory category,
+            CreatorType creatorType,
+            String creatorId,
+            String creatorName,
+            String shortDescription,
+            String detailedDescription,
+            LocalDate occurDate,
+            LocalTime startTime,
+            LocalTime endTime,
+            long durationInMinutes,
+            int numberOfParticipants,
+            String street,
+            String houseNumber,
+            String city,
+            int zipCode,
+            boolean done,
+            List<Volunteer> acceptedVolunteers
+    ) {
         this.hashcode = hashcode;
         this.name = name;
+        this.category = category;
+        this.creatorType = creatorType;
+        this.creatorId = creatorId;
+        this.creatorName = creatorName;
         this.shortDescription = shortDescription;
+        this.detailedDescription = detailedDescription;
         this.occurDate = occurDate;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.category = category;
-        this.creatorType = creatorType;
-        this.creatorName = creatorName;
-        this.done = done;
-        this.numberOfParticipants = numberOfParticipants;
         this.durationInMinutes = durationInMinutes;
+        this.numberOfParticipants = numberOfParticipants;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.done = done;
+        this.acceptedVolunteers = acceptedVolunteers;
     }
 
-    public Opportunity(String name,
-                       String shortDescription,
-                       LocalDate occurDate,
-                       LocalTime startTime,
-                       LocalTime endTime,
-                       String category,
-                       CreatorType creatorType,
-                       String creatorName,
-                       int numberOfParticipants,
-                       long durationInMinutes) {
+    public Opportunity(
+            String name,
+            OpportunityCategory category,
+            CreatorType creatorType,
+            String creatorId,
+            String creatorName,
+            String shortDescription,
+            String detailedDescription,
+            LocalDate occurDate,
+            LocalTime startTime,
+            LocalTime endTime,
+            int numberOfParticipants,
+            String street,
+            String houseNumber,
+            String city,
+            int zipCode
+    ) {
         this.name = name;
-        this.durationInMinutes = durationInMinutes;
+        this.category = category;
+        this.creatorType = creatorType;
+        this.creatorId = creatorId;
+        this.creatorName = creatorName;
         this.shortDescription = shortDescription;
+        this.detailedDescription = detailedDescription;
         this.occurDate = occurDate;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.category = category;
-        this.creatorType = creatorType;
-        this.creatorName = creatorName;
         this.numberOfParticipants = numberOfParticipants;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.city = city;
+        this.zipCode = zipCode;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
     public long getDurationInMinutes() {
@@ -225,11 +265,11 @@ public class Opportunity {
         this.endTime = endTime;
     }
 
-    public String getCategory() {
+    public OpportunityCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(OpportunityCategory category) {
         this.category = category;
     }
 
@@ -274,11 +314,11 @@ public class Opportunity {
     }
 
     public List<Volunteer> getAcceptedVolunteers() {
-        return AcceptedVolunteers;
+        return acceptedVolunteers;
     }
 
     public void setAcceptedVolunteers(List<Volunteer> acceptedVolunteers) {
-        AcceptedVolunteers = acceptedVolunteers;
+        this.acceptedVolunteers = acceptedVolunteers;
     }
 
     @Override
@@ -286,15 +326,15 @@ public class Opportunity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Opportunity that = (Opportunity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(occurDate, that.occurDate) &&
-                Objects.equals(startTime, that.startTime) &&
-                Objects.equals(endTime, that.endTime) &&
-                Objects.equals(creatorName, that.creatorName);
+        return name.equals(that.name) &&
+                creatorId.equals(that.creatorId) &&
+                occurDate.equals(that.occurDate) &&
+                startTime.equals(that.startTime) &&
+                endTime.equals(that.endTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, occurDate, startTime, endTime, creatorName);
+        return Objects.hash(name, creatorId, occurDate, startTime, endTime);
     }
 }

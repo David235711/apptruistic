@@ -86,7 +86,7 @@ public class OpportunityService {
         return Optional.of(opportunity);
     }
 
-    public void calculateDuration(Opportunity opportunity) {
+    private void calculateDuration(Opportunity opportunity) {
         LocalTime startTime = opportunity.getStartTime();
         LocalTime endTime = opportunity.getEndTime();
         Duration duration = Duration.between(startTime, endTime);
