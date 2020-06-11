@@ -3,6 +3,7 @@ package com.project.apptruistic.security;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.apptruistic.persistence.domain.Individual;
 import com.project.apptruistic.persistence.domain.Organization;
+import com.project.apptruistic.persistence.domain.Role;
 import com.project.apptruistic.persistence.domain.Volunteer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
@@ -32,10 +34,14 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Volunteer volunteer) {
-        List<GrantedAuthority> authorities = volunteer.getRoles().stream()
+    private static List<GrantedAuthority> getGrantedAuthorities(Set<Role> roles) {
+        return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
+    }
+
+    public static UserDetailsImpl build(Volunteer volunteer) {
+        List<GrantedAuthority> authorities = getGrantedAuthorities(volunteer.getRoles());
 
         return new UserDetailsImpl(
                 volunteer.getId(),
@@ -45,9 +51,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(Individual individual) {
-        List<GrantedAuthority> authorities = individual.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = getGrantedAuthorities(individual.getRoles());
 
         return new UserDetailsImpl(
                 individual.getId(),
@@ -57,9 +61,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(Organization organization) {
-        List<GrantedAuthority> authorities = organization.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = getGrantedAuthorities(organization.getRoles());
 
         return new UserDetailsImpl(
                 organization.getId(),
