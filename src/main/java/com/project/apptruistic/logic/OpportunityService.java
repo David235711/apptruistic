@@ -71,7 +71,7 @@ public class OpportunityService {
         }
         Volunteer volunteer = oVolunteer.get();
         return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(opportunity -> volunteer.getCategories().contains(opportunity.getCategory()))
+                .filter(opportunity -> volunteer.getCategories().contains(opportunity.getCategory().toString()))
                 .collect(toList());
     }
 
