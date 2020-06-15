@@ -158,8 +158,7 @@ public class AuthController {
                 signUpRequest.getStreet(),
                 signUpRequest.getHouseNumber(),
                 signUpRequest.getCity(),
-                signUpRequest.getZipCode()
-        );
+                signUpRequest.getZipCode());
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -220,8 +219,7 @@ public class AuthController {
                 signUpRequest.getStreet(),
                 signUpRequest.getHouseNumber(),
                 signUpRequest.getCity(),
-                signUpRequest.getZipCode()
-        );
+                signUpRequest.getZipCode());
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();

@@ -36,4 +36,13 @@ public class VolunteerService {
         volunteer.setPassword(encoded);
         return repository.save(volunteer);
     }
+
+    public void modifyVolunteer(String email, Volunteer volunteer) {
+        Optional<Volunteer> oVolunteer = repository.findOneByEmail(email);
+        if (oVolunteer.isEmpty()) {
+            System.out.println("modify volunteer not found");
+            return;
+        }
+        repository.save(volunteer);
+    }
 }

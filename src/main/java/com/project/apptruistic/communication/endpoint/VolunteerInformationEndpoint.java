@@ -5,6 +5,8 @@ import com.project.apptruistic.persistence.domain.Volunteer;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/volunteerinformation")
@@ -22,5 +24,9 @@ public class VolunteerInformationEndpoint {
         System.out.println("volunteerinformation request received");
         return volunteerService.getVolunteerByEmail(email).orElse(null);
     }
-
+    @PutMapping("/{email}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    void modifyVolunteer(@PathVariable String email, @Valid @RequestBody Volunteer volunteer){
+        volunteerService.modifyVolunteer(email, volunteer);
+    }
 }

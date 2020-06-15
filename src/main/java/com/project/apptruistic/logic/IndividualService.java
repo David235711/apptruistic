@@ -1,6 +1,7 @@
 package com.project.apptruistic.logic;
 
 import com.project.apptruistic.persistence.domain.Individual;
+import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.IndividualRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,13 @@ public class IndividualService {
         String encoded = passwordEncoder.encode(password);
         individual.setPassword(encoded);
         return repository.save(individual);
+    }
+    public void modifyIndividual(String email, Individual individual) {
+        Optional<Individual> oIndividual = repository.findOneByEmail(email);
+        if (oIndividual.isEmpty()) {
+            System.out.println("modify individual not found");
+            return;
+        }
+        repository.save(individual);
     }
 }
