@@ -1,8 +1,6 @@
 package com.project.apptruistic.logic;
 
-import com.project.apptruistic.persistence.domain.Individual;
 import com.project.apptruistic.persistence.domain.Organization;
-import com.project.apptruistic.persistence.repository.IndividualRepository;
 import com.project.apptruistic.persistence.repository.OrganizationRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +31,16 @@ public class OrganizationService {
         String password = organization.getPassword();
         String encoded = passwordEncoder.encode(password);
         organization.setPassword(encoded);
+        return repository.save(organization);
+    }
+
+    public Organization edit(String email, Organization organization) {
+        Optional<Organization> oOrganization = repository.findOneByEmail(email);
+
+        if (oOrganization.isEmpty()) {
+            return null;
+        }
+    //    Organization organization1 = oOrganization.get();
         return repository.save(organization);
     }
 }
