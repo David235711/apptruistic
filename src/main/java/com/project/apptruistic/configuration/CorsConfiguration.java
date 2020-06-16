@@ -3,7 +3,7 @@ package com.project.apptruistic.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+/*
 @Configuration
 public class CorsConfiguration implements WebMvcConfigurer {
 
@@ -13,3 +13,6 @@ public class CorsConfiguration implements WebMvcConfigurer {
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE");
     }
 }
+
+
+ */

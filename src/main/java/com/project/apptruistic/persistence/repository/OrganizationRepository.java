@@ -9,4 +9,5 @@ public interface OrganizationRepository extends MongoRepository<Organization, St
     Optional<Organization> findOneByEmail(String email);
 
     Boolean existsByEmail(String email);
-}
+
+  }
