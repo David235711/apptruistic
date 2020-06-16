@@ -24,7 +24,7 @@ public class VolunteerInformationEndpoint {
         System.out.println("volunteerinformation request received");
         return volunteerService.getVolunteerByEmail(email).orElse(null);
     }
-    @PutMapping("/{email}")
+    @PutMapping("/{email}/edit")
     @PreAuthorize("hasRole('VOLUNTEER')")
     void modifyVolunteer(@PathVariable String email, @Valid @RequestBody Volunteer volunteer){
         volunteerService.modifyVolunteer(email, volunteer);

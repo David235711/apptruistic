@@ -25,7 +25,7 @@ public class IndividualInformationEndpoint {
         System.out.println("individualinformation request received");
         return individualService.getIndividualByEmail(email).orElse(null);
     }
-    @PutMapping("/{email}")
+    @PutMapping("/{email}/edit")
     @PreAuthorize("hasRole('INDIVIDUAL')")
     void modifyIndividual(@PathVariable String email, @Valid @RequestBody Individual individual){
         individualService.modifyIndividual(email, individual);
