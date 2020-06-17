@@ -28,9 +28,9 @@ public class IndividualSignupRequest {
     private LocalDate dateOfBirth;
 
     private String gender;
-    
+
     private Set<String> roles;
-    
+
     @NotBlank
     @Size(min = 8)
     private String password;

@@ -85,7 +85,9 @@ public class UserDetailsImpl implements UserDetails {
         return email;
     }
 
-    public String getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

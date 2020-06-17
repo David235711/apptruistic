@@ -156,7 +156,6 @@ public class Individual {
     }
 
 
-
     public String getGender() {
         return gender;
     }
