@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Document(collection = "organizations")
@@ -53,6 +54,9 @@ public class Organization {
     @DBRef
     private List<Opportunity> createdOpportunity = new ArrayList<>();
 
+    @Size(max = 2000)
+    private String personalDescription;
+
     public Organization() {
     }
 
@@ -68,8 +72,7 @@ public class Organization {
             String city,
             int zipCode,
             Set<Role> roles,
-            List<Opportunity> createdOpportunity
-    ) {
+            List<Opportunity> createdOpportunity) {
         this.organizationName = organizationName;
         this.contactFirstName = contactFirstName;
         this.contactLastName = contactLastName;
@@ -94,8 +97,7 @@ public class Organization {
             String street,
             String houseNumber,
             String city,
-            int zipCode
-    ) {
+            int zipCode) {
         this.organizationName = organizationName;
         this.contactFirstName = contactFirstName;
         this.contactLastName = contactLastName;
@@ -212,6 +214,14 @@ public class Organization {
         this.createdOpportunity = createdOpportunity;
     }
 
+    public String getPersonalDescription() {
+        return personalDescription;
+    }
+
+    public void setPersonalDescription(String personalDescription) {
+        this.personalDescription = personalDescription;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -229,11 +239,12 @@ public class Organization {
                 Objects.equals(houseNumber, that.houseNumber) &&
                 Objects.equals(city, that.city) &&
                 Objects.equals(roles, that.roles) &&
-                Objects.equals(createdOpportunity, that.createdOpportunity);
+                Objects.equals(createdOpportunity, that.createdOpportunity) &&
+                Objects.equals(personalDescription, that.personalDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, organizationName, contactFirstName, contactLastName, email, phoneNumber, password, street, houseNumber, city, zipCode, roles, createdOpportunity);
+        return Objects.hash(id, organizationName, contactFirstName, contactLastName, email, phoneNumber, password, street, houseNumber, city, zipCode, roles, createdOpportunity, personalDescription);
     }
 }

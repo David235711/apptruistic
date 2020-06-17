@@ -39,7 +39,6 @@ public class Opportunity {
     @NotEmpty(message = "Specify creator name")
     private String creatorName;
 
-
     @NotEmpty(message = "Please provide a short description (maximum of 200 characters)")
     @Size(max = 280)
     private String shortDescription;

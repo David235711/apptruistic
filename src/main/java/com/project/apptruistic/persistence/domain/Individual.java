@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -57,6 +58,9 @@ public class Individual {
     @DBRef
     private List<Opportunity> createdOpportunity = new ArrayList<>();
 
+    @Size(max = 2000)
+    private String personalDescription;
+
     public Individual() {
     }
 
@@ -100,8 +104,7 @@ public class Individual {
             String street,
             String houseNumber,
             String city,
-            int zipCode
-    ) {
+            int zipCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -154,7 +157,6 @@ public class Individual {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
 
     public String getGender() {
         return gender;
@@ -228,6 +230,14 @@ public class Individual {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getPersonalDescription() {
+        return personalDescription;
+    }
+
+    public void setPersonalDescription(String personalDescription) {
+        this.personalDescription = personalDescription;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -246,11 +256,12 @@ public class Individual {
                 Objects.equals(houseNumber, that.houseNumber) &&
                 Objects.equals(city, that.city) &&
                 Objects.equals(roles, that.roles) &&
-                Objects.equals(createdOpportunity, that.createdOpportunity);
+                Objects.equals(createdOpportunity, that.createdOpportunity) &&
+                Objects.equals(personalDescription, that.personalDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, phoneNumber, dateOfBirth, gender, password, street, houseNumber, city, zipCode, roles, createdOpportunity);
+        return Objects.hash(id, firstName, lastName, email, phoneNumber, dateOfBirth, gender, password, street, houseNumber, city, zipCode, roles, createdOpportunity, personalDescription);
     }
 }
