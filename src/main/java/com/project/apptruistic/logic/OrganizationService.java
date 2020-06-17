@@ -44,7 +44,7 @@ public class OrganizationService {
         organization.setContactFirstName(newOrganization.getContactFirstName());
         organization.setContactLastName(newOrganization.getContactLastName());
         organization.setPhoneNumber(newOrganization.getPhoneNumber());
-        String password = organization.getPassword();
+        String password = newOrganization.getPassword();
         String encoded = passwordEncoder.encode(password);
         organization.setPassword(encoded);
         organization.setStreet(newOrganization.getStreet());

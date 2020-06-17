@@ -46,7 +46,7 @@ public class IndividualService {
         individual.setPhoneNumber(newIndividual.getPhoneNumber());
         individual.setDateOfBirth(newIndividual.getDateOfBirth());
         individual.setGender(newIndividual.getGender());
-        String password = individual.getPassword();
+        String password = newIndividual.getPassword();
         String encoded = passwordEncoder.encode(password);
         individual.setPassword(encoded);
         individual.setStreet(newIndividual.getStreet());
