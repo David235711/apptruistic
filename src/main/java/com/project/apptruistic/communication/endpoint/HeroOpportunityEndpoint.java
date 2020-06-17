@@ -23,7 +23,7 @@ public class HeroOpportunityEndpoint {
 
     @GetMapping
     @PreAuthorize("hasRole('VOLUNTEER') or hasRole('INDIVIDUAL') or hasRole('ORGANIZATION')")
-    List<Opportunity> getHeroes(){
+    List<Opportunity> getHeroes() {
         return opportunityService.findHeroOpportunities();
     }
 }
