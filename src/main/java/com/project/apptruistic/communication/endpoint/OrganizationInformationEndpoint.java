@@ -30,6 +30,7 @@ public class OrganizationInformationEndpoint {
     @PutMapping("/edit/{email}")
     @PreAuthorize("hasRole('ORGANIZATION')")
     Organization edit(@PathVariable String email,@Valid @RequestBody Organization organization) {
-        return organizationService.edit(email, organization);
+        return organizationService.editOrganization(email, organization)
+                .orElse(null);
     }
 }

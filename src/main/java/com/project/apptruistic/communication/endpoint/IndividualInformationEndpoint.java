@@ -2,7 +2,6 @@ package com.project.apptruistic.communication.endpoint;
 
 import com.project.apptruistic.logic.IndividualService;
 import com.project.apptruistic.persistence.domain.Individual;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +24,11 @@ public class IndividualInformationEndpoint {
         System.out.println("individualinformation request received");
         return individualService.getIndividualByEmail(email).orElse(null);
     }
+
     @PutMapping("/{email}/edit")
     @PreAuthorize("hasRole('INDIVIDUAL')")
-    void modifyIndividual(@PathVariable String email, @Valid @RequestBody Individual individual){
-        individualService.modifyIndividual(email, individual);
+    Individual modifyIndividual(@PathVariable String email, @Valid @RequestBody Individual individual) {
+        return individualService.editIndividual(email, individual).orElse(null);
     }
 
 }

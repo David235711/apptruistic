@@ -37,12 +37,24 @@ public class VolunteerService {
         return repository.save(volunteer);
     }
 
-    public void modifyVolunteer(String email, Volunteer volunteer) {
+    public Optional<Volunteer> editVolunteer(String email, Volunteer newVolunteer) {
         Optional<Volunteer> oVolunteer = repository.findOneByEmail(email);
         if (oVolunteer.isEmpty()) {
             System.out.println("modify volunteer not found");
-            return;
+            return Optional.empty();
         }
+        Volunteer volunteer = oVolunteer.get();
+        volunteer.setFirstName(newVolunteer.getFirstName());
+        volunteer.setLastName(newVolunteer.getLastName());
+        volunteer.setDateOfBirth(newVolunteer.getDateOfBirth());
+        volunteer.setGender(newVolunteer.getGender());
+        String password = newVolunteer.getPassword();
+        String encodedPassword = passwordEncoder.encode(password);
+        volunteer.setPassword(encodedPassword);
+        volunteer.setCategories(newVolunteer.getCategories());
+        volunteer.setPersonalDescription(newVolunteer.getPersonalDescription());
+        volunteer.setPhoneNumber(newVolunteer.getPhoneNumber());
         repository.save(volunteer);
+        return Optional.of(volunteer);
     }
 }
