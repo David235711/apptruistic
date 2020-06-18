@@ -44,14 +44,17 @@ public class OrganizationService {
         organization.setContactFirstName(newOrganization.getContactFirstName());
         organization.setContactLastName(newOrganization.getContactLastName());
         organization.setPhoneNumber(newOrganization.getPhoneNumber());
-        String password = newOrganization.getPassword();
-        String encoded = passwordEncoder.encode(password);
-        organization.setPassword(encoded);
         organization.setStreet(newOrganization.getStreet());
         organization.setHouseNumber(newOrganization.getHouseNumber());
         organization.setCity(newOrganization.getCity());
         organization.setZipCode(newOrganization.getZipCode());
         organization.setPersonalDescription(newOrganization.getPersonalDescription());
+        String password = newOrganization.getPassword();
+        if(!password.equals(organization.getPassword())){
+            String encode = passwordEncoder.encode(password);
+            organization.setPassword(encode);
+            System.out.println("old password");
+        }
         repository.save(organization);
         return Optional.of(organization);
     }

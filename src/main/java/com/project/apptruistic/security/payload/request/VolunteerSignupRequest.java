@@ -1,6 +1,8 @@
 package com.project.apptruistic.security.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.apptruistic.logic.CreatorType;
+import com.project.apptruistic.logic.OpportunityCategory;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -33,7 +35,9 @@ public class VolunteerSignupRequest {
     @Size(min = 8)
     private String password;
 
-    private Set<String> categories = new HashSet<>();
+    private CreatorType preferredType;
+
+    private Set<OpportunityCategory> categories = new HashSet<>();
 
     public String getEmail() {
         return email;
@@ -91,11 +95,19 @@ public class VolunteerSignupRequest {
         this.password = password;
     }
 
-    public Set<String> getCategories() {
+    public Set<OpportunityCategory> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<String> categories) {
+    public void setCategories(Set<OpportunityCategory> categories) {
         this.categories = categories;
+    }
+
+    public CreatorType getPreferredType() {
+        return preferredType;
+    }
+
+    public void setPreferredType(CreatorType preferredType) {
+        this.preferredType = preferredType;
     }
 }

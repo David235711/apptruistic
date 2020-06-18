@@ -1,6 +1,8 @@
 package com.project.apptruistic.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.apptruistic.logic.CreatorType;
+import com.project.apptruistic.logic.OpportunityCategory;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
@@ -40,8 +42,9 @@ public class Volunteer {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    //ToDo: Set of OpportunityCategory
-    private Set<String> categories = new HashSet<>();
+    private CreatorType preferredType;
+
+    private Set<OpportunityCategory> categories = new HashSet<>();
 
     @DBRef
     private List<Opportunity> appliedOpportunities = new ArrayList<>();
@@ -60,7 +63,7 @@ public class Volunteer {
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, Set<String> categories) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, Set<OpportunityCategory> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -71,7 +74,7 @@ public class Volunteer {
         this.categories = categories;
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<String> categories) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<OpportunityCategory> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -161,11 +164,11 @@ public class Volunteer {
         this.gender = gender;
     }
 
-    public Set<String> getCategories() {
+    public Set<OpportunityCategory> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<String> categories) {
+    public void setCategories(Set<OpportunityCategory> categories) {
         this.categories = categories;
     }
 
@@ -216,6 +219,14 @@ public class Volunteer {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities, personalDescription);
+    }
+
+    public CreatorType getPreferredType() {
+        return preferredType;
+    }
+
+    public void setPreferredType(CreatorType preferredType) {
+        this.preferredType = preferredType;
     }
 }
 
