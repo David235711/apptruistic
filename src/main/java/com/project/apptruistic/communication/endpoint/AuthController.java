@@ -1,5 +1,6 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.project.apptruistic.logic.mail.MailServiceImpl;
 import com.project.apptruistic.persistence.domain.*;
 import com.project.apptruistic.persistence.repository.IndividualRepository;
 import com.project.apptruistic.persistence.repository.OrganizationRepository;
@@ -33,6 +34,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/")
 public class AuthController {
+    @Autowired
+    MailServiceImpl mailService;
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -129,7 +133,7 @@ public class AuthController {
 
         user.setRoles(roles);
         volunteerRepository.save(user);
-
+        mailService.sendVerification("Sanaz", "write2johndoe@gmail.com");
         return ResponseEntity.ok(new MessageResponse("Volunteer registered successfully!"));
     }
 
