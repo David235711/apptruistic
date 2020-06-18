@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.*;
@@ -42,6 +44,7 @@ public class Volunteer {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
+    @NotNull(message = "Please select a preferred type of opportunity")
     private CreatorType preferredType;
 
     private Set<OpportunityCategory> categories = new HashSet<>();
@@ -74,13 +77,14 @@ public class Volunteer {
         this.categories = categories;
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<OpportunityCategory> categories) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, CreatorType preferredType,Set<OpportunityCategory> categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
         this.email = email;
+        this.preferredType = preferredType;
         this.categories = categories;
     }
 

@@ -40,7 +40,7 @@ class VolunteerServiceTest {
 
     @Test
     void saveAlreadyExists() {
-        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", Set.of(OpportunityCategory.ANIMALS));
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", CreatorType.INDIVIDUAL, Set.of(OpportunityCategory.ANIMALS));
         when(repository.findOneByEmail(volunteer.getEmail()))
                 .thenReturn(Optional.of(volunteer));
 
@@ -53,7 +53,7 @@ class VolunteerServiceTest {
 
     @Test
     void saveVolunteerDoesNotExist() {
-        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", Set.of(OpportunityCategory.ANIMALS));
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", CreatorType.INDIVIDUAL, Set.of(OpportunityCategory.ANIMALS));
         when(repository.findOneByEmail(volunteer.getEmail()))
                 .thenReturn(Optional.empty());
         when(passwordEncoder.encode(volunteer.getPassword()))
@@ -63,13 +63,13 @@ class VolunteerServiceTest {
 
         verify(repository).findOneByEmail(volunteer.getEmail());
         verify(passwordEncoder).encode(volunteer.getPassword());
-        Volunteer expected = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", Set.of(OpportunityCategory.ANIMALS));
+        Volunteer expected = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", CreatorType.INDIVIDUAL, Set.of(OpportunityCategory.ANIMALS));
         verify(repository).save(expected);
     }
     @Test
     void editVolunteerDoesNotFindVolunteer(){
         String email = "email";
-        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", email, Set.of(OpportunityCategory.ANIMALS));
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", email, CreatorType.INDIVIDUAL, Set.of(OpportunityCategory.ANIMALS));
 
         when(repository.findOneByEmail(email))
                 .thenReturn(Optional.empty());
@@ -83,7 +83,7 @@ class VolunteerServiceTest {
     @Test
     void editVolunteerFindsVolunteer(){
         String email = "email";
-        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", email, Set.of(OpportunityCategory.ANIMALS));
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", email, CreatorType.INDIVIDUAL, Set.of(OpportunityCategory.ANIMALS));
         when(repository.findOneByEmail(email))
                 .thenReturn(Optional.of(volunteer));
         when(passwordEncoder.encode(volunteer.getPassword()))
