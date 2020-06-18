@@ -48,12 +48,15 @@ public class VolunteerService {
         volunteer.setLastName(newVolunteer.getLastName());
         volunteer.setDateOfBirth(newVolunteer.getDateOfBirth());
         volunteer.setGender(newVolunteer.getGender());
-        String password = newVolunteer.getPassword();
-        String encodedPassword = passwordEncoder.encode(password);
-        volunteer.setPassword(encodedPassword);
         volunteer.setCategories(newVolunteer.getCategories());
         volunteer.setPersonalDescription(newVolunteer.getPersonalDescription());
         volunteer.setPhoneNumber(newVolunteer.getPhoneNumber());
+        String password = newVolunteer.getPassword();
+        if(!password.equals(volunteer.getPassword())){
+            String encode = passwordEncoder.encode(password);
+            volunteer.setPassword(encode);
+            System.out.println("old password");
+        }
         repository.save(volunteer);
         return Optional.of(volunteer);
     }

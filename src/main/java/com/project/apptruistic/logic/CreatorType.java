@@ -2,7 +2,8 @@ package com.project.apptruistic.logic;
 
 public enum CreatorType {
     INDIVIDUAL("individual"),
-    ORGANIZATION("organization");
+    ORGANIZATION("organization"),
+    BOTH("both");
 
     private final String representation;
 

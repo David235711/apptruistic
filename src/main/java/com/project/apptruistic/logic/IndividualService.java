@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class IndividualService {
+
     private final IndividualRepository repository;
     private final PasswordEncoder passwordEncoder;
 
@@ -46,14 +47,17 @@ public class IndividualService {
         individual.setPhoneNumber(newIndividual.getPhoneNumber());
         individual.setDateOfBirth(newIndividual.getDateOfBirth());
         individual.setGender(newIndividual.getGender());
-        String password = newIndividual.getPassword();
-        String encoded = passwordEncoder.encode(password);
-        individual.setPassword(encoded);
         individual.setStreet(newIndividual.getStreet());
         individual.setHouseNumber(newIndividual.getHouseNumber());
         individual.setCity(newIndividual.getCity());
         individual.setZipCode(newIndividual.getZipCode());
         individual.setPersonalDescription(newIndividual.getPersonalDescription());
+        String password = newIndividual.getPassword();
+        if(!password.equals(individual.getPassword())){
+            String encode = passwordEncoder.encode(password);
+            individual.setPassword(encode);
+            System.out.println("old password");
+        }
         repository.save(individual);
         return Optional.of(individual);
     }
