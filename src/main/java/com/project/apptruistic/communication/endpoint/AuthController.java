@@ -133,7 +133,7 @@ public class AuthController {
 
         user.setRoles(roles);
         volunteerRepository.save(user);
-        mailService.sendVerification("Sanaz", "write2johndoe@gmail.com");
+        mailService.sendVerification(user.getFirstName(), user.getEmail());
         return ResponseEntity.ok(new MessageResponse("Volunteer registered successfully!"));
     }
 
@@ -195,7 +195,7 @@ public class AuthController {
 
         individual.setRoles(roles);
         individualRepository.save(individual);
-
+        mailService.sendVerification(individual.getFirstName(), individual.getEmail());
         return ResponseEntity.ok(new MessageResponse("Individual registered successfully!"));
     }
 
@@ -256,7 +256,7 @@ public class AuthController {
 
         organization.setRoles(roles);
         organizationRepository.save(organization);
-
+        mailService.sendVerification(organization.getContactFirstName(), organization.getEmail());
         return ResponseEntity.ok(new MessageResponse("Organization registered successfully!"));
     }
 }
