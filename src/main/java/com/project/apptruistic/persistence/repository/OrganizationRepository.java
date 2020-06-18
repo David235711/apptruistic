@@ -10,4 +10,4 @@ public interface OrganizationRepository extends MongoRepository<Organization, St
 
     Boolean existsByEmail(String email);
 
-  }
+}

@@ -1,5 +1,6 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.project.apptruistic.logic.mail.MailServiceImpl;
 import com.project.apptruistic.persistence.domain.*;
 import com.project.apptruistic.persistence.repository.IndividualRepository;
 import com.project.apptruistic.persistence.repository.OrganizationRepository;
@@ -33,6 +34,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/")
 public class AuthController {
+    @Autowired
+    MailServiceImpl mailService;
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -95,7 +99,7 @@ public class AuthController {
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getEmail(),
                 signUpRequest.getCategories()
-                );
+        );
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -128,9 +132,8 @@ public class AuthController {
         }
 
         user.setRoles(roles);
-        user.getCategories().add("social"); //ToDo: remove default category after frontend implementatiion
         volunteerRepository.save(user);
-
+        mailService.sendVerification(user.getFirstName(), user.getEmail());
         return ResponseEntity.ok(new MessageResponse("Volunteer registered successfully!"));
     }
 
@@ -158,8 +161,7 @@ public class AuthController {
                 signUpRequest.getStreet(),
                 signUpRequest.getHouseNumber(),
                 signUpRequest.getCity(),
-                signUpRequest.getZipCode()
-        );
+                signUpRequest.getZipCode());
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -193,7 +195,7 @@ public class AuthController {
 
         individual.setRoles(roles);
         individualRepository.save(individual);
-
+        mailService.sendVerification(individual.getFirstName(), individual.getEmail());
         return ResponseEntity.ok(new MessageResponse("Individual registered successfully!"));
     }
 
@@ -220,8 +222,7 @@ public class AuthController {
                 signUpRequest.getStreet(),
                 signUpRequest.getHouseNumber(),
                 signUpRequest.getCity(),
-                signUpRequest.getZipCode()
-        );
+                signUpRequest.getZipCode());
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -255,7 +256,7 @@ public class AuthController {
 
         organization.setRoles(roles);
         organizationRepository.save(organization);
-
+        mailService.sendVerification(organization.getContactFirstName(), organization.getEmail());
         return ResponseEntity.ok(new MessageResponse("Organization registered successfully!"));
     }
 }

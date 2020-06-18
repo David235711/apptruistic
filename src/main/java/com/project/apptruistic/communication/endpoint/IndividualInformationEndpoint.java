@@ -5,6 +5,8 @@ import com.project.apptruistic.persistence.domain.Individual;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/individualinformation")
@@ -21,6 +23,12 @@ public class IndividualInformationEndpoint {
     Individual getVolunteerByEmail(@PathVariable String email) {
         System.out.println("individualinformation request received");
         return individualService.getIndividualByEmail(email).orElse(null);
+    }
+
+    @PutMapping("/edit/{email}")
+    @PreAuthorize("hasRole('INDIVIDUAL')")
+    Individual modifyIndividual(@PathVariable String email, @Valid @RequestBody Individual individual) {
+        return individualService.editIndividual(email, individual).orElse(null);
     }
 
 }

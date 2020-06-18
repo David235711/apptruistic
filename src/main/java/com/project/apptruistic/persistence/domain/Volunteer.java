@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -51,6 +52,11 @@ public class Volunteer {
     @DBRef
     private List<Opportunity> acceptedOpportunities = new ArrayList<>();
 
+    @Size(max = 2000)
+    private String personalDescription;
+
+    private String phoneNumber;
+
     public Volunteer() {
     }
 
@@ -73,6 +79,22 @@ public class Volunteer {
         this.password = password;
         this.email = email;
         this.categories = categories;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPersonalDescription() {
+        return personalDescription;
+    }
+
+    public void setPersonalDescription(String personalDescription) {
+        this.personalDescription = personalDescription;
     }
 
     public LocalDate getDateOfBirth() {
@@ -187,12 +209,13 @@ public class Volunteer {
                 Objects.equals(categories, volunteer.categories) &&
                 Objects.equals(appliedOpportunities, volunteer.appliedOpportunities) &&
                 Objects.equals(declinedOpportunities, volunteer.declinedOpportunities) &&
-                Objects.equals(acceptedOpportunities, volunteer.acceptedOpportunities);
+                Objects.equals(acceptedOpportunities, volunteer.acceptedOpportunities) &&
+                Objects.equals(personalDescription, volunteer.personalDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities, personalDescription);
     }
 }
 

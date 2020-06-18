@@ -26,19 +26,19 @@ public class VolunteerSignupRequest {
 
     @NotBlank
     private String gender;
-    
+
     private Set<String> roles;
-    
+
     @NotBlank
     @Size(min = 8)
     private String password;
 
     private Set<String> categories = new HashSet<>();
-  
+
     public String getEmail() {
         return email;
     }
- 
+
     public void setEmail(String email) {
         this.email = email;
     }

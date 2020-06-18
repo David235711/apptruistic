@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Service
 public class OrganizationService {
+
     private final OrganizationRepository repository;
     private final PasswordEncoder passwordEncoder;
 
@@ -34,13 +35,24 @@ public class OrganizationService {
         return repository.save(organization);
     }
 
-    public Organization edit(String email, Organization organization) {
+    public Optional<Organization> editOrganization(String email, Organization newOrganization) {
         Optional<Organization> oOrganization = repository.findOneByEmail(email);
-
         if (oOrganization.isEmpty()) {
-            return null;
+            return Optional.empty();
         }
-    //    Organization organization1 = oOrganization.get();
-        return repository.save(organization);
+        Organization organization = oOrganization.get();
+        organization.setContactFirstName(newOrganization.getContactFirstName());
+        organization.setContactLastName(newOrganization.getContactLastName());
+        organization.setPhoneNumber(newOrganization.getPhoneNumber());
+        String password = newOrganization.getPassword();
+        String encoded = passwordEncoder.encode(password);
+        organization.setPassword(encoded);
+        organization.setStreet(newOrganization.getStreet());
+        organization.setHouseNumber(newOrganization.getHouseNumber());
+        organization.setCity(newOrganization.getCity());
+        organization.setZipCode(newOrganization.getZipCode());
+        organization.setPersonalDescription(newOrganization.getPersonalDescription());
+        repository.save(organization);
+        return Optional.of(organization);
     }
 }
