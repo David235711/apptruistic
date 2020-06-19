@@ -6,6 +6,7 @@ import com.project.apptruistic.logic.OpportunityCategory;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -35,6 +36,7 @@ public class VolunteerSignupRequest {
     @Size(min = 8)
     private String password;
 
+    @NotNull
     private CreatorType preferredType;
 
     private Set<OpportunityCategory> categories = new HashSet<>();

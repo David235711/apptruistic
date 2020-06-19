@@ -91,13 +91,14 @@ public class AuthController {
         }
 
         // Create new volunteer's account
-        Volunteer user = new Volunteer(
+        Volunteer volunteer = new Volunteer(
                 signUpRequest.getFirstName(),
                 signUpRequest.getLastName(),
                 signUpRequest.getDateOfBirth(),
                 signUpRequest.getGender(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getEmail(),
+                signUpRequest.getPreferredType(),
                 signUpRequest.getCategories()
         );
 
@@ -131,9 +132,9 @@ public class AuthController {
             });
         }
 
-        user.setRoles(roles);
-        volunteerRepository.save(user);
-        mailService.sendVerification(user.getFirstName(), user.getEmail());
+        volunteer.setRoles(roles);
+        volunteerRepository.save(volunteer);
+        mailService.sendVerification(volunteer.getFirstName(), volunteer.getEmail());
         return ResponseEntity.ok(new MessageResponse("Volunteer registered successfully!"));
     }
 
