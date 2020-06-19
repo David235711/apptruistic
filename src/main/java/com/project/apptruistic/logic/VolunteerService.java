@@ -51,6 +51,7 @@ public class VolunteerService {
         volunteer.setCategories(newVolunteer.getCategories());
         volunteer.setPersonalDescription(newVolunteer.getPersonalDescription());
         volunteer.setPhoneNumber(newVolunteer.getPhoneNumber());
+        volunteer.setPreferredType(newVolunteer.getPreferredType());
         String password = newVolunteer.getPassword();
         if(!password.equals(volunteer.getPassword())){
             String encode = passwordEncoder.encode(password);

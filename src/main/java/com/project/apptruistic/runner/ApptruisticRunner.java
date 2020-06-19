@@ -15,8 +15,8 @@ public class ApptruisticRunner {
     @Bean
     ApplicationRunner prepareStuff(OpportunityRepository opportunityRepository, VolunteerRepository volunteerRepository) {
         return args -> {
-//            Optional<Opportunity> optionalOpportunity1 = opportunityRepository.findOneByHashcode(-490171662);
-//            Optional<Opportunity> optionalOpportunity2 = opportunityRepository.findOneByHashcode(-946539702);
+//            Optional<Opportunity> optionalOpportunity1 = opportunityRepository.findOneByHashcode(-173726471);
+//            Optional<Opportunity> optionalOpportunity2 = opportunityRepository.findOneByHashcode(1148693535);
 //            Optional<Opportunity> optionalOpportunity3 = opportunityRepository.findOneByHashcode(501632404);
 //            Optional<Volunteer> oVolunteer = volunteerRepository.findOneByEmail("bad@becky");
 //            if (oVolunteer.isPresent() && optionalOpportunity1.isPresent() && optionalOpportunity2.isPresent()
