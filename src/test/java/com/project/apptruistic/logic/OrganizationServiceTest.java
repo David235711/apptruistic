@@ -102,7 +102,6 @@ class OrganizationServiceTest {
         organizationService.editOrganization(email, newOrganization);
 
         verify(organizationRepository).findOneByEmail(email);
-        verify(encoder).encode(password);
         verify(organizationRepository).save(newOrganization);
     }
 }
