@@ -11,9 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -36,15 +34,65 @@ class IndividualServiceTest {
         verify(individualRepository).findOneByEmail(email);
     }
 
-//    @Test
-//    void saveFindsIndividual() {
-//        String email = "email";
-//        Individual individual = new Individual("firstName", "lastName", email, "phone", LocalDate.now(), "gender", )
-//        when(individualRepository.findOneByEmail(email))
-//                .thenReturn(Optional.of(individual));
-//    }
+    @Test
+    void saveFindsIndividual() {
+        String email = "email";
+        Individual individual = new Individual("firstName", "lastName", email, "phone", LocalDate.now(), "gender", "password", "street", "houseNumber", "city", 1000);
+        when(individualRepository.findOneByEmail(email))
+                .thenReturn(Optional.of(individual));
+
+        individualService.save(individual);
+
+        verify(individualRepository).findOneByEmail(email);
+        verifyNoInteractions(encoder);
+        verifyNoMoreInteractions(individualRepository);
+    }
 
     @Test
-    void editIndividual() {
+    void saveDoesNotFindIndividual() {
+        String email = "email";
+        String password = "password";
+        Individual individual = new Individual("firstName", "lastName", email, "phone", LocalDate.now(), "gender", password, "street", "houseNumber", "city", 1000);
+        when(individualRepository.findOneByEmail(email))
+                .thenReturn(Optional.empty());
+        when(encoder.encode(password))
+                .thenReturn(password);
+
+        individualService.save(individual);
+
+        verify(individualRepository).findOneByEmail(email);
+        verify(encoder).encode(password);
+        verify(individualRepository).save(individual);
+    }
+
+    @Test
+    void editDoesNotFindIndividual() {
+        String email = "email";
+        String password = "password";
+        Individual individual = new Individual("firstName", "lastName", email, "phone", LocalDate.now(), "gender", password, "street", "houseNumber", "city", 1000);
+        when(individualRepository.findOneByEmail(email))
+                .thenReturn(Optional.empty());
+
+        individualService.editIndividual(email, individual);
+
+        verify(individualRepository).findOneByEmail(email);
+        verifyNoInteractions(encoder);
+        verifyNoMoreInteractions(individualRepository);
+    }
+
+    @Test
+    void editFindsIndividual() {
+        String email = "email";
+        String password = "password";
+        Individual individual = new Individual("firstName", "lastName", email, "phone", LocalDate.now(), "gender", password, "street", "houseNumber", "city", 1000);
+        when(individualRepository.findOneByEmail(email))
+                .thenReturn(Optional.of(individual));
+        when(encoder.encode(password))
+                .thenReturn(password);
+
+        individualService.editIndividual(email, individual);
+
+        verify(individualRepository).findOneByEmail(email);
+        verify(individualRepository).save(individual);
     }
 }

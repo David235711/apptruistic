@@ -92,7 +92,6 @@ class VolunteerServiceTest {
         volunteerService.editVolunteer(email, volunteer);
 
         verify(repository).findOneByEmail(email);
-        //verify(passwordEncoder).encode(volunteer.getPassword());
         verify(repository).save(volunteer);
     }
 }
