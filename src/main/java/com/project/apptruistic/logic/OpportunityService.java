@@ -13,6 +13,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -93,4 +95,79 @@ public class OpportunityService {
         opportunity.setDurationInMinutes(duration.toMinutes());
     }
 
+
+    public List<Opportunity> getAllByZipCode(int zipcode) {
+        List<Opportunity> opportunities = opportunityRepository.findAllByZipCode(zipcode);
+        return opportunities;
+    }
+
+    public List<Opportunity> getAllByCategory(OpportunityCategory category) {
+        List<Opportunity> opportunities = opportunityRepository.findAllByCategory(category);
+        return opportunities;
+    }
+
+    public List<Opportunity> getAllByOrganizationName(String organizationName) {
+        return opportunityRepository.findAllByCreatorName(organizationName).stream()
+                .filter(e -> e.getCreatorType().equals(CreatorType.ORGANIZATION))
+                .collect(Collectors.toList());
+
+    }
+
+    public List<Opportunity> getAllSingleOpportunities() {
+        return opportunityRepository.findAll().stream()
+                .filter(e -> e.getNumberOfParticipants() == 1)
+                .collect(Collectors.toList());
+    }
+
+    public List<Opportunity> getAllGroupOpportunities() {
+        return opportunityRepository.findAll().stream()
+                .filter(e -> e.getNumberOfParticipants() > 1)
+                .collect(Collectors.toList());
+    }
+
+    public List<Opportunity> getAllByIndividualCreator() {
+        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorType(CreatorType.INDIVIDUAL);
+        return opportunities;
+    }
+
+    public List<Opportunity> getAllByOrganizationCreator() {
+        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorType(CreatorType.ORGANIZATION);
+        return opportunities;
+    }
+
+/*
+    public List<Opportunity> getAllByTime(String time) {
+        List<Opportunity> timeOfopportunities = opportunityRepository.findAll();
+        LocalTime morning = LocalTime.parse("12:00");
+        LocalTime afternoon = LocalTime.parse("18:00");
+        LocalTime night = LocalTime.parse("24:00");
+
+        List<Opportunity> morningOpportunities = timeOfopportunities.stream()
+                .filter(e -> e.getStartTime().isBefore(morning))
+                .collect(Collectors.toList());
+
+        List<Opportunity> afternoonOpportunities = timeOfopportunities.stream()
+                .filter(e -> e.getStartTime().isBefore(afternoon) && e.getStartTime().isAfter(morning))
+                .collect(Collectors.toList());
+
+        List<Opportunity> nightOpportunities = timeOfopportunities.stream()
+                .filter(e -> e.getStartTime().isBefore(night) && e.getStartTime().isAfter(afternoon))
+                .collect(Collectors.toList());
+
+        if (time.equals("Morning")) {
+            return morningOpportunities;
+        }
+        if (time.equals("Afternoon")) {
+            return afternoonOpportunities;
+        }
+
+            return nightOpportunities;
+
+    }
+        public List<Opportunity> getAllByOccurDate (LocalDate date){
+            List<Opportunity> opportunities = opportunityRepository.findAllByOccurDate(date);
+            return opportunities;
+        }
+
+ */
 }

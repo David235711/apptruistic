@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/opportunities")
 public class OpportunityEndpoint {
     private final OpportunityService opportunityService;
+
 
     public OpportunityEndpoint(OpportunityService opportunityService) {
         this.opportunityService = opportunityService;
@@ -52,5 +56,64 @@ public class OpportunityEndpoint {
     OpportunityCategory[] getAllCategories() {
         return OpportunityCategory.values();
     }
+
+
+    @GetMapping("/zipcode/{zipcode}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    List<Opportunity> getByZipcode(@PathVariable int zipcode) {
+        List<Opportunity> opportunities = opportunityService.getAllByZipCode(zipcode);
+        return opportunities;
+    }
+
+    @GetMapping("/category/{category}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    List<Opportunity> getByCategory(@PathVariable OpportunityCategory category) {
+        List<Opportunity> opportunities = opportunityService.getAllByCategory(category);
+        return opportunities;
+    }
+
+
+    @GetMapping("/organization/{organizationName}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    List<Opportunity> getByOrganizationName(@PathVariable String organizationName) {
+        List<Opportunity> opportunities = opportunityService.getAllByOrganizationName(organizationName);
+        return opportunities;
+    }
+
+    @GetMapping("/singleOpportunities")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    List<Opportunity> getSingleOpportuities() {
+        List<Opportunity> opportunities = opportunityService.getAllSingleOpportunities();
+        return opportunities;
+    }
+
+    @GetMapping("/groupOpportunities")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    List<Opportunity> getGroupOpportuities() {
+        List<Opportunity> opportunities = opportunityService.getAllGroupOpportunities();
+        return opportunities;
+    }
+
+    @GetMapping("/individualCreator")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    List<Opportunity> getIndividualCreator() {
+        List<Opportunity> opportunities = opportunityService.getAllByIndividualCreator();
+        return opportunities;
+    }
+    @GetMapping("/organizationCreator")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    List<Opportunity> getOrganizationCreator() {
+        List<Opportunity> opportunities = opportunityService.getAllByOrganizationCreator();
+        return opportunities;
+    }
+
+/*
+    @GetMapping("/time/{time}")
+     List<Opportunity> getTime(@PathVariable String time) {
+        List<Opportunity> opportunities = opportunityService.getAllByTime(time);
+        return opportunities;
+    }
+
+ */
 
 }
