@@ -41,6 +41,7 @@ public class OrganizationService {
             return Optional.empty();
         }
         Organization organization = oOrganization.get();
+        organization.setOrganizationName(newOrganization.getOrganizationName());
         organization.setContactFirstName(newOrganization.getContactFirstName());
         organization.setContactLastName(newOrganization.getContactLastName());
         organization.setPhoneNumber(newOrganization.getPhoneNumber());

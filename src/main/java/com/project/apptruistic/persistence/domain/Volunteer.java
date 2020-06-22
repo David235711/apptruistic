@@ -47,7 +47,8 @@ public class Volunteer {
     @NotNull(message = "Please select a preferred type of opportunity")
     private CreatorType preferredType;
 
-    private Set<OpportunityCategory> categories = new HashSet<>();
+    @NotNull(message = "Please provide a category")
+    private OpportunityCategory categories;
 
     @DBRef
     private List<Opportunity> appliedOpportunities = new ArrayList<>();
@@ -66,7 +67,7 @@ public class Volunteer {
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, Set<OpportunityCategory> categories) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, OpportunityCategory categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -77,7 +78,7 @@ public class Volunteer {
         this.categories = categories;
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, CreatorType preferredType,Set<OpportunityCategory> categories) {
+    public Volunteer(@NotEmpty(message = "Please provide a first name") String firstName, @NotEmpty(message = "Please provide a last name") String lastName, LocalDate dateOfBirth, @NotEmpty(message = "please provide a gender") String gender, @Length(min = 8, message = "Please provide a password with at least 8 characters") String password, @NotEmpty(message = "Please provide an email address") @Email(message = "Please provide a valid email address") String email, @NotNull(message = "Please select a preferred type of opportunity") CreatorType preferredType, @NotNull(message = "Please provide a category") OpportunityCategory categories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -168,11 +169,11 @@ public class Volunteer {
         this.gender = gender;
     }
 
-    public Set<OpportunityCategory> getCategories() {
+    public OpportunityCategory getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<OpportunityCategory> categories) {
+    public void setCategories(OpportunityCategory categories) {
         this.categories = categories;
     }
 
