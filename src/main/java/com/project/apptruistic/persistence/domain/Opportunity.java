@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class Opportunity {
 
     @Indexed(unique = true)
     private int hashcode;
+
+    private LocalDateTime timestamp;
 
     @NotEmpty(message = "Please provide a name")
     private String name;
@@ -336,5 +340,13 @@ public class Opportunity {
     @Override
     public int hashCode() {
         return Objects.hash(name, creatorId, occurDate, startTime, endTime);
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }

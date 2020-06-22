@@ -39,7 +39,8 @@ public class VolunteerSignupRequest {
     @NotNull
     private CreatorType preferredType;
 
-    private Set<OpportunityCategory> categories = new HashSet<>();
+    @NotNull
+    private OpportunityCategory categories;
 
     public String getEmail() {
         return email;
@@ -97,11 +98,11 @@ public class VolunteerSignupRequest {
         this.password = password;
     }
 
-    public Set<OpportunityCategory> getCategories() {
+    public OpportunityCategory getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<OpportunityCategory> categories) {
+    public void setCategories(OpportunityCategory categories) {
         this.categories = categories;
     }
 

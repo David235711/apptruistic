@@ -1,18 +1,26 @@
 package com.project.apptruistic.logic;
 
+import com.project.apptruistic.persistence.domain.Individual;
 import com.project.apptruistic.persistence.domain.Opportunity;
+import com.project.apptruistic.persistence.domain.Organization;
 import com.project.apptruistic.persistence.domain.Volunteer;
+import com.project.apptruistic.persistence.repository.IndividualRepository;
 import com.project.apptruistic.persistence.repository.OpportunityRepository;
+import com.project.apptruistic.persistence.repository.OrganizationRepository;
 import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,12 +29,20 @@ public class OpportunityService {
 
     private final OpportunityRepository opportunityRepository;
     private final VolunteerRepository volunteerRepository;
+    private final OrganizationRepository organizationRepository;
+    private final IndividualRepository individualRepository;
+    private final OrganizationService organizationService;
+    private final IndividualService individualService;
     private final int urgentLimitInWeeks;
 
     public OpportunityService(OpportunityRepository opportunityRepository,
-                              VolunteerRepository volunteerRepository, @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
+                              VolunteerRepository volunteerRepository, OrganizationRepository organizationRepository, IndividualRepository individualRepository, OrganizationService organizationService, IndividualService individualService, @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
         this.opportunityRepository = opportunityRepository;
         this.volunteerRepository = volunteerRepository;
+        this.organizationRepository = organizationRepository;
+        this.individualRepository = individualRepository;
+        this.organizationService = organizationService;
+        this.individualService = individualService;
         this.urgentLimitInWeeks = urgentLimitInWeeks;
     }
 
@@ -38,7 +54,25 @@ public class OpportunityService {
         }
         opportunity.setHashcode(hashcode);
         calculateDuration(opportunity);
-        return opportunityRepository.save(opportunity);
+        opportunity.setTimestamp(LocalDateTime.now());
+        opportunityRepository.save(opportunity);
+        String creatorId = opportunity.getCreatorId();
+        Optional<Organization> oOrganization = organizationRepository.findById(creatorId);
+        Optional<Individual> oIndividual = individualRepository.findById(creatorId);
+        if (oOrganization.isPresent()) {
+            Organization organization = oOrganization.get();
+            organization.getCreatedOpportunity().add(opportunity);
+            organizationRepository.save(organization);
+        }
+        if (oIndividual.isPresent()) {
+            Individual individual = oIndividual.get();
+            individual.getCreatedOpportunity().add(opportunity);
+            individualRepository.save(individual);
+        }
+        if(oOrganization.isEmpty() && oIndividual.isEmpty()){
+            System.out.println("creator not found");
+        }
+        return opportunity;
     }
 
     public Optional<Opportunity> get(String name) {
@@ -50,7 +84,9 @@ public class OpportunityService {
     }
 
     public List<Opportunity> getAll() {
-        return opportunityRepository.findAll();
+        return opportunityRepository.findAll().stream()
+                .sorted(Comparator.comparing(Opportunity::getTimestamp).reversed())
+                .collect(toList());
     }
 
     public List<Opportunity> getAllAvailables() {
@@ -71,7 +107,7 @@ public class OpportunityService {
         }
         Volunteer volunteer = oVolunteer.get();
         return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(opportunity -> volunteer.getCategories().contains(opportunity.getCategory()))
+                .filter(opportunity -> volunteer.getCategories().equals(opportunity.getCategory()))
                 .collect(toList());
     }
 
@@ -93,4 +129,79 @@ public class OpportunityService {
         opportunity.setDurationInMinutes(duration.toMinutes());
     }
 
+
+    public List<Opportunity> getAllByZipCode(int zipcode) {
+        List<Opportunity> opportunities = opportunityRepository.findAllByZipCode(zipcode);
+        return opportunities;
+    }
+
+    public List<Opportunity> getAllByCategory(OpportunityCategory category) {
+        List<Opportunity> opportunities = opportunityRepository.findAllByCategory(category);
+        return opportunities;
+    }
+
+    public List<Opportunity> getAllByOrganizationName(String organizationName) {
+        return opportunityRepository.findAllByCreatorName(organizationName).stream()
+                .filter(e -> e.getCreatorType().equals(CreatorType.ORGANIZATION))
+                .collect(Collectors.toList());
+
+    }
+
+    public List<Opportunity> getAllSingleOpportunities() {
+        return opportunityRepository.findAll().stream()
+                .filter(e -> e.getNumberOfParticipants() == 1)
+                .collect(Collectors.toList());
+    }
+
+    public List<Opportunity> getAllGroupOpportunities() {
+        return opportunityRepository.findAll().stream()
+                .filter(e -> e.getNumberOfParticipants() > 1)
+                .collect(Collectors.toList());
+    }
+
+    public List<Opportunity> getAllByIndividualCreator() {
+        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorType(CreatorType.INDIVIDUAL);
+        return opportunities;
+    }
+
+    public List<Opportunity> getAllByOrganizationCreator() {
+        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorType(CreatorType.ORGANIZATION);
+        return opportunities;
+    }
+
+/*
+    public List<Opportunity> getAllByTime(String time) {
+        List<Opportunity> timeOfopportunities = opportunityRepository.findAll();
+        LocalTime morning = LocalTime.parse("12:00");
+        LocalTime afternoon = LocalTime.parse("18:00");
+        LocalTime night = LocalTime.parse("24:00");
+
+        List<Opportunity> morningOpportunities = timeOfopportunities.stream()
+                .filter(e -> e.getStartTime().isBefore(morning))
+                .collect(Collectors.toList());
+
+        List<Opportunity> afternoonOpportunities = timeOfopportunities.stream()
+                .filter(e -> e.getStartTime().isBefore(afternoon) && e.getStartTime().isAfter(morning))
+                .collect(Collectors.toList());
+
+        List<Opportunity> nightOpportunities = timeOfopportunities.stream()
+                .filter(e -> e.getStartTime().isBefore(night) && e.getStartTime().isAfter(afternoon))
+                .collect(Collectors.toList());
+
+        if (time.equals("Morning")) {
+            return morningOpportunities;
+        }
+        if (time.equals("Afternoon")) {
+            return afternoonOpportunities;
+        }
+
+            return nightOpportunities;
+
+    }
+        public List<Opportunity> getAllByOccurDate (LocalDate date){
+            List<Opportunity> opportunities = opportunityRepository.findAllByOccurDate(date);
+            return opportunities;
+        }
+
+ */
 }

@@ -145,7 +145,7 @@ class OpportunityServiceTest {
     @Test
     void findSuggestedOpportunitiesFindsVolunteer() {
         String id = "id";
-        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", CreatorType.INDIVIDUAL, Set.of(OpportunityCategory.ANIMALS));
+        Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", CreatorType.INDIVIDUAL, OpportunityCategory.ANIMALS);
         Opportunity expectedOpp = new Opportunity("name", OpportunityCategory.ANIMALS, CreatorType.INDIVIDUAL,
                 "creatorId", "creatorName", "shortDescription", "detailedDescription",
                 LocalDate.of(2020, 6, 22), LocalTime.now(), LocalTime.now(), 1, "street", "houseNumber", "Vienna", 1000);
