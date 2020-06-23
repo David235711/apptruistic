@@ -1,5 +1,6 @@
 package com.project.apptruistic.logic;
 
+import com.project.apptruistic.communication.dto.VolunteerDTO;
 import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +49,7 @@ public class VolunteerService {
         volunteer.setLastName(newVolunteer.getLastName());
         volunteer.setDateOfBirth(newVolunteer.getDateOfBirth());
         volunteer.setGender(newVolunteer.getGender());
-        volunteer.setCategories(newVolunteer.getCategories());
+        volunteer.setCategory(newVolunteer.getCategory());
         volunteer.setPersonalDescription(newVolunteer.getPersonalDescription());
         volunteer.setPhoneNumber(newVolunteer.getPhoneNumber());
         volunteer.setPreferredType(newVolunteer.getPreferredType());
@@ -60,5 +61,23 @@ public class VolunteerService {
         }
         repository.save(volunteer);
         return Optional.of(volunteer);
+    }
+
+    public Optional<VolunteerDTO> getVolunteerDtoById(String id) {
+        Optional<Volunteer> oVolunteer = repository.findById(id);
+        if (oVolunteer.isEmpty()) {
+            System.out.println("Volunteer by id not found");
+            return Optional.empty();
+        }
+        Volunteer volunteer = oVolunteer.get();
+        VolunteerDTO volunteerDTO = new VolunteerDTO(
+                volunteer.getId(),
+                volunteer.getFirstName(),
+                volunteer.getLastName(),
+                volunteer.getGender(),
+                volunteer.getCategory(),
+                volunteer.getPersonalDescription()
+        );
+        return Optional.of(volunteerDTO);
     }
 }

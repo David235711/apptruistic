@@ -1,5 +1,6 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.project.apptruistic.communication.dto.VolunteerDTO;
 import com.project.apptruistic.logic.VolunteerService;
 import com.project.apptruistic.persistence.domain.Volunteer;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,5 +30,10 @@ public class VolunteerInformationEndpoint {
     @PreAuthorize("hasRole('VOLUNTEER')")
     Volunteer modifyVolunteer(@PathVariable String email, @Valid @RequestBody Volunteer volunteer) {
         return volunteerService.editVolunteer(email, volunteer).orElse(null);
+    }
+
+    @GetMapping("/preview/{id}")
+    VolunteerDTO getVolunteerDTO(@PathVariable String id) {
+        return volunteerService.getVolunteerDtoById(id).orElse(null);
     }
 }

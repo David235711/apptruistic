@@ -21,7 +21,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -92,13 +91,16 @@ public class OpportunityService {
 
 
     public List<Opportunity> getAllAvailables() {
-        return opportunityRepository.findAllByDoneFalse();
+        return opportunityRepository.findAllByDoneFalse().stream()
+                .sorted(Comparator.comparing(Opportunity::getTimestamp).reversed())
+                .collect(toList());
     }
 
     public List<Opportunity> findHeroOpportunities() {
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(urgentLimitInWeeks)))
                 .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
+                .sorted(Comparator.comparing(Opportunity::getTimestamp).reversed())
                 .collect(toList());
     }
 
@@ -109,7 +111,7 @@ public class OpportunityService {
         }
         Volunteer volunteer = oVolunteer.get();
         return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(opportunity -> volunteer.getCategories().equals(opportunity.getCategory()))
+                .filter(opportunity -> volunteer.getCategory().equals(opportunity.getCategory()))
                 .collect(toList());
     }
 

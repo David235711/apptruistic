@@ -99,7 +99,7 @@ public class AuthController {
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getEmail(),
                 signUpRequest.getPreferredType(),
-                signUpRequest.getCategories()
+                signUpRequest.getCategory()
         );
 
         Set<String> strRoles = signUpRequest.getRoles();

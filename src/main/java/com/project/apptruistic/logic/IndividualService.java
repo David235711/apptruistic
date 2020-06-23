@@ -1,7 +1,7 @@
 package com.project.apptruistic.logic;
 
+import com.project.apptruistic.communication.dto.IndividualDTO;
 import com.project.apptruistic.persistence.domain.Individual;
-import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.IndividualRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,5 +60,23 @@ public class IndividualService {
         }
         repository.save(individual);
         return Optional.of(individual);
+    }
+
+    public Optional<IndividualDTO> getIndividualDtoById(String id) {
+        Optional<Individual> oIndividual = repository.findById(id);
+        if (oIndividual.isEmpty()) {
+            System.out.println("individual DTO not found");
+            return Optional.empty();
+        }
+        Individual individual = oIndividual.get();
+        IndividualDTO individualDTO = new IndividualDTO(
+                individual.getId(),
+                individual.getFirstName(),
+                individual.getLastName(),
+                individual.getGender(),
+                individual.getZipCode(),
+                individual.getPersonalDescription()
+        );
+        return Optional.of(individualDTO);
     }
 }
