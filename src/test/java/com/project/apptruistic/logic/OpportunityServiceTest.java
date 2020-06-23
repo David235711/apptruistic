@@ -111,6 +111,8 @@ class OpportunityServiceTest {
         verify(opportunityRepository).findAll();
     }
 
+
+
     @Test
     void findHeroOpportunities() {
         Opportunity expectedOpp = new Opportunity("name", OpportunityCategory.ANIMALS, CreatorType.INDIVIDUAL,
