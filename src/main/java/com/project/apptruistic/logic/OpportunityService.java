@@ -96,6 +96,7 @@ public class OpportunityService {
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(urgentLimitInWeeks)))
                 .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
+                .peek(System.out::println)
                 .collect(toList());
     }
 

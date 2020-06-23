@@ -1,5 +1,7 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.project.apptruistic.communication.endpoint.dto.IndividualDTO;
+import com.project.apptruistic.communication.endpoint.dto.VolunteerDTO;
 import com.project.apptruistic.logic.IndividualService;
 import com.project.apptruistic.persistence.domain.Individual;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +31,11 @@ public class IndividualInformationEndpoint {
     @PreAuthorize("hasRole('INDIVIDUAL')")
     Individual modifyIndividual(@PathVariable String email, @Valid @RequestBody Individual individual) {
         return individualService.editIndividual(email, individual).orElse(null);
+    }
+
+    @GetMapping("/preview/{id}")
+    IndividualDTO getIndividualDTO(@PathVariable String id) {
+        return individualService.getIndividualDtoById(id).orElse(null);
     }
 
 }
