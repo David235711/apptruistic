@@ -1,5 +1,6 @@
 package com.project.apptruistic.logic;
 
+import com.project.apptruistic.communication.dto.OrganizationDTO;
 import com.project.apptruistic.persistence.domain.Organization;
 import com.project.apptruistic.persistence.repository.OrganizationRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,12 +52,23 @@ public class OrganizationService {
         organization.setZipCode(newOrganization.getZipCode());
         organization.setPersonalDescription(newOrganization.getPersonalDescription());
         String password = newOrganization.getPassword();
-        if(!password.equals(organization.getPassword())){
+        if (!password.equals(organization.getPassword())) {
             String encode = passwordEncoder.encode(password);
             organization.setPassword(encode);
             System.out.println("old password");
         }
         repository.save(organization);
         return Optional.of(organization);
+    }
+
+    public Optional<OrganizationDTO> getOrganizationDTOById(String id) {
+        Optional<Organization> oOrganization = repository.findById(id);
+        if (oOrganization.isEmpty()) {
+            System.out.println("Organization DTO not found");
+            return Optional.empty();
+        }
+        Organization organization = oOrganization.get();
+        OrganizationDTO organizationDTO = new OrganizationDTO(organization.getId(), organization.getOrganizationName(), organization.getContactFirstName(), organization.getContactLastName(), organization.getPhoneNumber(), organization.getStreet(), organization.getHouseNumber(), organization.getCity(), organization.getZipCode(), organization.getPersonalDescription());
+        return Optional.of(organizationDTO);
     }
 }
