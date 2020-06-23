@@ -1,26 +1,24 @@
-package com.project.apptruistic.communication.endpoint.dto;
-
-import com.project.apptruistic.logic.OpportunityCategory;
+package com.project.apptruistic.communication.dto;
 
 import java.util.Objects;
 
-public class VolunteerDTO {
+public class IndividualDTO {
     private String id;
     private String firstName;
     private String lastName;
     private String gender;
-    private OpportunityCategory category;
+    private int zipCode;
     private String personalDescription;
 
-    public VolunteerDTO() {
+    public IndividualDTO() {
     }
 
-    public VolunteerDTO(String id, String firstName, String lastName, String gender, OpportunityCategory category, String personalDescription) {
+    public IndividualDTO(String id, String firstName, String lastName, String gender, int zipCode, String personalDescription) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.category = category;
+        this.zipCode = zipCode;
         this.personalDescription = personalDescription;
     }
 
@@ -56,12 +54,12 @@ public class VolunteerDTO {
         this.gender = gender;
     }
 
-    public OpportunityCategory getCategory() {
-        return category;
+    public int getZipCode() {
+        return zipCode;
     }
 
-    public void setCategory(OpportunityCategory category) {
-        this.category = category;
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getPersonalDescription() {
@@ -76,17 +74,17 @@ public class VolunteerDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VolunteerDTO that = (VolunteerDTO) o;
-        return Objects.equals(id, that.id) &&
+        IndividualDTO that = (IndividualDTO) o;
+        return zipCode == that.zipCode &&
+                Objects.equals(id, that.id) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(gender, that.gender) &&
-                category == that.category &&
                 Objects.equals(personalDescription, that.personalDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, gender, category, personalDescription);
+        return Objects.hash(id, firstName, lastName, gender, zipCode, personalDescription);
     }
 }

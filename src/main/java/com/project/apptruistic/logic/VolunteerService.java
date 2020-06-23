@@ -1,6 +1,6 @@
 package com.project.apptruistic.logic;
 
-import com.project.apptruistic.communication.endpoint.dto.VolunteerDTO;
+import com.project.apptruistic.communication.dto.VolunteerDTO;
 import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Value;
