@@ -48,7 +48,7 @@ public class VolunteerService {
         volunteer.setLastName(newVolunteer.getLastName());
         volunteer.setDateOfBirth(newVolunteer.getDateOfBirth());
         volunteer.setGender(newVolunteer.getGender());
-        volunteer.setCategories(newVolunteer.getCategories());
+        volunteer.setCategory(newVolunteer.getCategory());
         volunteer.setPersonalDescription(newVolunteer.getPersonalDescription());
         volunteer.setPhoneNumber(newVolunteer.getPhoneNumber());
         volunteer.setPreferredType(newVolunteer.getPreferredType());

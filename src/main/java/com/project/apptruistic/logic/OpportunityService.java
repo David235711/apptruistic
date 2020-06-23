@@ -20,7 +20,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -107,7 +106,7 @@ public class OpportunityService {
         }
         Volunteer volunteer = oVolunteer.get();
         return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(opportunity -> volunteer.getCategories().equals(opportunity.getCategory()))
+                .filter(opportunity -> volunteer.getCategory().equals(opportunity.getCategory()))
                 .collect(toList());
     }
 
