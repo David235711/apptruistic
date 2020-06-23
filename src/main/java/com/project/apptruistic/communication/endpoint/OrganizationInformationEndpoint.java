@@ -1,5 +1,6 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.project.apptruistic.communication.dto.OrganizationDTO;
 import com.project.apptruistic.logic.OrganizationService;
 import com.project.apptruistic.persistence.domain.Opportunity;
 import com.project.apptruistic.persistence.domain.Organization;
@@ -32,5 +33,9 @@ public class OrganizationInformationEndpoint {
     Organization edit(@PathVariable String email,@Valid @RequestBody Organization organization) {
         return organizationService.editOrganization(email, organization)
                 .orElse(null);
+    }
+    @GetMapping("/preview/{id}")
+    OrganizationDTO getOrganizationDTO(@PathVariable String id){
+        return organizationService.getOrganizationDTOById(id).orElse(null);
     }
 }
