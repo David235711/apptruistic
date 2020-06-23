@@ -90,13 +90,16 @@ public class OpportunityService {
     }
 
     public List<Opportunity> getAllAvailables() {
-        return opportunityRepository.findAllByDoneFalse();
+        return opportunityRepository.findAllByDoneFalse().stream()
+                .sorted(Comparator.comparing(Opportunity::getTimestamp).reversed())
+                .collect(toList());
     }
 
     public List<Opportunity> findHeroOpportunities() {
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> opportunity.getOccurDate().isBefore(LocalDate.now().plusWeeks(urgentLimitInWeeks)))
                 .filter(opportunity -> !opportunity.getOccurDate().isBefore(LocalDate.now()))
+                .sorted(Comparator.comparing(Opportunity::getTimestamp).reversed())
                 .collect(toList());
     }
 
@@ -108,6 +111,7 @@ public class OpportunityService {
         Volunteer volunteer = oVolunteer.get();
         return opportunityRepository.findAllByDoneFalse().stream()
                 .filter(opportunity -> volunteer.getCategories().equals(opportunity.getCategory()))
+                .sorted(Comparator.comparing(Opportunity::getTimestamp).reversed())
                 .collect(toList());
     }
 
