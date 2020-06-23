@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 public class VolunteerSignupRequest {
@@ -39,8 +38,8 @@ public class VolunteerSignupRequest {
     @NotNull
     private CreatorType preferredType;
 
-    @NotNull
-    private OpportunityCategory categories;
+    @NotNull(message = "opportunity category null")
+    private OpportunityCategory category;
 
     public String getEmail() {
         return email;
@@ -98,12 +97,12 @@ public class VolunteerSignupRequest {
         this.password = password;
     }
 
-    public OpportunityCategory getCategories() {
-        return categories;
+    public OpportunityCategory getCategory() {
+        return category;
     }
 
-    public void setCategories(OpportunityCategory categories) {
-        this.categories = categories;
+    public void setCategory(OpportunityCategory category) {
+        this.category = category;
     }
 
     public CreatorType getPreferredType() {

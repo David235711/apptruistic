@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -48,7 +47,7 @@ public class Volunteer {
     private CreatorType preferredType;
 
     @NotNull(message = "Please provide a category")
-    private OpportunityCategory categories;
+    private OpportunityCategory category;
 
     @DBRef
     private List<Opportunity> appliedOpportunities = new ArrayList<>();
@@ -67,7 +66,7 @@ public class Volunteer {
     public Volunteer() {
     }
 
-    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, OpportunityCategory categories) {
+    public Volunteer(String firstName, String lastName, LocalDate dateOfBirth, String gender, String password, String email, Set<Role> roles, OpportunityCategory category) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -75,10 +74,10 @@ public class Volunteer {
         this.password = password;
         this.email = email;
         this.roles = roles;
-        this.categories = categories;
+        this.category = category;
     }
 
-    public Volunteer(@NotEmpty(message = "Please provide a first name") String firstName, @NotEmpty(message = "Please provide a last name") String lastName, LocalDate dateOfBirth, @NotEmpty(message = "please provide a gender") String gender, @Length(min = 8, message = "Please provide a password with at least 8 characters") String password, @NotEmpty(message = "Please provide an email address") @Email(message = "Please provide a valid email address") String email, @NotNull(message = "Please select a preferred type of opportunity") CreatorType preferredType, @NotNull(message = "Please provide a category") OpportunityCategory categories) {
+    public Volunteer(@NotEmpty(message = "Please provide a first name") String firstName, @NotEmpty(message = "Please provide a last name") String lastName, LocalDate dateOfBirth, @NotEmpty(message = "please provide a gender") String gender, @Length(min = 8, message = "Please provide a password with at least 8 characters") String password, @NotEmpty(message = "Please provide an email address") @Email(message = "Please provide a valid email address") String email, @NotNull(message = "Please select a preferred type of opportunity") CreatorType preferredType, @NotNull(message = "Please provide a category") OpportunityCategory category) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -86,7 +85,7 @@ public class Volunteer {
         this.password = password;
         this.email = email;
         this.preferredType = preferredType;
-        this.categories = categories;
+        this.category = category;
     }
 
     public String getPhoneNumber() {
@@ -169,12 +168,12 @@ public class Volunteer {
         this.gender = gender;
     }
 
-    public OpportunityCategory getCategories() {
-        return categories;
+    public OpportunityCategory getCategory() {
+        return category;
     }
 
-    public void setCategories(OpportunityCategory categories) {
-        this.categories = categories;
+    public void setCategory(OpportunityCategory category) {
+        this.category = category;
     }
 
     public List<Opportunity> getAppliedOpportunities() {
@@ -214,7 +213,7 @@ public class Volunteer {
                 Objects.equals(password, volunteer.password) &&
                 Objects.equals(email, volunteer.email) &&
                 Objects.equals(roles, volunteer.roles) &&
-                Objects.equals(categories, volunteer.categories) &&
+                Objects.equals(category, volunteer.category) &&
                 Objects.equals(appliedOpportunities, volunteer.appliedOpportunities) &&
                 Objects.equals(declinedOpportunities, volunteer.declinedOpportunities) &&
                 Objects.equals(acceptedOpportunities, volunteer.acceptedOpportunities) &&
@@ -223,7 +222,7 @@ public class Volunteer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, categories, appliedOpportunities, declinedOpportunities, acceptedOpportunities, personalDescription);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, category, appliedOpportunities, declinedOpportunities, acceptedOpportunities, personalDescription);
     }
 
     public CreatorType getPreferredType() {
