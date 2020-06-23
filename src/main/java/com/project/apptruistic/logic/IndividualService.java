@@ -1,8 +1,7 @@
 package com.project.apptruistic.logic;
 
-import com.project.apptruistic.communication.endpoint.dto.IndividualDTO;
+import com.project.apptruistic.communication.dto.IndividualDTO;
 import com.project.apptruistic.persistence.domain.Individual;
-import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.IndividualRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

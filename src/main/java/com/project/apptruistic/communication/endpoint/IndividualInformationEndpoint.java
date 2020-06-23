@@ -1,7 +1,6 @@
 package com.project.apptruistic.communication.endpoint;
 
-import com.project.apptruistic.communication.endpoint.dto.IndividualDTO;
-import com.project.apptruistic.communication.endpoint.dto.VolunteerDTO;
+import com.project.apptruistic.communication.dto.IndividualDTO;
 import com.project.apptruistic.logic.IndividualService;
 import com.project.apptruistic.persistence.domain.Individual;
 import org.springframework.security.access.prepost.PreAuthorize;
