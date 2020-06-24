@@ -80,6 +80,7 @@ public class Opportunity {
     @NotNull(message = "please include a zip code")
     private int zipCode;
 
+    // if confirmed volunteers is full
     private boolean done;
 
     @DBRef
