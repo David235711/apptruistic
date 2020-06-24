@@ -18,15 +18,17 @@ public interface OpportunityRepository extends MongoRepository<Opportunity, Stri
 
     List<Opportunity> findAllByDoneFalse();
 
-    List<Opportunity> findAllByZipCode(int zipCode);
+    //  List<Opportunity> findAllByZipCode(int zipCode);
+    List<Opportunity> findAllByZipCodeAndDoneFalse(int zipCode);
 
-    List<Opportunity> findAllByCategory(OpportunityCategory category);
+    List<Opportunity> findAllByCategoryAndDoneFalse(OpportunityCategory category);
 
-    List<Opportunity> findAllByCreatorName(String creatorName);
+    List<Opportunity> findAllByCreatorNameAndDoneFalse(String creatorName);
 
-    List<Opportunity> findAllByCreatorType(CreatorType creatorType);
+    List<Opportunity> findAllByCreatorTypeAndDoneFalse(CreatorType creatorType);
 
-    List<Opportunity> findAllByOccurDate(LocalDate date);
+    List<Opportunity> findAllByOccurDateAndDoneFalse(LocalDate date);
 
     List<Opportunity> findAllByStartTime(LocalTime startTime);
+    // List<Opportunity> findAllBy$ZAndZipCode$AndStartTime (int zipcode)
 }

@@ -26,7 +26,7 @@ public class Opportunity {
     @Indexed(unique = true)
     private int hashcode;
 
-    private LocalDateTime timestamp;
+   private LocalDateTime timestamp;
 
     @NotEmpty(message = "Please provide a name")
     private String name;
@@ -349,4 +349,6 @@ public class Opportunity {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
+
 }
