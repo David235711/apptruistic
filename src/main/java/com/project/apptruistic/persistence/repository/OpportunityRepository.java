@@ -3,7 +3,6 @@ package com.project.apptruistic.persistence.repository;
 import com.project.apptruistic.logic.CreatorType;
 import com.project.apptruistic.logic.OpportunityCategory;
 import com.project.apptruistic.persistence.domain.Opportunity;
-import com.project.apptruistic.persistence.query.OpportunityRepositoryCustom;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalDate;
@@ -11,7 +10,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface OpportunityRepository extends MongoRepository<Opportunity, String>, OpportunityRepositoryCustom {
+public interface OpportunityRepository extends MongoRepository<Opportunity, String> {
 
     Optional<Opportunity> findOneByName(String name);
 
