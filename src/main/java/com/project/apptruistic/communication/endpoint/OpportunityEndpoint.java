@@ -154,30 +154,34 @@ public class OpportunityEndpoint {
     @GetMapping("/lookup")
     @ResponseBody
     public List<Opportunity> processSearch(
-            @RequestParam Optional<Integer> zipCode,
+//            @RequestParam Optional<Integer> zipCode,
+            @RequestParam int zipCode,
             @RequestParam (required = false) OpportunityCategory category,
             @RequestParam (required = false) String creatorName,
-            @RequestParam Optional<Integer> numberOfParticipants,
+//            @RequestParam Optional<Integer> numberOfParticipants,
+            @RequestParam int numberOfParticipants,
             @RequestParam (required = false) CreatorType creatorType,
             @RequestParam (required = true) boolean done
     ) {
-        if (zipCode.isEmpty()  && category == null && creatorName == null && numberOfParticipants.isEmpty() && creatorType == null) {
-            return opportunityService.getAllAvailables();
+//        if (zipCode.isEmpty()  && category == null && creatorName == null && numberOfParticipants.isEmpty() && creatorType == null) {
+        if (zipCode == 0  && category == null && creatorName.isBlank() && numberOfParticipants == 0 && creatorType == null) {
+                return opportunityService.getAllAvailables();
+//            }
         }
         DynamicQuery dynamicQuery = new DynamicQuery();
-        if (zipCode.isPresent())  {
-            dynamicQuery.setZipCode(zipCode.get());
-        } else {
-            dynamicQuery.setZipCode(0);
-        }
+//        if (zipCode.isPresent())  {
+            dynamicQuery.setZipCode(zipCode);
+//        } else {
+//            dynamicQuery.setZipCode(0);
+//        }
 
         dynamicQuery.setCategory(category);
         dynamicQuery.setCreatorName(creatorName);
-        if (numberOfParticipants.isPresent()) {
-            dynamicQuery.setNumberOfParticipants(numberOfParticipants.get());
-        } else {
-            dynamicQuery.setNumberOfParticipants(0);
-        }
+//        if (numberOfParticipants.isPresent()) {
+            dynamicQuery.setNumberOfParticipants(numberOfParticipants);
+//        } else {
+//            dynamicQuery.setNumberOfParticipants(0);
+//        }
         dynamicQuery.setCreatorType(creatorType);
         dynamicQuery.setDone(done);
         return opportunityRepository.query(dynamicQuery);
