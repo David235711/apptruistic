@@ -82,4 +82,18 @@ public class DynamicQuery {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    @Override
+    public String toString() {
+        return "DynamicQuery{" +
+                "zipCode=" + zipCode +
+                ", category=" + category +
+                ", creatorName='" + creatorName + '\'' +
+                ", numberOfParticipants=" + numberOfParticipants +
+                ", creatorType=" + creatorType +
+                ", startTime='" + startTime + '\'' +
+                ", occurDate=" + occurDate +
+                ", done=" + done +
+                '}';
+    }
 }
