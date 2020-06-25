@@ -36,7 +36,11 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
         }
 
         if (dynamicQuery.getNumberOfParticipants() > 0) {
-            criteria.add(Criteria.where("numberOfParticipants").is(dynamicQuery.getNumberOfParticipants()));
+            if (dynamicQuery.getNumberOfParticipants() == 1) {
+                criteria.add(Criteria.where("numberOfParticipants").is(dynamicQuery.getNumberOfParticipants()));
+            } else {
+                criteria.add(Criteria.where("numberOfParticipants").gte(dynamicQuery.getNumberOfParticipants()));
+            }
         }
 
         if (dynamicQuery.getCreatorType() != null) {
