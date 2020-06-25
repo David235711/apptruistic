@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,6 +45,7 @@ class OpportunityRepositoryTest {
 
         List<Opportunity> opportunities = opportunityRepository.query(dynamicQuery);
         int expectedCount = 1;
+        System.out.println(opportunities.toString());
         assertEquals(expectedCount, opportunities.size());
     }
 
@@ -54,6 +57,7 @@ class OpportunityRepositoryTest {
 
         List<Opportunity> opportunities = opportunityRepository.query(dynamicQuery);
         int expectedCount = 1;
+        System.out.println(opportunities.toString());
         assertEquals(expectedCount, opportunities.size());
     }
 
@@ -65,6 +69,19 @@ class OpportunityRepositoryTest {
 
         List<Opportunity> opportunities = opportunityRepository.query(dynamicQuery);
         int expectedCount = 8;
+        System.out.println(opportunities.toString());
+        assertEquals(expectedCount, opportunities.size());
+    }
+
+    @Test
+    public void queryOccurDate() {
+        LocalDate localDate = LocalDate.of(2020, 7, 2);
+        DynamicQuery dynamicQuery = new DynamicQuery();
+        dynamicQuery.setOccurDate(localDate);
+
+        List<Opportunity> opportunities = opportunityRepository.query(dynamicQuery);
+        int expectedCount = 1;
+        System.out.println(opportunities.toString());
         assertEquals(expectedCount, opportunities.size());
     }
 }

@@ -48,6 +48,11 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
                     /*.lt(LocalTime.of(12, 0))*/);
         }
 
+        if (dynamicQuery.getOccurDate() != null) {
+            criteria.add(Criteria.where("occurDate").is(dynamicQuery.getOccurDate()));
+        }
+
+
         if (!criteria.isEmpty()) {
             query.addCriteria(new Criteria().andOperator(criteria.toArray(new Criteria[criteria.size()])));
         }
