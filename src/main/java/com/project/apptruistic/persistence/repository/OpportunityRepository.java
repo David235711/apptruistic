@@ -10,7 +10,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface OpportunityRepository extends MongoRepository<Opportunity, String> {
+public interface OpportunityRepository extends MongoRepository<Opportunity, String>, OpportunityRepositoryCustom {
 
     Optional<Opportunity> findOneByName(String name);
 

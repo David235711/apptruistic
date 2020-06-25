@@ -80,6 +80,7 @@ public class Opportunity {
     @NotNull(message = "please include a zip code")
     private int zipCode;
 
+    // if confirmed volunteers is full
     private boolean done;
 
     @DBRef
@@ -349,5 +350,18 @@ public class Opportunity {
         this.timestamp = timestamp;
     }
 
-
+    @Override
+    public String toString() {
+        return "Opportunity{" +
+                "name='" + name + '\'' +
+                ", category=" + category +
+                ", creatorType=" + creatorType +
+                ", occurDate=" + occurDate +
+                ", startTime=" + startTime +
+                ", numberOfParticipants=" + numberOfParticipants +
+                ", city='" + city + '\'' +
+                ", zipCode=" + zipCode +
+                ", done=" + done +
+                '}';
+    }
 }
