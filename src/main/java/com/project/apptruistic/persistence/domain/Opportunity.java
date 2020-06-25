@@ -349,5 +349,18 @@ public class Opportunity {
         this.timestamp = timestamp;
     }
 
-
+    @Override
+    public String toString() {
+        return "Opportunity{" +
+                "name='" + name + '\'' +
+                ", category=" + category +
+                ", creatorType=" + creatorType +
+                ", occurDate=" + occurDate +
+                ", startTime=" + startTime +
+                ", numberOfParticipants=" + numberOfParticipants +
+                ", city='" + city + '\'' +
+                ", zipCode=" + zipCode +
+                ", done=" + done +
+                '}';
+    }
 }

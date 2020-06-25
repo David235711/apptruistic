@@ -1,4 +1,4 @@
-package com.project.apptruistic.persistence.query;
+package com.project.apptruistic.persistence.repository;
 
 import com.project.apptruistic.logic.CreatorType;
 import com.project.apptruistic.logic.OpportunityCategory;
@@ -14,6 +14,7 @@ public class DynamicQuery {
     private CreatorType creatorType;
     private String startTime; // values: morning (6-12), afternoon (12-18), evening (18-24)
     private LocalDateTime occurDate;
+    private boolean done;
 
     public DynamicQuery() {
     }
@@ -72,5 +73,13 @@ public class DynamicQuery {
 
     public void setOccurDate(LocalDateTime occurDate) {
         this.occurDate = occurDate;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }

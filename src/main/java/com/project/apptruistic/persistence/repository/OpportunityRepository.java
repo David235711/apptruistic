@@ -3,7 +3,6 @@ package com.project.apptruistic.persistence.repository;
 import com.project.apptruistic.logic.CreatorType;
 import com.project.apptruistic.logic.OpportunityCategory;
 import com.project.apptruistic.persistence.domain.Opportunity;
-import com.project.apptruistic.persistence.query.OpportunityRepositoryCustom;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalDate;

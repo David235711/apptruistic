@@ -1,4 +1,4 @@
-package com.project.apptruistic.persistence.query;
+package com.project.apptruistic.persistence.repository;
 
 import com.project.apptruistic.persistence.domain.Opportunity;
 
