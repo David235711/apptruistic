@@ -54,7 +54,7 @@ public class OpportunityService {
         }
         opportunity.setHashcode(hashcode);
         calculateDuration(opportunity);
-        //  opportunity.setTimestamp(LocalDateTime.now());
+        opportunity.setTimestamp(LocalDateTime.now());
         opportunityRepository.save(opportunity);
         String creatorId = opportunity.getCreatorId();
         Optional<Organization> oOrganization = organizationRepository.findById(creatorId);
