@@ -26,7 +26,8 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
         if (dynamicQuery.getCreatorName() != null) {
             criteria.add(Criteria.where("creatorName").is(dynamicQuery.getCreatorName()));
         }
-        if (dynamicQuery.getZipCode() > 0) {
+
+        if (dynamicQuery.getZipCode() > 0 ) {
             criteria.add(Criteria.where("zipCode").is(dynamicQuery.getZipCode()));
         }
 
