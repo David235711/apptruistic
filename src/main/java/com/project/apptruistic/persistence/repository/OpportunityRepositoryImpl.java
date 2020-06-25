@@ -26,7 +26,8 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
         if (dynamicQuery.getCreatorName() != null) {
             criteria.add(Criteria.where("creatorName").is(dynamicQuery.getCreatorName()));
         }
-        if (dynamicQuery.getZipCode() > 0) {
+
+        if (dynamicQuery.getZipCode() > 0 ) {
             criteria.add(Criteria.where("zipCode").is(dynamicQuery.getZipCode()));
         }
 
@@ -47,6 +48,11 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
             criteria.add(Criteria.where("startTime").gt(LocalTime.of(0, 0))
                     /*.lt(LocalTime.of(12, 0))*/);
         }
+
+        /*if (dynamicQuery.getOccurDate() != null) {
+            criteria.add(Criteria.where("occurDate").is(dynamicQuery.getOccurDate()));
+        }*/
+
 
         if (!criteria.isEmpty()) {
             query.addCriteria(new Criteria().andOperator(criteria.toArray(new Criteria[criteria.size()])));

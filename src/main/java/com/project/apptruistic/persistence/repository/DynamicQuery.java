@@ -3,7 +3,7 @@ package com.project.apptruistic.persistence.repository;
 import com.project.apptruistic.logic.CreatorType;
 import com.project.apptruistic.logic.OpportunityCategory;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class DynamicQuery {
 
@@ -13,7 +13,7 @@ public class DynamicQuery {
     private int numberOfParticipants;
     private CreatorType creatorType;
     private String startTime; // values: morning (6-12), afternoon (12-18), evening (18-24)
-    private LocalDateTime occurDate;
+    private LocalDate occurDate;
     private boolean done;
 
     public DynamicQuery() {
@@ -67,11 +67,11 @@ public class DynamicQuery {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getOccurDate() {
+    public LocalDate getOccurDate() {
         return occurDate;
     }
 
-    public void setOccurDate(LocalDateTime occurDate) {
+    public void setOccurDate(LocalDate occurDate) {
         this.occurDate = occurDate;
     }
 
