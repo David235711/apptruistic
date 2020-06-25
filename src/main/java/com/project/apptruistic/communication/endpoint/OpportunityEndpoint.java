@@ -1,8 +1,11 @@
 package com.project.apptruistic.communication.endpoint;
 
+import com.project.apptruistic.logic.CreatorType;
 import com.project.apptruistic.logic.OpportunityCategory;
 import com.project.apptruistic.logic.OpportunityService;
 import com.project.apptruistic.persistence.domain.Opportunity;
+import com.project.apptruistic.persistence.repository.DynamicQuery;
+import com.project.apptruistic.persistence.repository.OpportunityRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +14,7 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,10 +24,11 @@ import java.util.stream.Stream;
 @RequestMapping("/opportunities")
 public class OpportunityEndpoint {
     private final OpportunityService opportunityService;
+    private final OpportunityRepository opportunityRepository;
 
-
-    public OpportunityEndpoint(OpportunityService opportunityService) {
+    public OpportunityEndpoint(OpportunityService opportunityService, OpportunityRepository opportunityRepository) {
         this.opportunityService = opportunityService;
+        this.opportunityRepository = opportunityRepository;
     }
 
     @PostMapping
@@ -146,29 +151,40 @@ public class OpportunityEndpoint {
  */
 
 
-    @GetMapping("/search")
+    @GetMapping("/lookup")
     @ResponseBody
-    public List<Opportunity> processSearch(@RequestParam String creatorName,
-                                           @RequestParam int zipcode,
-                                           @RequestParam(required = false) String time,
-                                           @RequestParam(required = false) String date
-
+    public List<Opportunity> processSearch(
+//            @RequestParam Optional<Integer> zipCode,
+            @RequestParam int zipCode,
+            @RequestParam (required = false) OpportunityCategory category,
+            @RequestParam (required = false) String creatorName,
+//            @RequestParam Optional<Integer> numberOfParticipants,
+            @RequestParam int numberOfParticipants,
+            @RequestParam (required = false) CreatorType creatorType,
+            @RequestParam (required = true) boolean done
     ) {
-        List<Opportunity> nameOpportunities = opportunityService.getAllByOrganizationName(creatorName);
-        List<Opportunity> zipOpportunities = opportunityService.getAllByZipCode(zipcode);
-      if( nameOpportunities.containsAll(zipOpportunities)) {
+//        if (zipCode.isEmpty()  && category == null && creatorName == null && numberOfParticipants.isEmpty() && creatorType == null) {
+        if (zipCode == 0  && category == null && creatorName.isBlank() && numberOfParticipants == 0 && creatorType == null) {
+                return opportunityService.getAllAvailables();
+//            }
+        }
+        DynamicQuery dynamicQuery = new DynamicQuery();
+//        if (zipCode.isPresent())  {
+            dynamicQuery.setZipCode(zipCode);
+//        } else {
+//            dynamicQuery.setZipCode(0);
+//        }
 
-          return nameOpportunities;
-      }
-      return List.of();
-
-        /*
-        return nameOpportunities.stream()
-                .filter(e -> e.getZipCode() == zipcode && opportunityService.getTimeCategory(e.getStartTime()).equals(time)
-                        && opportunityService.convertStringToLOcalDate(date).equals(e.getOccurDate()))
-                .collect(Collectors.toList());
-
-         */
+        dynamicQuery.setCategory(category);
+        dynamicQuery.setCreatorName(creatorName);
+//        if (numberOfParticipants.isPresent()) {
+            dynamicQuery.setNumberOfParticipants(numberOfParticipants);
+//        } else {
+//            dynamicQuery.setNumberOfParticipants(0);
+//        }
+        dynamicQuery.setCreatorType(creatorType);
+        dynamicQuery.setDone(done);
+        return opportunityRepository.query(dynamicQuery);
     }
 
 
