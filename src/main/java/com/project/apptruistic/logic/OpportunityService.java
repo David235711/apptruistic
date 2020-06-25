@@ -16,10 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -168,12 +165,10 @@ public class OpportunityService {
         return opportunities;
     }
 
-    public List<Opportunity> getAllByOrganizationCreator() {
-        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorTypeAndDoneFalse(CreatorType.ORGANIZATION);
-        return opportunities;
-    }
-
-
+//    public List<Opportunity> getAllByOrganizationCreator() {
+//        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorTypeAndDoneFalse(CreatorType.ORGANIZATION);
+//        return opportunities;
+//    }
 
     public List<Opportunity> getAllByTime(String time) {
         List<Opportunity> opportunities = opportunityRepository.findAllByDoneFalse();
@@ -215,10 +210,6 @@ public class OpportunityService {
         return opportunities;
     }
 
-
-
-
-
     public String getTimeCategory(LocalTime time) {
         List<Opportunity> opportunities = opportunityRepository.findAllByDoneFalse();
         LocalTime morning = LocalTime.NOON;
@@ -237,6 +228,12 @@ public class OpportunityService {
         return convertedDate;
     }
 
-
+    public Set<String> getAllByOrganizationCreator() {
+        Set<Opportunity> opportunities = opportunityRepository.findAllByCreatorType(CreatorType.ORGANIZATION);
+        Set<String> creatorNames = opportunities.stream()
+                .map(e-> e.getCreatorName())
+                .collect(Collectors.toSet());
+        return creatorNames;
+    }
 
 }

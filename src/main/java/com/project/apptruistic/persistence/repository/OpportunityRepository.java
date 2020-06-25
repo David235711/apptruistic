@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface OpportunityRepository extends MongoRepository<Opportunity, String>, OpportunityRepositoryCustom {
 
@@ -31,4 +32,6 @@ public interface OpportunityRepository extends MongoRepository<Opportunity, Stri
 
     List<Opportunity> findAllByStartTime(LocalTime startTime);
     // List<Opportunity> findAllBy$ZAndZipCode$AndStartTime (int zipcode)
+
+    Set<Opportunity> findAllByCreatorType(CreatorType creatorType);
 }

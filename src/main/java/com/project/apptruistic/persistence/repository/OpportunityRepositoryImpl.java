@@ -21,9 +21,10 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
 
     @Override
     public List<Opportunity> query(DynamicQuery dynamicQuery) {
+        System.out.println(dynamicQuery);
         Query query = new Query();
         List<Criteria> criteria = new ArrayList<>();
-        if (dynamicQuery.getCreatorName() != null) {
+        if (dynamicQuery.getCreatorName().isBlank() == false) {
             criteria.add(Criteria.where("creatorName").is(dynamicQuery.getCreatorName()));
         }
 
@@ -35,13 +36,22 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
             criteria.add(Criteria.where("category").is(dynamicQuery.getCategory()));
         }
 
-        if (dynamicQuery.getNumberOfParticipants() > 0) {
-            criteria.add(Criteria.where("numberOfParticipants").is(dynamicQuery.getNumberOfParticipants()));
+        int participants = dynamicQuery.getNumberOfParticipants();
+        if (participants > 0) {
+            if (participants == 1) {
+                System.out.println("receiving: " + participants);
+                criteria.add(Criteria.where("numberOfParticipants").is(participants));
+            } else {
+                System.out.println("receiving: " + participants);
+                criteria.add(Criteria.where("numberOfParticipants").gte(participants));
+            }
         }
 
         if (dynamicQuery.getCreatorType() != null) {
             criteria.add(Criteria.where("creatorType").is(dynamicQuery.getCreatorType()));
         }
+
+        criteria.add(Criteria.where("done").is(dynamicQuery.isDone()));
 
         //ToDo: doesn't work
         if (dynamicQuery.getStartTime() != null && dynamicQuery.getStartTime().equals("morning")) {
