@@ -25,7 +25,7 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
         System.out.println(dynamicQuery);
         Query query = new Query();
         List<Criteria> criteria = new ArrayList<>();
-        if (dynamicQuery.getCreatorName().isBlank() == false) {
+        if (!dynamicQuery.getCreatorName().isBlank()) {
             criteria.add(Criteria.where("creatorName").is(dynamicQuery.getCreatorName()));
         }
 
