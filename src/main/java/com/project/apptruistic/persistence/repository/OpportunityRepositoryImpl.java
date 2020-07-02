@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +56,15 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
 
         //ToDo: doesn't work
         if (dynamicQuery.getStartTime() != null && dynamicQuery.getStartTime().equals("morning")) {
-            criteria.add(Criteria.where("startTime").gt(LocalTime.of(0, 0))
-                    /*.lt(LocalTime.of(12, 0))*/);
+            System.out.println("checking startTime search");
+            criteria.add(Criteria.where("startTime").is(LocalTime.of(8, 0))/*.gt(LocalTime.of(0, 0))*/
+                    /*.lt(LocalTime.of(0, 0))*/);
         }
 
-        /*if (dynamicQuery.getOccurDate() != null) {
-            criteria.add(Criteria.where("occurDate").is(dynamicQuery.getOccurDate()));
-        }*/
+        if (dynamicQuery.getOccurDate() != null) {
+            System.out.println("checking occurDate search");
+            criteria.add(Criteria.where("occurDate").gte(dynamicQuery.getOccurDate()).lt(dynamicQuery.getOccurDate().plusDays(1L)));
+        }
 
 
         if (!criteria.isEmpty()) {
