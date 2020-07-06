@@ -3,6 +3,7 @@ server:
 spring:
   data:
     mongodb:
+      database: apptruistic
       uri: mongodb://apptruistic:apptruist1c@ds247479.mlab.com:47479/apptruistic?retryWrites=false
   mailsetting:
     host: smtp.gmail.com
