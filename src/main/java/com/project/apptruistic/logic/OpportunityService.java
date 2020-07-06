@@ -15,7 +15,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,7 +32,12 @@ public class OpportunityService {
     private final int urgentLimitInWeeks;
 
     public OpportunityService(OpportunityRepository opportunityRepository,
-                              VolunteerRepository volunteerRepository, OrganizationRepository organizationRepository, IndividualRepository individualRepository, OrganizationService organizationService, IndividualService individualService, @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
+                              VolunteerRepository volunteerRepository,
+                              OrganizationRepository organizationRepository,
+                              IndividualRepository individualRepository,
+                              OrganizationService organizationService,
+                              IndividualService individualService,
+                              @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
         this.opportunityRepository = opportunityRepository;
         this.volunteerRepository = volunteerRepository;
         this.organizationRepository = organizationRepository;
@@ -130,104 +134,6 @@ public class OpportunityService {
         Duration duration = Duration.between(startTime, endTime);
         opportunity.setDurationInMinutes(duration.toMinutes());
     }
-
-
-    public List<Opportunity> getAllByZipCode(int zipcode) {
-        List<Opportunity> opportunities = opportunityRepository.findAllByZipCodeAndDoneFalse(zipcode);
-        return opportunities;
-    }
-
-    public List<Opportunity> getAllByCategory(OpportunityCategory category) {
-        List<Opportunity> opportunities = opportunityRepository.findAllByCategoryAndDoneFalse(category);
-        return opportunities;
-    }
-
-    public List<Opportunity> getAllByOrganizationName(String organizationName) {
-        return opportunityRepository.findAllByCreatorNameAndDoneFalse(organizationName).stream()
-                .filter(e -> e.getCreatorType().equals(CreatorType.ORGANIZATION))
-                .collect(Collectors.toList());
-
-    }
-
-    public List<Opportunity> getAllSingleOpportunities() {
-        return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(e -> e.getNumberOfParticipants() == 1 )
-                .collect(Collectors.toList());
-    }
-
-    public List<Opportunity> getAllGroupOpportunities() {
-        return opportunityRepository.findAllByDoneFalse().stream()
-                .filter(e -> e.getNumberOfParticipants() > 1)
-                .collect(Collectors.toList());
-    }
-
-    public List<Opportunity> getAllByIndividualCreator() {
-        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorTypeAndDoneFalse(CreatorType.INDIVIDUAL);
-        return opportunities;
-    }
-
-//    public List<Opportunity> getAllByOrganizationCreator() {
-//        List<Opportunity> opportunities = opportunityRepository.findAllByCreatorTypeAndDoneFalse(CreatorType.ORGANIZATION);
-//        return opportunities;
-//    }
-
-//    public List<Opportunity> getAllByTime(String time) {
-//        List<Opportunity> opportunities = opportunityRepository.findAllByDoneFalse();
-//        //LocalTime morning = LocalTime.parse("12:00");
-//        LocalTime morning = LocalTime.NOON;
-//        LocalTime afternoon = LocalTime.parse("18:00");
-//        LocalTime night = LocalTime.parse("23:59");
-//
-//        List<Opportunity> morningOpportunities = opportunities.stream()
-//                .filter(e -> e.getStartTime().isBefore(LocalTime.NOON))
-//                .collect(Collectors.toList());
-//
-//        List<Opportunity> afternoonOpportunities = opportunities.stream()
-//                .filter(e -> e.getStartTime().isBefore(afternoon) && e.getStartTime().isAfter(morning))
-//                .collect(Collectors.toList());
-//
-//        List<Opportunity> nightOpportunities = opportunities.stream()
-//                .filter(e -> e.getStartTime().isBefore(night) && e.getStartTime().isAfter(afternoon))
-//                .collect(Collectors.toList());
-//
-//        if (time.equals("Morning")) {
-//            return morningOpportunities;
-//        }
-//        if (time.equals("Afternoon")) {
-//            return afternoonOpportunities;
-//        }
-//
-//        return nightOpportunities;
-//
-//    }
-
-//    public List<Opportunity> getAllByOccurDate(String date) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-//        LocalDate convertedDate = LocalDate.parse(date, formatter);
-//        List<Opportunity> opportunities = opportunityRepository.findAllByDoneFalse().stream()
-//                .filter(e -> e.getOccurDate().equals(convertedDate))
-//                .collect(Collectors.toList());
-//
-//        return opportunities;
-//    }
-
-//    public String getTimeCategory(LocalTime time) {
-//        List<Opportunity> opportunities = opportunityRepository.findAllByDoneFalse();
-//        LocalTime morning = LocalTime.NOON;
-//        LocalTime afternoon = LocalTime.parse("18:00");
-//        LocalTime night = LocalTime.parse("23:59");
-//
-//        if (time.isBefore(morning)) return "Morning";
-//        if (time.isBefore(afternoon) && time.isAfter(morning)) return "Afternoon";
-//        return "Night";
-//    }
-
-
-//    public LocalDate convertStringToLOcalDate(String date){
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-//        LocalDate convertedDate = LocalDate.parse(date, formatter);
-//        return convertedDate;
-//    }
 
     public Set<String> getAllByOrganizationCreator() {
         Set<Opportunity> opportunities = opportunityRepository.findAllByCreatorType(CreatorType.ORGANIZATION);

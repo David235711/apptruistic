@@ -74,8 +74,7 @@ public class OpportunityEndpoint {
             @RequestParam (required = false) String startTime,
             @RequestParam (required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate occurDate
             ) {
-        // Old version expects empty search parameters to be NOT sent by request
-//        if (zipCode == 0  && category == null && creatorName.isBlank() && numberOfParticipants == 0 && creatorType == null) {
+
         if (zipCode == 0  && category == null && creatorName.isBlank() && numberOfParticipants == 0 && creatorType == null && startTime.isBlank() && occurDate == null) {
             return opportunityService.getAllAvailables();
         }
@@ -94,7 +93,7 @@ public class OpportunityEndpoint {
 
     @GetMapping("/organizations")
     //  @PreAuthorize("hasRole('VOLUNTEER')")
-    Set<String> getAllOrganizatio() {
+    Set<String> getAllOrganization() {
         Set<String> opportunities = opportunityService.getAllByOrganizationCreator();
         return opportunities;
     }

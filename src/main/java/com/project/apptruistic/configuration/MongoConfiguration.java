@@ -19,8 +19,8 @@ public class MongoConfiguration extends AbstractMongoClientConfiguration {
     @Value("${spring.data.mongodb.database}")
     String database;
 
-//    @Value("${spring.data.mongodb.host:ds247479.mlab.com}:${spring.data.mongodb.port:47479}")
-    String host = "mongodb://apptruistic:apptruist1c@ds247479.mlab.com:47479/apptruistic?retryWrites=false";
+    @Value("${spring.data.mongodb.uri}")
+    String host;
 
     @Override
     protected String getDatabaseName() {
