@@ -17,6 +17,10 @@ public class MongoLocalTime implements Comparable<MongoLocalTime> {
         return new MongoLocalTime(LocalTime.of(hour, minute));
     }
 
+    public MongoLocalTime(String time) {
+        this.localTime = LocalTime.parse(time);
+    }
+
     public int getHour() {
         return this.localTime.getHour();
     }

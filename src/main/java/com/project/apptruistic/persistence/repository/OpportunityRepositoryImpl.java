@@ -1,5 +1,6 @@
 package com.project.apptruistic.persistence.repository;
 
+import com.project.apptruistic.logic.time.MongoLocalTime;
 import com.project.apptruistic.persistence.domain.Opportunity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -59,8 +60,7 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
         //ToDo: doesn't work
         if (dynamicQuery.getStartTime() != null && dynamicQuery.getStartTime().equals("morning")) {
             System.out.println("checking startTime search");
-            criteria.add(Criteria.where("startTime").gt(LocalTime.of(6, 0))
-                    /*.lt(LocalTime.of(12, 0))*/);
+            criteria.add(Criteria.where("startTime").gt(MongoLocalTime.of(12, 0)));
         }
 
         if (dynamicQuery.getOccurDate() != null) {
