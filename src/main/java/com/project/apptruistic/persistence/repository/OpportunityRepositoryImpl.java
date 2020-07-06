@@ -57,10 +57,21 @@ public class OpportunityRepositoryImpl implements OpportunityRepositoryCustom {
 
         criteria.add(Criteria.where("done").is(dynamicQuery.isDone()));
 
-        //ToDo: doesn't work
         if (dynamicQuery.getStartTime() != null && dynamicQuery.getStartTime().equals("morning")) {
-            System.out.println("checking startTime search");
-            criteria.add(Criteria.where("startTime").gt(MongoLocalTime.of(12, 0)));
+            criteria.add(Criteria.where("startTime").gte(MongoLocalTime.of(5, 0)).lt(MongoLocalTime.of(12, 0)));
+        }
+
+        if (dynamicQuery.getStartTime() != null && dynamicQuery.getStartTime().equals("afternoon")) {
+            criteria.add(Criteria.where("startTime").gte(MongoLocalTime.of(12, 0)).lt(MongoLocalTime.of(18, 0)));
+        }
+
+        if (dynamicQuery.getStartTime() != null && dynamicQuery.getStartTime().equals("night")) {
+            criteria.add(
+                    new Criteria().orOperator(
+                            Criteria.where("startTime").gte(MongoLocalTime.of(18, 0)).lt(MongoLocalTime.of(23, 59)),
+                            Criteria.where("startTime").gte(MongoLocalTime.of(0, 0)).lt(MongoLocalTime.of(5, 0))
+                    )
+            );
         }
 
         if (dynamicQuery.getOccurDate() != null) {
