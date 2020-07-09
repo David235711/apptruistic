@@ -66,16 +66,16 @@ public class OpportunityEndpoint {
     @ResponseBody
     public List<Opportunity> processSearch(
             @RequestParam int zipCode,
-            @RequestParam (required = false) OpportunityCategory category,
-            @RequestParam (required = false) String creatorName,
+            @RequestParam(required = false) OpportunityCategory category,
+            @RequestParam(required = false) String creatorName,
             @RequestParam int numberOfParticipants,
-            @RequestParam (required = false) CreatorType creatorType,
-            @RequestParam (required = true) boolean done,
-            @RequestParam (required = false) String startTime,
-            @RequestParam (required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate occurDate
-            ) {
+            @RequestParam(required = false) CreatorType creatorType,
+            @RequestParam(required = true) boolean done,
+            @RequestParam(required = false) String startTime,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate occurDate
+    ) {
 
-        if (zipCode == 0  && category == null && creatorName.isBlank() && numberOfParticipants == 0 && creatorType == null && startTime.isBlank() && occurDate == null) {
+        if (zipCode == 0 && category == null && creatorName.isBlank() && numberOfParticipants == 0 && creatorType == null && startTime.isBlank() && occurDate == null) {
             return opportunityService.getAllAvailables();
         }
         DynamicQuery dynamicQuery = new DynamicQuery();
@@ -92,9 +92,15 @@ public class OpportunityEndpoint {
     }
 
     @GetMapping("/organizations")
-    //  @PreAuthorize("hasRole('VOLUNTEER')")
+        //  @PreAuthorize("hasRole('VOLUNTEER')")
     Set<String> getAllOrganization() {
         Set<String> opportunities = opportunityService.getAllByOrganizationCreator();
         return opportunities;
+    }
+
+    @PutMapping("/{id1}/apply/{id2}")
+    @PreAuthorize("hasRole('VOLUNTEER')")
+    void apply(@PathVariable String id1, @PathVariable String id2) {
+        opportunityService.apply(id1, id2);
     }
 }

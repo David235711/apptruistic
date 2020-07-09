@@ -53,10 +53,11 @@ public class Volunteer {
     private List<Opportunity> appliedOpportunities = new ArrayList<>();
 
     @DBRef
-    private List<Opportunity> declinedOpportunities = new ArrayList<>();
+    private List<Opportunity> acceptedOpportunities = new ArrayList<>();
 
     @DBRef
-    private List<Opportunity> acceptedOpportunities = new ArrayList<>();
+    private List<Opportunity> declinedOpportunities = new ArrayList<>();
+
 
     @Size(max = 2000)
     private String personalDescription;
@@ -200,6 +201,14 @@ public class Volunteer {
         this.declinedOpportunities = declinedOpportunities;
     }
 
+    public CreatorType getPreferredType() {
+        return preferredType;
+    }
+
+    public void setPreferredType(CreatorType preferredType) {
+        this.preferredType = preferredType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -214,23 +223,12 @@ public class Volunteer {
                 Objects.equals(email, volunteer.email) &&
                 Objects.equals(roles, volunteer.roles) &&
                 Objects.equals(category, volunteer.category) &&
-                Objects.equals(appliedOpportunities, volunteer.appliedOpportunities) &&
-                Objects.equals(declinedOpportunities, volunteer.declinedOpportunities) &&
-                Objects.equals(acceptedOpportunities, volunteer.acceptedOpportunities) &&
                 Objects.equals(personalDescription, volunteer.personalDescription);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, dateOfBirth, gender, password, email, roles, category, appliedOpportunities, declinedOpportunities, acceptedOpportunities, personalDescription);
-    }
-
-    public CreatorType getPreferredType() {
-        return preferredType;
-    }
-
-    public void setPreferredType(CreatorType preferredType) {
-        this.preferredType = preferredType;
     }
 }
 

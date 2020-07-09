@@ -24,3 +24,4 @@ apptruistic:
   urgentLimitInWeeks: 1
   jwtSecret: "SecretKey"
   jwtExpirationMs: 86400000
+  maxQueueLength: 3

@@ -29,6 +29,7 @@ public class OpportunityService {
     private final IndividualRepository individualRepository;
     private final OrganizationService organizationService;
     private final IndividualService individualService;
+    private final int maxQueueLength;
     private final int urgentLimitInWeeks;
 
     public OpportunityService(OpportunityRepository opportunityRepository,
@@ -37,6 +38,7 @@ public class OpportunityService {
                               IndividualRepository individualRepository,
                               OrganizationService organizationService,
                               IndividualService individualService,
+                              @Value("${apptruistic.maxQueueLength}") int maxQueueLength,
                               @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
         this.opportunityRepository = opportunityRepository;
         this.volunteerRepository = volunteerRepository;
@@ -44,6 +46,7 @@ public class OpportunityService {
         this.individualRepository = individualRepository;
         this.organizationService = organizationService;
         this.individualService = individualService;
+        this.maxQueueLength = maxQueueLength;
         this.urgentLimitInWeeks = urgentLimitInWeeks;
     }
 
@@ -59,6 +62,9 @@ public class OpportunityService {
         opportunity.setTimestamp(LocalDateTime.now());
         opportunityRepository.save(opportunity);
         String creatorId = opportunity.getCreatorId();
+        int participant = opportunity.getNumberOfParticipants();
+        int max = participant * maxQueueLength;
+        opportunity.setMaxQueueLength(max);
         Optional<Organization> oOrganization = organizationRepository.findById(creatorId);
         Optional<Individual> oIndividual = individualRepository.findById(creatorId);
         if (oOrganization.isPresent()) {
@@ -137,10 +143,32 @@ public class OpportunityService {
 
     public Set<String> getAllByOrganizationCreator() {
         Set<Opportunity> opportunities = opportunityRepository.findAllByCreatorType(CreatorType.ORGANIZATION);
-        Set<String> creatorNames = opportunities.stream()
-                .map(e-> e.getCreatorName())
+        return opportunities.stream()
+                .map(Opportunity::getCreatorName)
                 .collect(Collectors.toSet());
-        return creatorNames;
     }
 
+    public void apply(String volunteerId, String opportunityId) {
+        Optional<Volunteer> oVolunteer = volunteerRepository.findById(volunteerId);
+        Optional<Opportunity> oOpportunity = opportunityRepository.findById(opportunityId);
+        if (oVolunteer.isEmpty() || oOpportunity.isEmpty()) {
+            return;
+        }
+        Opportunity opportunity = oOpportunity.get();
+        Volunteer volunteer = oVolunteer.get();
+        if (opportunity.getAppliedVolunteer().contains(volunteer)) {
+            return;
+        }
+        opportunity.getAppliedVolunteer().add(volunteer);
+        opportunityRepository.save(opportunity);
+        if (volunteer.getAppliedOpportunities().contains(opportunity)) {
+            return;
+        }
+        volunteer.getAppliedOpportunities().add(opportunity);
+        volunteerRepository.save(volunteer);
+        if (opportunity.getAppliedVolunteer().size() == opportunity.getMaxQueueLength()) {
+            opportunity.setQueueFull(true);
+            opportunityRepository.save(opportunity);
+        }
+    }
 }

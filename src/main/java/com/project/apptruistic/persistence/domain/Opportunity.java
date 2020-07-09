@@ -81,11 +81,22 @@ public class Opportunity {
     @NotNull(message = "please include a zip code")
     private int zipCode;
 
+    private boolean isQueueFull;
+
     // if confirmed volunteers is full
     private boolean done;
 
+    private int maxQueueLength;
+
+    @DBRef
+    private List<Volunteer> appliedVolunteer = new ArrayList<>();
+
     @DBRef
     private List<Volunteer> acceptedVolunteers = new ArrayList<>();
+
+    @DBRef
+    private List<Volunteer> declinedVolunteer = new ArrayList<>();
+
 
     public Opportunity() {
     }
@@ -364,5 +375,37 @@ public class Opportunity {
                 ", zipCode=" + zipCode +
                 ", done=" + done +
                 '}';
+    }
+
+    public List<Volunteer> getAppliedVolunteer() {
+        return appliedVolunteer;
+    }
+
+    public void setAppliedVolunteer(List<Volunteer> appliedVolunteer) {
+        this.appliedVolunteer = appliedVolunteer;
+    }
+
+    public List<Volunteer> getDeclinedVolunteer() {
+        return declinedVolunteer;
+    }
+
+    public void setDeclinedVolunteer(List<Volunteer> declinedVolunteer) {
+        this.declinedVolunteer = declinedVolunteer;
+    }
+
+    public boolean isQueueFull() {
+        return isQueueFull;
+    }
+
+    public void setQueueFull(boolean queueFull) {
+        isQueueFull = queueFull;
+    }
+
+    public int getMaxQueueLength() {
+        return maxQueueLength;
+    }
+
+    public void setMaxQueueLength(int maxQueueLength) {
+        this.maxQueueLength = maxQueueLength;
     }
 }
