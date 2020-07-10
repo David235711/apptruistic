@@ -11,10 +11,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -89,13 +87,13 @@ public class Opportunity {
     private int maxQueueLength;
 
     @DBRef
-    private List<Volunteer> appliedVolunteer = new ArrayList<>();
+    private List<Volunteer> appliedVolunteers = new ArrayList<>();
 
     @DBRef
     private List<Volunteer> acceptedVolunteers = new ArrayList<>();
 
     @DBRef
-    private List<Volunteer> declinedVolunteer = new ArrayList<>();
+    private List<Volunteer> declinedVolunteers = new ArrayList<>();
 
 
     public Opportunity() {
@@ -377,20 +375,20 @@ public class Opportunity {
                 '}';
     }
 
-    public List<Volunteer> getAppliedVolunteer() {
-        return appliedVolunteer;
+    public List<Volunteer> getAppliedVolunteers() {
+        return appliedVolunteers;
     }
 
-    public void setAppliedVolunteer(List<Volunteer> appliedVolunteer) {
-        this.appliedVolunteer = appliedVolunteer;
+    public void setAppliedVolunteers(List<Volunteer> appliedVolunteers) {
+        this.appliedVolunteers = appliedVolunteers;
     }
 
-    public List<Volunteer> getDeclinedVolunteer() {
-        return declinedVolunteer;
+    public List<Volunteer> getDeclinedVolunteers() {
+        return declinedVolunteers;
     }
 
-    public void setDeclinedVolunteer(List<Volunteer> declinedVolunteer) {
-        this.declinedVolunteer = declinedVolunteer;
+    public void setDeclinedVolunteers(List<Volunteer> declinedVolunteers) {
+        this.declinedVolunteers = declinedVolunteers;
     }
 
     public boolean isQueueFull() {

@@ -156,17 +156,17 @@ public class OpportunityService {
         }
         Opportunity opportunity = oOpportunity.get();
         Volunteer volunteer = oVolunteer.get();
-        if (opportunity.getAppliedVolunteer().contains(volunteer)) {
+        if (opportunity.getAppliedVolunteers().contains(volunteer)) {
             return;
         }
-        opportunity.getAppliedVolunteer().add(volunteer);
+        opportunity.getAppliedVolunteers().add(volunteer);
         opportunityRepository.save(opportunity);
         if (volunteer.getAppliedOpportunities().contains(opportunity)) {
             return;
         }
         volunteer.getAppliedOpportunities().add(opportunity);
         volunteerRepository.save(volunteer);
-        if (opportunity.getAppliedVolunteer().size() == opportunity.getMaxQueueLength()) {
+        if (opportunity.getAppliedVolunteers().size() == opportunity.getMaxQueueLength()) {
             opportunity.setQueueFull(true);
             opportunityRepository.save(opportunity);
         }
