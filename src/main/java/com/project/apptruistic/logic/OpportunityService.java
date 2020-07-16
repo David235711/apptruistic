@@ -156,14 +156,15 @@ public class OpportunityService {
         }
         Opportunity opportunity = oOpportunity.get();
         Volunteer volunteer = oVolunteer.get();
-        if (opportunity.getAppliedVolunteer().contains(volunteer.getId()) || volunteer.getAppliedOpportunities().contains(opportunity)) {
+        if (opportunity.getAppliedVolunteers().contains(volunteer.getId()) || volunteer.getAppliedOpportunities().contains(opportunity)) {
             return;
         }
-        opportunity.getAppliedVolunteer().add(volunteer.getId());
+        opportunity.getAppliedVolunteers().add(volunteer.getId());
+
         opportunityRepository.save(opportunity);
         volunteer.getAppliedOpportunities().add(opportunity);
         volunteerRepository.save(volunteer);
-        if (opportunity.getAppliedVolunteer().size() == opportunity.getMaxQueueLength()) {
+        if (opportunity.getAppliedVolunteers().size() == opportunity.getMaxQueueLength()) {
             opportunity.setQueueFull(true);
             opportunityRepository.save(opportunity);
         }
@@ -177,10 +178,10 @@ public class OpportunityService {
         }
         Opportunity opportunity = oOpportunity.get();
         Volunteer volunteer = oVolunteer.get();
-        if (opportunity.getDeclinedVolunteer().contains(volunteer.getId()) || opportunity.getAppliedVolunteer().contains(volunteer)) {
+        if (opportunity.getDeclinedVolunteers().contains(volunteer.getId()) || opportunity.getAppliedVolunteers().contains(volunteer)) {
             return "declinedOrApplied";
         }
-        if (opportunity.getAppliedVolunteer().size() == opportunity.getMaxQueueLength()) {
+        if (opportunity.getAppliedVolunteers().size() == opportunity.getMaxQueueLength()) {
             return "full";
         }
         return "okay";
