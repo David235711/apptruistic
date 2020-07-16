@@ -156,19 +156,33 @@ public class OpportunityService {
         }
         Opportunity opportunity = oOpportunity.get();
         Volunteer volunteer = oVolunteer.get();
-        if (opportunity.getAppliedVolunteer().contains(volunteer)) {
+        if (opportunity.getAppliedVolunteer().contains(volunteer.getId()) || volunteer.getAppliedOpportunities().contains(opportunity)) {
             return;
         }
-        opportunity.getAppliedVolunteer().add(volunteer);
+        opportunity.getAppliedVolunteer().add(volunteer.getId());
         opportunityRepository.save(opportunity);
-        if (volunteer.getAppliedOpportunities().contains(opportunity)) {
-            return;
-        }
         volunteer.getAppliedOpportunities().add(opportunity);
         volunteerRepository.save(volunteer);
         if (opportunity.getAppliedVolunteer().size() == opportunity.getMaxQueueLength()) {
             opportunity.setQueueFull(true);
             opportunityRepository.save(opportunity);
         }
+    }
+
+    public String applicationStatus(String opportunityId, String volunteerId) {
+        Optional<Opportunity> oOpportunity = opportunityRepository.findById(opportunityId);
+        Optional<Volunteer> oVolunteer = volunteerRepository.findById(volunteerId);
+        if (oOpportunity.isEmpty() || oVolunteer.isEmpty()) {
+            return "opportunity/volunteer not found";
+        }
+        Opportunity opportunity = oOpportunity.get();
+        Volunteer volunteer = oVolunteer.get();
+        if (opportunity.getDeclinedVolunteer().contains(volunteer.getId()) || opportunity.getAppliedVolunteer().contains(volunteer)) {
+            return "declinedOrApplied";
+        }
+        if (opportunity.getAppliedVolunteer().size() == opportunity.getMaxQueueLength()) {
+            return "full";
+        }
+        return "okay";
     }
 }

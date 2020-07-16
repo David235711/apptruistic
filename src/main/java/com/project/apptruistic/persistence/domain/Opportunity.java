@@ -89,13 +89,13 @@ public class Opportunity {
     private int maxQueueLength;
 
     @DBRef
-    private List<Volunteer> appliedVolunteer = new ArrayList<>();
+    private List<String> appliedVolunteer = new ArrayList<>();
 
     @DBRef
-    private List<Volunteer> acceptedVolunteers = new ArrayList<>();
+    private List<String> acceptedVolunteers = new ArrayList<>();
 
     @DBRef
-    private List<Volunteer> declinedVolunteer = new ArrayList<>();
+    private List<String> declinedVolunteer = new ArrayList<>();
 
 
     public Opportunity() {
@@ -120,7 +120,7 @@ public class Opportunity {
             String city,
             int zipCode,
             boolean done,
-            List<Volunteer> acceptedVolunteers
+            List<String> acceptedVolunteers
     ) {
         this.hashcode = hashcode;
         this.name = name;
@@ -329,11 +329,11 @@ public class Opportunity {
         this.numberOfParticipants = numberOfParticipants;
     }
 
-    public List<Volunteer> getAcceptedVolunteers() {
+    public List<String> getAcceptedVolunteers() {
         return acceptedVolunteers;
     }
 
-    public void setAcceptedVolunteers(List<Volunteer> acceptedVolunteers) {
+    public void setAcceptedVolunteers(List<String> acceptedVolunteers) {
         this.acceptedVolunteers = acceptedVolunteers;
     }
 
@@ -377,19 +377,19 @@ public class Opportunity {
                 '}';
     }
 
-    public List<Volunteer> getAppliedVolunteer() {
+    public List<String> getAppliedVolunteer() {
         return appliedVolunteer;
     }
 
-    public void setAppliedVolunteer(List<Volunteer> appliedVolunteer) {
+    public void setAppliedVolunteer(List<String> appliedVolunteer) {
         this.appliedVolunteer = appliedVolunteer;
     }
 
-    public List<Volunteer> getDeclinedVolunteer() {
+    public List<String> getDeclinedVolunteer() {
         return declinedVolunteer;
     }
 
-    public void setDeclinedVolunteer(List<Volunteer> declinedVolunteer) {
+    public void setDeclinedVolunteer(List<String> declinedVolunteer) {
         this.declinedVolunteer = declinedVolunteer;
     }
 

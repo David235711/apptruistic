@@ -103,4 +103,9 @@ public class OpportunityEndpoint {
     void apply(@PathVariable String id1, @PathVariable String id2) {
         opportunityService.apply(id1, id2);
     }
+
+    @GetMapping("/{id1}/status/{id2}")
+    String status(@PathVariable String id1, @PathVariable String id2) {
+        return opportunityService.applicationStatus(id1, id2);
+    }
 }
