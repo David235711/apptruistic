@@ -159,8 +159,10 @@ public class OpportunityService {
         if (opportunity.getAppliedVolunteers().contains(volunteer.getId()) || volunteer.getAppliedOpportunities().contains(opportunity)) {
             return;
         }
+        if (opportunity.getDeclinedVolunteers().contains(volunteer.getId()) || volunteer.getDeclinedOpportunities().contains(opportunity)) {
+            return;
+        }
         opportunity.getAppliedVolunteers().add(volunteer.getId());
-
         opportunityRepository.save(opportunity);
         volunteer.getAppliedOpportunities().add(opportunity);
         volunteerRepository.save(volunteer);
