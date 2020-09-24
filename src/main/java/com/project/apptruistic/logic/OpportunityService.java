@@ -27,8 +27,6 @@ public class OpportunityService {
     private final VolunteerRepository volunteerRepository;
     private final OrganizationRepository organizationRepository;
     private final IndividualRepository individualRepository;
-    private final OrganizationService organizationService;
-    private final IndividualService individualService;
     private final int maxQueueLength;
     private final int urgentLimitInWeeks;
 
@@ -36,16 +34,12 @@ public class OpportunityService {
                               VolunteerRepository volunteerRepository,
                               OrganizationRepository organizationRepository,
                               IndividualRepository individualRepository,
-                              OrganizationService organizationService,
-                              IndividualService individualService,
                               @Value("${apptruistic.maxQueueLength}") int maxQueueLength,
                               @Value("${apptruistic.urgentLimitInWeeks}") int urgentLimitInWeeks) {
         this.opportunityRepository = opportunityRepository;
         this.volunteerRepository = volunteerRepository;
         this.organizationRepository = organizationRepository;
         this.individualRepository = individualRepository;
-        this.organizationService = organizationService;
-        this.individualService = individualService;
         this.maxQueueLength = maxQueueLength;
         this.urgentLimitInWeeks = urgentLimitInWeeks;
     }

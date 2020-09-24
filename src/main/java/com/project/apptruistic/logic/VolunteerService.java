@@ -12,11 +12,11 @@ import java.util.Set;
 
 @Service
 public class VolunteerService {
+
     private final VolunteerRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    public VolunteerService(VolunteerRepository repository, PasswordEncoder passwordEncoder,
-                            @Value("${apptruistic.volunteerRole}") Set<String> volunteerRole) {
+    public VolunteerService(VolunteerRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
     }
