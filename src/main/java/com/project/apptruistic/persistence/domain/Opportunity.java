@@ -175,6 +175,25 @@ public class Opportunity {
         this.zipCode = zipCode;
     }
 
+    public Opportunity(int hashcode, @NotEmpty(message = "Please provide a name") String name, @NotNull(message = "Please provide a category") OpportunityCategory category, @NotNull(message = "Specify creator type") CreatorType creatorType, @NotEmpty(message = "Specify creator id") String creatorId, @NotEmpty(message = "Specify creator name") String creatorName, @NotEmpty(message = "Please provide a short description (maximum of 200 characters)") @Size(max = 280) String shortDescription, @NotEmpty(message = "Please provide a detailed description (maximum of 2000 characters)") @Size(max = 2000) String detailedDescription, @NotNull(message = "Please provide a occurrence date (dd.MM.yyyy)") LocalDate occurDate, @NotNull(message = "Please provide a start time (HH:mm)") MongoLocalTime startTime, @NotNull(message = "Please provide a end time (HH:mm)") MongoLocalTime endTime, @NotNull(message = "please provide a number of participants") int numberOfParticipants, @NotBlank(message = "please include a street") String street, @NotBlank(message = "please include a house number") String houseNumber, @NotBlank(message = "please include a city") String city, @NotNull(message = "please include a zip code") int zipCode) {
+        this.hashcode = hashcode;
+        this.name = name;
+        this.category = category;
+        this.creatorType = creatorType;
+        this.creatorId = creatorId;
+        this.creatorName = creatorName;
+        this.shortDescription = shortDescription;
+        this.detailedDescription = detailedDescription;
+        this.occurDate = occurDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.numberOfParticipants = numberOfParticipants;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.city = city;
+        this.zipCode = zipCode;
+    }
+
     public String getCreatorId() {
         return creatorId;
     }

@@ -7,6 +7,7 @@ import com.project.apptruistic.persistence.domain.Opportunity;
 import com.project.apptruistic.persistence.repository.DynamicQuery;
 import com.project.apptruistic.persistence.repository.OpportunityRepository;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class OpportunityEndpoint {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('INDIVIDUAL') or hasRole('ORGANIZATION')")
     Opportunity post(@Valid @RequestBody Opportunity opportunity) {
         return opportunityService.save(opportunity);

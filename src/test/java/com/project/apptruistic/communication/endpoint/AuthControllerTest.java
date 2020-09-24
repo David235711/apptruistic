@@ -2,6 +2,7 @@ package com.project.apptruistic.communication.endpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.apptruistic.ApptruisticApplication;
+import com.project.apptruistic.persistence.domain.Individual;
 import com.project.apptruistic.security.payload.request.LoginRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -95,21 +96,14 @@ class AuthControllerTest {
                 .andExpect(status().isForbidden());*/
     }
 
-    @Test
-    public void givenNoToken_whenGetSecuredRequest_thenUnauthorized() throws Exception {
-        this.mvc = webAppContextSetup(this.webApplicationContext).build();
-                    mvc.perform(MockMvcRequestBuilders.get("/opportunities/availables")
-                    .header("Authorization", "Bearer " + "xx")
-                    .accept(CONTENT_TYPE))
-                    .andExpect(status().is5xxServerError());
+//    @Test
+//    public void givenNoToken_whenGetSecuredRequest_thenUnauthorized() throws Exception {
+//        this.mvc = webAppContextSetup(this.webApplicationContext).build();
+//                    mvc.perform(MockMvcRequestBuilders.get("/opportunities/availables")
+//                    .header("Authorization", "Bearer " + "xx")
+//                    .accept(CONTENT_TYPE))
+//                    .andExpect(status().is5xxServerError());
+//
+//    }
 
-    }
-
-    @Test
-    void registerIndividual() {
-    }
-
-    @Test
-    void registerOrganization() {
-    }
 }
