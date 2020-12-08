@@ -4,7 +4,7 @@ spring:
   data:
     mongodb:
       database: apptruistic
-      uri: mongodb://apptruistic:apptruist1c@ds247479.mlab.com:47479/apptruistic?retryWrites=false
+      uri: mongodb+srv://apptruistic:apptruist1c@apptruistic.bhdkl.mongodb.net/apptruistic?retryWrites=true&w=majority
   mailsetting:
     host: smtp.gmail.com
     port: 587
