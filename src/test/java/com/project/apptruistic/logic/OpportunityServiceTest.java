@@ -1,6 +1,5 @@
 package com.project.apptruistic.logic;
 
-import com.project.apptruistic.logic.time.MongoLocalTime;
 import com.project.apptruistic.persistence.domain.Opportunity;
 import com.project.apptruistic.persistence.domain.Volunteer;
 import com.project.apptruistic.persistence.repository.OpportunityRepository;
@@ -40,7 +39,7 @@ class OpportunityServiceTest {
 
     Opportunity opportunity = new Opportunity("name", OpportunityCategory.CARETAKING, CreatorType.INDIVIDUAL,
             "creatorId", "creatorName", "shortDescription", "detailedDescription",
-            LocalDate.of(2020, 07, 15), MongoLocalTime.of(LocalTime.now()), MongoLocalTime.of(LocalTime.now()), 1, "street", "houseNumber", "Vienna", 1000);
+            LocalDate.of(2020, 07, 15), LocalTime.now(), LocalTime.now(), 1, "street", "houseNumber", "Vienna", 1000);
 
     @Test
     void saveOpportunityAlreadyExists() {
@@ -118,7 +117,7 @@ class OpportunityServiceTest {
     void findHeroOpportunities() {
         Opportunity expectedOpp = new Opportunity("name", OpportunityCategory.ANIMALS, CreatorType.INDIVIDUAL,
                 "creatorId", "creatorName", "shortDescription", "detailedDescription",
-                LocalDate.of(2020, 6, 22), MongoLocalTime.of(LocalTime.now()), MongoLocalTime.of(LocalTime.now()), 1, "street", "houseNumber", "Vienna", 1000);
+                LocalDate.of(2020, 6, 22), LocalTime.now(), LocalTime.now(), 1, "street", "houseNumber", "Vienna", 1000);
         when(opportunityRepository.findAllByDoneFalse())
                 .thenReturn(List.of(opportunity, expectedOpp));
 
@@ -151,7 +150,7 @@ class OpportunityServiceTest {
         Volunteer volunteer = new Volunteer("ciao", "ciao", LocalDate.now(), "gender", "ciao", "ciao", CreatorType.INDIVIDUAL, OpportunityCategory.ANIMALS);
         Opportunity expectedOpp = new Opportunity("name", OpportunityCategory.ANIMALS, CreatorType.INDIVIDUAL,
                 "creatorId", "creatorName", "shortDescription", "detailedDescription",
-                LocalDate.of(2020, 6, 22), MongoLocalTime.of(LocalTime.now()), MongoLocalTime.of(LocalTime.now()), 1, "street", "houseNumber", "Vienna", 1000);
+                LocalDate.of(2020, 6, 22), LocalTime.now(), LocalTime.now(), 1, "street", "houseNumber", "Vienna", 1000);
 
         when(volunteerRepository.findById(id))
                 .thenReturn(Optional.of(volunteer));

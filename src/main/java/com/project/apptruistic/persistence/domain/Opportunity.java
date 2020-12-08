@@ -3,7 +3,6 @@ package com.project.apptruistic.persistence.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.apptruistic.logic.CreatorType;
 import com.project.apptruistic.logic.OpportunityCategory;
-import com.project.apptruistic.logic.time.MongoLocalTime;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -58,11 +57,11 @@ public class Opportunity {
 
     @NotNull(message = "Please provide a start time (HH:mm)")
     @JsonFormat(pattern = "HH:mm")
-    private MongoLocalTime startTime;
+    private LocalTime startTime;
 
     @NotNull(message = "Please provide a end time (HH:mm)")
     @JsonFormat(pattern = "HH:mm")
-    private MongoLocalTime endTime;
+    private LocalTime endTime;
 
     private long durationInMinutes;
 
@@ -100,8 +99,8 @@ public class Opportunity {
             String shortDescription,
             String detailedDescription,
             LocalDate occurDate,
-            MongoLocalTime startTime,
-            MongoLocalTime endTime,
+            LocalTime startTime,
+            LocalTime endTime,
             long durationInMinutes,
             int numberOfParticipants,
             String street,
@@ -141,8 +140,8 @@ public class Opportunity {
             String shortDescription,
             String detailedDescription,
             LocalDate occurDate,
-            MongoLocalTime startTime,
-            MongoLocalTime endTime,
+            LocalTime startTime,
+            LocalTime endTime,
             int numberOfParticipants,
             String street,
             String houseNumber,
@@ -254,19 +253,19 @@ public class Opportunity {
         this.occurDate = occurDate;
     }
 
-    public MongoLocalTime getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(MongoLocalTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public MongoLocalTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(MongoLocalTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
